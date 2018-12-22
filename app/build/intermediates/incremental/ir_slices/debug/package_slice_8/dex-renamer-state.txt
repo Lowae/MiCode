@@ -1,0 +1,4 @@
+#Tue Dec 11 21:01:06 CST 2018
+base.0=E\:\\MiCode-Notes\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\8
+path.0=classes.dex
+renamed.0=classes.dex
