@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-
+//便签列表适配器，继承CursorAdapter，用于将Cursor的数据适配成合适的形式显示在View中给用户看
 public class NotesListAdapter extends CursorAdapter {
     private static final String TAG = "NotesListAdapter";
     private Context mContext;
