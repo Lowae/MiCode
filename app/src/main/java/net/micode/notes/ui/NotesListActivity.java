@@ -566,7 +566,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
 
     /**
      * 删除指定文件夹
-     * @param folderId
+     * @param folderId 文件夹ID
      */
     private void deleteFolder(long folderId) {
         if (folderId == Notes.ID_ROOT_FOLDER) {
@@ -636,24 +636,29 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 break;
         }
     }
-
+    //调用系统软键盘
     private void showSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         }
     }
-
+    //隐藏系统软键盘
     private void hideSoftInput(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * 用于实现新建文件夹的名字及修改文件夹
+     * @param create 新建文件的标识
+     */
     private void showCreateOrModifyFolderDialog(final boolean create) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_edit_text, null);
         final EditText etName = (EditText) view.findViewById(R.id.et_foler_name);
         showSoftInput();
+        //修改文件夹名称
         if (!create) {
             if (mFocusNoteDataItem != null) {
                 etName.setText(mFocusNoteDataItem.getSnippet());
@@ -662,12 +667,14 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 Log.e(TAG, "The long click data item is null");
                 return;
             }
+        //新建文件夹命名
         } else {
             etName.setText("");
             builder.setTitle(this.getString(R.string.menu_create_folder));
         }
-
+        //设置最右边的按钮
         builder.setPositiveButton(android.R.string.ok, null);
+        //设置中间的按钮
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 hideSoftInput(etName);
@@ -680,13 +687,16 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
             public void onClick(View v) {
                 hideSoftInput(etName);
                 String name = etName.getText().toString();
+                //如果该名字已被使用，提示“文件夹  已存在，请重新命名”
                 if (DataUtils.checkVisibleFolderName(mContentResolver, name)) {
                     Toast.makeText(NotesListActivity.this, getString(R.string.folder_exist, name),
                             Toast.LENGTH_LONG).show();
                     etName.setSelection(0, etName.length());
                     return;
                 }
+                //如果是修改文件名
                 if (!create) {
+                    //如果name不为空，则更新文件名
                     if (!TextUtils.isEmpty(name)) {
                         ContentValues values = new ContentValues();
                         values.put(NoteColumns.SNIPPET, name);
@@ -697,6 +707,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                             String.valueOf(mFocusNoteDataItem.getId())
                         });
                     }
+                //如果是新建文件夹
                 } else if (!TextUtils.isEmpty(name)) {
                     ContentValues values = new ContentValues();
                     values.put(NoteColumns.SNIPPET, name);
@@ -706,7 +717,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 dialog.dismiss();
             }
         });
-
+        //如果输入为空，则关闭确定按钮
         if (TextUtils.isEmpty(etName.getText())) {
             positive.setEnabled(false);
         }
@@ -734,6 +745,9 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         });
     }
 
+    /**
+     * 按下返回键实现异步保存的功能
+     */
     @Override
     public void onBackPressed() {
         switch (mState) {
@@ -758,6 +772,12 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         }
     }
 
+    /**
+     * 更新桌面小部件
+     *
+     * @param appWidgetId   Widget小部件Id
+     * @param appWidgetType Widget小部件类型
+     */
     private void updateWidget(int appWidgetId, int appWidgetType) {
         Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         if (appWidgetType == Notes.TYPE_WIDGET_2X) {
@@ -777,12 +797,18 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         setResult(RESULT_OK, intent);
     }
 
+    /**
+     * 创建菜单按钮事件监听器
+     */
     private final OnCreateContextMenuListener mFolderOnCreateContextMenuListener = new OnCreateContextMenuListener() {
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
             if (mFocusNoteDataItem != null) {
                 menu.setHeaderTitle(mFocusNoteDataItem.getSnippet());
+                //查看文件夹
                 menu.add(0, MENU_FOLDER_VIEW, 0, R.string.menu_folder_view);
+                //删除文件夹
                 menu.add(0, MENU_FOLDER_DELETE, 0, R.string.menu_folder_delete);
+                //修改文件夹名称
                 menu.add(0, MENU_FOLDER_CHANGE_NAME, 0, R.string.menu_folder_change_name);
             }
         }
@@ -796,6 +822,12 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         super.onContextMenuClosed(menu);
     }
 
+    /**
+     * 已创建的菜单被选中时调用的方法
+     *
+     * @param item  被选中的菜单
+     * @return
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (mFocusNoteDataItem == null) {
@@ -803,9 +835,11 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
             return false;
         }
         switch (item.getItemId()) {
+            //如果选中 “查看文件夹”，则打开指定id的文件夹
             case MENU_FOLDER_VIEW:
                 openFolder(mFocusNoteDataItem);
                 break;
+            //如果选中“删除文件夹”，则删除指定id的文件夹
             case MENU_FOLDER_DELETE:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.alert_title_delete));
@@ -820,6 +854,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 builder.setNegativeButton(android.R.string.cancel, null);
                 builder.show();
                 break;
+            //如果选中“修改文件夹名称“，则修改指定id的文件夹名称
             case MENU_FOLDER_CHANGE_NAME:
                 showCreateOrModifyFolderDialog(false);
                 break;
@@ -830,10 +865,16 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         return true;
     }
 
+    /**
+     * 在显示菜单前调用
+     * @param menu  菜单对象
+     * @return
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         if (mState == ListEditState.NOTE_LIST) {
+            //绑定菜单的视图文件
             getMenuInflater().inflate(R.menu.note_list, menu);
             // set sync or sync_cancel
             menu.findItem(R.id.menu_sync).setTitle(
