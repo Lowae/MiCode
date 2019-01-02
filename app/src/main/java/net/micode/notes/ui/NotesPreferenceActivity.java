@@ -47,7 +47,9 @@ import net.micode.notes.data.Notes;
 import net.micode.notes.data.Notes.NoteColumns;
 import net.micode.notes.gtask.remote.GTaskSyncService;
 
-
+/**
+ * 实现设置（首选项）里的功能，继承PreferenceActivity
+ */
 public class NotesPreferenceActivity extends PreferenceActivity {
     public static final String PREFERENCE_NAME = "notes_preferences";
 

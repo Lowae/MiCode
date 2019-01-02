@@ -30,20 +30,24 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-//便签列表适配器，继承CursorAdapter，用于将Cursor的数据适配成合适的形式显示在View中给用户看
+/**
+ * 便签列表适配器，继承CursorAdapter，用于将Cursor的数据适配成合适的形式显示在View中给用户看
+ */
 public class NotesListAdapter extends CursorAdapter {
     private static final String TAG = "NotesListAdapter";
     private Context mContext;
     private HashMap<Integer, Boolean> mSelectedIndex;
     private int mNotesCount;
     private boolean mChoiceMode;
-
+    /**
+     * 设置app的桌面部件属性
+     */
     public static class AppWidgetAttribute {
         public int widgetId;
         public int widgetType;
-    };
+    }
 
-    public NotesListAdapter(Context context) {
+    NotesListAdapter(Context context) {
         super(context, null);
         mSelectedIndex = new HashMap<Integer, Boolean>();
         mContext = context;
@@ -55,6 +59,13 @@ public class NotesListAdapter extends CursorAdapter {
         return new NotesListItem(context);
     }
 
+    /**
+     * 将现有视图绑定到游标指向的数据
+     *
+     * @param view 现有视图，由newView返回
+     * @param context 与应用程序全局信息的接口
+     * @param cursor 从中获取数据的光标。 光标已移动到正确的位置。
+     */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         if (view instanceof NotesListItem) {
@@ -64,6 +75,11 @@ public class NotesListAdapter extends CursorAdapter {
         }
     }
 
+    /**
+     * 将被选中的item加入到mSelectedIndex中
+     * @param position 选中的item的位置
+     * @param checked   选中状态（true或false）
+     */
     public void setCheckedItem(final int position, final boolean checked) {
         mSelectedIndex.put(position, checked);
         notifyDataSetChanged();
@@ -78,6 +94,11 @@ public class NotesListAdapter extends CursorAdapter {
         mChoiceMode = mode;
     }
 
+    /**
+     * 为列表中的所有项设置选中状态
+     *
+     * @param checked 选中状态
+     */
     public void selectAll(boolean checked) {
         Cursor cursor = getCursor();
         for (int i = 0; i < getCount(); i++) {
@@ -89,10 +110,14 @@ public class NotesListAdapter extends CursorAdapter {
         }
     }
 
+    /**
+     * 获取选中的Item的Id
+     * @return  选中Id的HashSet集合
+     */
     public HashSet<Long> getSelectedItemIds() {
         HashSet<Long> itemSet = new HashSet<Long>();
         for (Integer position : mSelectedIndex.keySet()) {
-            if (mSelectedIndex.get(position) == true) {
+            if (mSelectedIndex.get(position)) {
                 Long id = getItemId(position);
                 if (id == Notes.ID_ROOT_FOLDER) {
                     Log.d(TAG, "Wrong item id, should not happen");
@@ -108,7 +133,7 @@ public class NotesListAdapter extends CursorAdapter {
     public HashSet<AppWidgetAttribute> getSelectedWidget() {
         HashSet<AppWidgetAttribute> itemSet = new HashSet<AppWidgetAttribute>();
         for (Integer position : mSelectedIndex.keySet()) {
-            if (mSelectedIndex.get(position) == true) {
+            if (mSelectedIndex.get(position)) {
                 Cursor c = (Cursor) getItem(position);
                 if (c != null) {
                     AppWidgetAttribute widget = new AppWidgetAttribute();
@@ -128,6 +153,10 @@ public class NotesListAdapter extends CursorAdapter {
         return itemSet;
     }
 
+    /**
+     * 获取选中的数目，使用迭代器计算
+     * @return 选中数目
+     */
     public int getSelectedCount() {
         Collection<Boolean> values = mSelectedIndex.values();
         if (null == values) {
@@ -136,7 +165,7 @@ public class NotesListAdapter extends CursorAdapter {
         Iterator<Boolean> iter = values.iterator();
         int count = 0;
         while (iter.hasNext()) {
-            if (true == iter.next()) {
+            if (iter.next()) {
                 count++;
             }
         }
@@ -167,6 +196,9 @@ public class NotesListAdapter extends CursorAdapter {
         calcNotesCount();
     }
 
+    /**
+     * 计算便签数目
+     */
     private void calcNotesCount() {
         mNotesCount = 0;
         for (int i = 0; i < getCount(); i++) {

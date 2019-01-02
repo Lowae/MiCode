@@ -79,12 +79,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 
-//实现主界面
+/**
+ * 主界面实现类，负责便签列表及便签文件夹的展示
+ *
+ */
 public class NotesListActivity extends AppCompatActivity implements OnClickListener, OnItemLongClickListener {
+    //以下是对静态常量的设置
+
+    //文件夹内便签查询的令牌token
     private static final int FOLDER_NOTE_LIST_QUERY_TOKEN = 0;
-
+    //查询文件夹列表的令牌token
     private static final int FOLDER_LIST_QUERY_TOKEN      = 1;
-
     private static final int MENU_FOLDER_DELETE = 0;
 
     private static final int MENU_FOLDER_VIEW = 1;
@@ -128,7 +133,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
     private NoteItemData mFocusNoteDataItem;
 
     private static final String NORMAL_SELECTION = NoteColumns.PARENT_ID + "=?";
-
+    //主文件夹的查询串
     private static final String ROOT_FOLDER_SELECTION = "(" + NoteColumns.TYPE + "<>"
             + Notes.TYPE_SYSTEM + " AND " + NoteColumns.PARENT_ID + "=?)" + " OR ("
             + NoteColumns.ID + "=" + Notes.ID_CALL_RECORD_FOLDER + " AND "
@@ -889,17 +894,25 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         return true;
     }
 
+    /**
+     * 当菜单选项被选中后调用
+     * @param item  被选中的菜单项
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            //实现“新建文件夹”功能
             case R.id.menu_new_folder: {
                 showCreateOrModifyFolderDialog(true);
                 break;
             }
+            //实现“导出文本”功能
             case R.id.menu_export_text: {
                 exportNoteToText();
                 break;
             }
+            //实现“同步”功能
             case R.id.menu_sync: {
                 if (isSyncMode()) {
                     if (TextUtils.equals(item.getTitle(), getString(R.string.menu_sync))) {
@@ -912,14 +925,17 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 }
                 break;
             }
+            //实现“设置”功能
             case R.id.menu_setting: {
                 startPreferenceActivity();
                 break;
             }
+            //实现“新建便签”功能
             case R.id.menu_new_note: {
                 createNewNote();
                 break;
             }
+            //实现“搜索”功能
             case R.id.menu_search:
                 onSearchRequested();
                 break;
@@ -935,6 +951,9 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         return true;
     }
 
+    /**
+     * 实现导出便签到文本的功能
+     */
     private void exportNoteToText() {
         final BackupUtils backup = BackupUtils.getInstance(NotesListActivity.this);
         new AsyncTask<Void, Void, Integer>() {
@@ -981,12 +1000,18 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         return NotesPreferenceActivity.getSyncAccountName(this).trim().length() > 0;
     }
 
+    /**
+     * 实现“设置”菜单
+     */
     private void startPreferenceActivity() {
         Activity from = getParent() != null ? getParent() : this;
         Intent intent = new Intent(from, NotesPreferenceActivity.class);
         from.startActivityIfNeeded(intent, -1);
     }
 
+    /**
+     * 对主界面的便签列表中的item设置点击事件监听器
+     */
     private class OnListItemClickListener implements OnItemClickListener {
 
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -994,6 +1019,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 NoteItemData item = ((NotesListItem) view).getItemData();
                 if (mNotesListAdapter.isInChoiceMode()) {
                     if (item.getType() == Notes.TYPE_NOTE) {
+                        //修正有Header的ListView的position的值，从0开始
                         position = position - mNotesListView.getHeaderViewsCount();
                         mModeCallBack.onItemCheckedStateChanged(null, position, id,
                                 !mNotesListAdapter.isSelectedItem(position));
@@ -1002,10 +1028,13 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 }
 
                 switch (mState) {
+                    //主界面列表
                     case NOTE_LIST:
+                        //如果是文件夹，则打开该文件夹
                         if (item.getType() == Notes.TYPE_FOLDER
                                 || item.getType() == Notes.TYPE_SYSTEM) {
                             openFolder(item);
+                        //如果是便签，则打开改便签
                         } else if (item.getType() == Notes.TYPE_NOTE) {
                             openNode(item);
                         } else {
@@ -1028,11 +1057,24 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
 
     }
 
+    /**
+     * 查询目标文件夹
+     */
     private void startQueryDestinationFolders() {
         String selection = NoteColumns.TYPE + "=? AND " + NoteColumns.PARENT_ID + "<>? AND " + NoteColumns.ID + "<>?";
         selection = (mState == ListEditState.NOTE_LIST) ? selection:
             "(" + selection + ") OR (" + NoteColumns.ID + "=" + Notes.ID_ROOT_FOLDER + ")";
-
+        /**
+         * 此方法开始异步查询
+         *
+         * @param token 标识查询。
+         * @param cookie
+         * @param uri 使用content：//格式的URI，用于检索内容。
+         * @param projection 要返回的列的列表
+         * @param selection 一个过滤器，声明要返回哪些行，格式化为SQL WHERE子句（不包括WHERE本身）。传递null将返回给定URI的所有行
+         * @param selectionArgs 当你在selection中包含有“？”时，会被替换成该里面的值
+         * @param orderBy 如何对行进行排序，格式化为SQL ORDER BY子句（不包括ORDER BY本身），此处为降序排序
+         */
         mBackgroundQueryHandler.startQuery(FOLDER_LIST_QUERY_TOKEN,
                 null,
                 Notes.CONTENT_NOTE_URI,
@@ -1046,6 +1088,15 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 NoteColumns.MODIFIED_DATE + " DESC");
     }
 
+    /**
+     * 对ListView中的item响应长按事件
+     *
+     * @param parent ListView所采用的Adapter
+     * @param view 长按的item
+     * @param position 长按的位置
+     * @param id 长按的item对应的id
+     * @return
+     */
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         if (view instanceof NotesListItem) {
             mFocusNoteDataItem = ((NotesListItem) view).getItemData();
