@@ -15,6 +15,12 @@
      limitations under the License.
 -->
 
+
+    <!--界面主要由PrefercenScreen、PreferenceCategory和Preference三个主要部分组成-->
+
+    <!--PrefercenScreen最根的部分;-->
+    <!--PreferenceCategory是每个设置的分组;-->
+    <!--Preference是具体到每个设置元素；-->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
