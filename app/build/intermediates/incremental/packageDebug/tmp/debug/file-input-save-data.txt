@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Dec 11 21:05:57 CST 2018
+#Thu Jan 03 17:34:17 CST 2019
 0.baseType=DIRECTORY
 0.base=E\:\\MiCode-Notes\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 0.path=classes.dex
