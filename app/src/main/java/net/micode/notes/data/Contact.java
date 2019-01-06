@@ -29,6 +29,7 @@ public class Contact {
     private static HashMap<String, String> sContactCache;
     private static final String TAG = "Contact";
 
+    //把电话和邮箱信息赋给CALLER_ID_SELECTION
     private static final String CALLER_ID_SELECTION = "PHONE_NUMBERS_EQUAL(" + Phone.NUMBER
     + ",?) AND " + Data.MIMETYPE + "='" + Phone.CONTENT_ITEM_TYPE + "'"
     + " AND " + Data.RAW_CONTACT_ID + " IN "
@@ -36,6 +37,7 @@ public class Contact {
             + " FROM phone_lookup"
             + " WHERE min_match = '+')";
 
+    //返回电话号码并实现后五位的替换
     public static String getContact(Context context, String phoneNumber) {
         if(sContactCache == null) {
             sContactCache = new HashMap<String, String>();
@@ -45,8 +47,10 @@ public class Contact {
             return sContactCache.get(phoneNumber);
         }
 
+        //把电话号码后五位替换为"+++++"
         String selection = CALLER_ID_SELECTION.replace("+",
                 PhoneNumberUtils.toCallerIDMinMatch(phoneNumber));
+        //查询给定的URI，在结果集上返回
         Cursor cursor = context.getContentResolver().query(
                 Data.CONTENT_URI,
                 new String [] { Phone.DISPLAY_NAME },
@@ -56,7 +60,10 @@ public class Contact {
 
         if (cursor != null && cursor.moveToFirst()) {
             try {
+                //返回实例cursor第0列的值
                 String name = cursor.getString(0);
+                //将name与phoneNumber中的指定键关联。
+                //如果phoneNumber之前包含键的映射，则替换旧值。
                 sContactCache.put(phoneNumber, name);
                 return name;
             } catch (IndexOutOfBoundsException e) {
