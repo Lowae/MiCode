@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "F:\\MiCode\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h720dp-v13\\values-h720dp-v13.xml",
+            "outputFile": "E:\\Micode1\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h720dp-v13\\values-h720dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\09821f805ca6c46e8f86beb2753299ef\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
