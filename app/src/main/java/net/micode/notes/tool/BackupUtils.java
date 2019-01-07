@@ -35,58 +35,62 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-//123
-
+//备份
 public class BackupUtils {
     private static final String TAG = "BackupUtils";
     // Singleton stuff
     private static BackupUtils sInstance;
 
-    public static synchronized BackupUtils getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new BackupUtils(context);
+    public static synchronized BackupUtils getInstance(Context context) {//同步更新
+        if (sInstance == null) {//如果存档为空
+            sInstance = new BackupUtils(context);//则存档
         }
-        return sInstance;
+        return sInstance;//返回存档
     }
 
     /**
-     * Following states are signs to represents backup or restore
+     * Following states are signs to represents backup or restore //以下状态表示备份或恢复
      * status
      */
-    // Currently, the sdcard is not mounted
+    //五种存档时遇到的情况
+    // Currently, the sdcard is not mounted //目前，未安装SD卡
     public static final int STATE_SD_CARD_UNMOUONTED           = 0;
-    // The backup file not exist
+    // The backup file not exist //备份文件不存在
     public static final int STATE_BACKUP_FILE_NOT_EXIST        = 1;
     // The data is not well formated, may be changed by other programs
+    //数据格式不正确，可能会被其他程序更改
     public static final int STATE_DATA_DESTROIED               = 2;
     // Some run-time exception which causes restore or backup fails
+    //导致还原或备份的某些运行时异常失败
     public static final int STATE_SYSTEM_ERROR                 = 3;
     // Backup or restore success
+    //备份或恢复成功
     public static final int STATE_SUCCESS                      = 4;
 
-    private TextExport mTextExport;
+    private TextExport mTextExport;//文本导出
 
     private BackupUtils(Context context) {
         mTextExport = new TextExport(context);
     }
-
-    private static boolean externalStorageAvailable() {
+//将存档的文本导出来
+    private static boolean externalStorageAvailable() {//外部储存可用
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
+    }//获取外部存储状态
 
     public int exportToText() {
         return mTextExport.exportToText();
-    }
+    }//导出到文本
 
     public String getExportedTextFileName() {
         return mTextExport.mFileName;
     }
+    //获取导出的文本文件名
 
     public String getExportedTextFileDir() {
         return mTextExport.mFileDirectory;
     }
-
-    private static class TextExport {
+   //获取导出的文本文件目录
+    private static class TextExport {//文本导出
         private static final String[] NOTE_PROJECTION = {
                 NoteColumns.ID,
                 NoteColumns.MODIFIED_DATE,
@@ -110,9 +114,10 @@ public class BackupUtils {
         };
 
         private static final int DATA_COLUMN_CONTENT = 0;
+       //数据栏内容
 
         private static final int DATA_COLUMN_MIME_TYPE = 1;
-
+        //
         private static final int DATA_COLUMN_CALL_DATE = 2;
 
         private static final int DATA_COLUMN_PHONE_NUMBER = 4;
