@@ -98,13 +98,13 @@ public class BackupUtils {
                 NoteColumns.TYPE
         };
 
-        private static final int NOTE_COLUMN_ID = 0;
+        private static final int NOTE_COLUMN_ID = 0;//注释列ID为0
 
-        private static final int NOTE_COLUMN_MODIFIED_DATE = 1;
+        private static final int NOTE_COLUMN_MODIFIED_DATE = 1;//备注栏修改日期为1
 
-        private static final int NOTE_COLUMN_SNIPPET = 2;
+        private static final int NOTE_COLUMN_SNIPPET = 2;//备注列代码段为2
 
-        private static final String[] DATA_PROJECTION = {
+        private static final String[] DATA_PROJECTION = {//数据投影
                 DataColumns.CONTENT,
                 DataColumns.MIME_TYPE,
                 DataColumns.DATA1,
@@ -114,14 +114,14 @@ public class BackupUtils {
         };
 
         private static final int DATA_COLUMN_CONTENT = 0;
-       //数据栏内容
+       //数据栏内容为0
 
         private static final int DATA_COLUMN_MIME_TYPE = 1;
         //
         private static final int DATA_COLUMN_CALL_DATE = 2;
-
+        //数据列调用日期为2
         private static final int DATA_COLUMN_PHONE_NUMBER = 4;
-
+        //数据列电话号码为4
         private final String [] TEXT_FORMAT;
         private static final int FORMAT_FOLDER_NAME          = 0;
         private static final int FORMAT_NOTE_DATE            = 1;
