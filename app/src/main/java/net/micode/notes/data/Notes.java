@@ -17,6 +17,7 @@
 package net.micode.notes.data;
 
 import android.net.Uri;
+//定义note类
 public class Notes {
     public static final String AUTHORITY = "micode_notes";
     public static final String TAG = "Notes";
@@ -30,90 +31,104 @@ public class Notes {
      * {@link Notes#ID_TEMPARAY_FOLDER } is for notes belonging no folder
      * {@link Notes#ID_CALL_RECORD_FOLDER} is to store call records
      */
+    //默认文件夹
     public static final int ID_ROOT_FOLDER = 0;
+    //临时文件夹
     public static final int ID_TEMPARAY_FOLDER = -1;
+    //存储通话记录
     public static final int ID_CALL_RECORD_FOLDER = -2;
+    //回收站
     public static final int ID_TRASH_FOLER = -3;
 
+    //可选择的日期
     public static final String INTENT_EXTRA_ALERT_DATE = "net.micode.notes.alert_date";
+    //背景颜色
     public static final String INTENT_EXTRA_BACKGROUND_ID = "net.micode.notes.background_color_id";
+    //控件ID
     public static final String INTENT_EXTRA_WIDGET_ID = "net.micode.notes.widget_id";
+    //控件类型
     public static final String INTENT_EXTRA_WIDGET_TYPE = "net.micode.notes.widget_type";
+    //文件夹ID
     public static final String INTENT_EXTRA_FOLDER_ID = "net.micode.notes.folder_id";
+    //通话信息
     public static final String INTENT_EXTRA_CALL_DATE = "net.micode.notes.call_date";
 
+    //控件类型的无效标识
     public static final int TYPE_WIDGET_INVALIDE      = -1;
+    //两倍控件类型
     public static final int TYPE_WIDGET_2X            = 0;
+    //四倍控件类型
     public static final int TYPE_WIDGET_4X            = 1;
 
+    //数据存储器类
     public static class DataConstants {
         public static final String NOTE = TextNote.CONTENT_ITEM_TYPE;
         public static final String CALL_NOTE = CallNote.CONTENT_ITEM_TYPE;
     }
 
     /**
-     * Uri to query all notes and folders
+     * 用于查询所有笔记和文件夹的URI
      */
     public static final Uri CONTENT_NOTE_URI = Uri.parse("content://" + AUTHORITY + "/note");
 
     /**
-     * Uri to query data
+     * 用于查询数据的URI
      */
     public static final Uri CONTENT_DATA_URI = Uri.parse("content://" + AUTHORITY + "/data");
 
     public interface NoteColumns {
         /**
-         * The unique ID for a row
-         * <P> Type: INTEGER (long) </P>
+         * 唯一的行ID
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String ID = "_id";
 
         /**
-         * The parent's id for note or folder
-         * <P> Type: INTEGER (long) </P>
+         * 便笺或文件夹的父级ID
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String PARENT_ID = "parent_id";
 
         /**
-         * Created date for note or folder
-         * <P> Type: INTEGER (long) </P>
+         * 给便签或文件夹设置日期
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String CREATED_DATE = "created_date";
 
         /**
-         * Latest modified date
-         * <P> Type: INTEGER (long) </P>
+         * 最新修改日期
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String MODIFIED_DATE = "modified_date";
 
 
         /**
-         * Alert date
-         * <P> Type: INTEGER (long) </P>
+         * //闹钟提醒的日期
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String ALERTED_DATE = "alert_date";
 
         /**
-         * Folder's name or text content of note
-         * <P> Type: TEXT </P>
+         * 便签的文本信息或文件夹名字
+         * <P> 数据类型: TEXT </P>
          */
         public static final String SNIPPET = "snippet";
 
         /**
-         * Note's widget id
-         * <P> Type: INTEGER (long) </P>
+         * 便签的控件ID
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String WIDGET_ID = "widget_id";
 
         /**
-         * Note's widget type
-         * <P> Type: INTEGER (long) </P>
+         * 便签的控件类型
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String WIDGET_TYPE = "widget_type";
 
         /**
-         * Note's background color's id
-         * <P> Type: INTEGER (long) </P>
+         * 便签的背景颜色ID
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String BG_COLOR_ID = "bg_color_id";
 
