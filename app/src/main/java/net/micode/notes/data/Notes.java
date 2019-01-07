@@ -31,7 +31,7 @@ public class Notes {
      * {@link Notes#ID_TEMPARAY_FOLDER } is for notes belonging no folder
      * {@link Notes#ID_CALL_RECORD_FOLDER} is to store call records
      */
-    //默认文件夹
+    //默认根文件夹
     public static final int ID_ROOT_FOLDER = 0;
     //临时文件夹
     public static final int ID_TEMPARAY_FOLDER = -1;
@@ -78,7 +78,7 @@ public class Notes {
 
     public interface NoteColumns {
         /**
-         * 唯一的行ID
+         * 唯一行ID
          * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String ID = "_id";
@@ -133,133 +133,129 @@ public class Notes {
         public static final String BG_COLOR_ID = "bg_color_id";
 
         /**
-         * For text note, it doesn't has attachment, for multi-media
-         * note, it has at least one attachment
-         * <P> Type: INTEGER </P>
+         *
+         * 便签是否含有附件,普通便签没有附件,多媒体便签至少含一个.
+         * <P> 数据类型: INTEGER </P>
          */
         public static final String HAS_ATTACHMENT = "has_attachment";
 
         /**
-         * Folder's count of notes
-         * <P> Type: INTEGER (long) </P>
+         * 文件夹的数量
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String NOTES_COUNT = "notes_count";
 
         /**
-         * The file type: folder or note
-         * <P> Type: INTEGER </P>
+         * 文件的类型:文件夹或便签
+         * <P> 数据类型: INTEGER </P>
          */
         public static final String TYPE = "type";
 
         /**
-         * The last sync id
-         * <P> Type: INTEGER (long) </P>
+         * 最新的同步ID
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String SYNC_ID = "sync_id";
 
         /**
-         * Sign to indicate local modified or not
-         * <P> Type: INTEGER </P>
+         * 是否本地修改的标志
+         * <P> 数据类型: INTEGER </P>
          */
         public static final String LOCAL_MODIFIED = "local_modified";
 
         /**
-         * Original parent id before moving into temporary folder
-         * <P> Type : INTEGER </P>
+         * 移动到临时文件夹前的原始父ID
+         * <P> 数据类型 : INTEGER </P>
          */
         public static final String ORIGIN_PARENT_ID = "origin_parent_id";
 
         /**
-         * The gtask id
-         * <P> Type : TEXT </P>
+         * 谷歌账号ID
+         * <P> 数据类型 : TEXT </P>
          */
         public static final String GTASK_ID = "gtask_id";
 
         /**
-         * The version code
-         * <P> Type : INTEGER (long) </P>
+         * 版本号
+         * <P> 数据类型 : INTEGER (long) </P>
          */
         public static final String VERSION = "version";
     }
 
     public interface DataColumns {
         /**
-         * The unique ID for a row
-         * <P> Type: INTEGER (long) </P>
+         * 任意行对应的唯一ID
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String ID = "_id";
 
         /**
-         * The MIME type of the item represented by this row.
-         * <P> Type: Text </P>
+         * 此行表示的项的媒体类型
+         *
+         * <P> 数据类型: Text </P>
          */
         public static final String MIME_TYPE = "mime_type";
 
         /**
-         * The reference id to note that this data belongs to
-         * <P> Type: INTEGER (long) </P>
+         * 这个数据归属的便签的引用ID
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String NOTE_ID = "note_id";
 
         /**
-         * Created data for note or folder
-         * <P> Type: INTEGER (long) </P>
+         * 给便签或文件夹创建数据
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String CREATED_DATE = "created_date";
 
         /**
-         * Latest modified date
-         * <P> Type: INTEGER (long) </P>
+         * 最新修改的日期
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String MODIFIED_DATE = "modified_date";
 
         /**
-         * Data's content
-         * <P> Type: TEXT </P>
+         * 数据的内容
+         * <P> 数据类型: TEXT </P>
          */
         public static final String CONTENT = "content";
 
 
         /**
-         * Generic data column, the meaning is {@link #MIMETYPE} specific, used for
-         * integer data type
-         * <P> Type: INTEGER </P>
+         * 通用数据列，含义为@link mimetype特定，用作整数数据类型
+         * <P> 数据类型: INTEGER </P>
          */
         public static final String DATA1 = "data1";
 
         /**
-         * Generic data column, the meaning is {@link #MIMETYPE} specific, used for
-         * integer data type
-         * <P> Type: INTEGER </P>
+         * 通用数据列，含义为@link mimetype特定，用作整数数据类型
+         * <P> 数据类型: INTEGER </P>
          */
         public static final String DATA2 = "data2";
 
         /**
-         * Generic data column, the meaning is {@link #MIMETYPE} specific, used for
-         * TEXT data type
-         * <P> Type: TEXT </P>
+         * 通用数据列，含义为@link mimetype特定，用作文本数据类型
+         * <P> 数据类型: TEXT </P>
          */
         public static final String DATA3 = "data3";
 
         /**
-         * Generic data column, the meaning is {@link #MIMETYPE} specific, used for
-         * TEXT data type
-         * <P> Type: TEXT </P>
+         * 通用数据列，含义为@link mimetype特定，用作文本数据类型
+         * <P> 数据类型: TEXT </P>
          */
         public static final String DATA4 = "data4";
 
         /**
-         * Generic data column, the meaning is {@link #MIMETYPE} specific, used for
-         * TEXT data type
-         * <P> Type: TEXT </P>
+         * 通用数据列，含义为@link mimetype特定，用作文本数据类型
+         * <P> 数据类型: TEXT </P>
          */
         public static final String DATA5 = "data5";
     }
 
     public static final class TextNote implements DataColumns {
         /**
-         * Mode to indicate the text in check list mode or not
-         * <P> Type: Integer 1:check list mode 0: normal mode </P>
+         * 是否显示检查列表模式中的文本的模式
+         * <P> 数据类型: Integer 1:check list mode 0: normal mode </P>
          */
         public static final String MODE = DATA1;
 
@@ -274,14 +270,14 @@ public class Notes {
 
     public static final class CallNote implements DataColumns {
         /**
-         * Call date for this record
-         * <P> Type: INTEGER (long) </P>
+         * 此记录的调用日期
+         * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String CALL_DATE = DATA1;
 
         /**
-         * Phone number for this record
-         * <P> Type: TEXT </P>
+         * 此记录中的电话号码
+         * <P> 数据类型: TEXT </P>
          */
         public static final String PHONE_NUMBER = DATA3;
 
