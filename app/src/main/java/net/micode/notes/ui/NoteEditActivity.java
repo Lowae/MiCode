@@ -27,8 +27,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
@@ -66,15 +70,23 @@ import net.micode.notes.ui.NoteEditText.OnTextViewChangeListener;
 import net.micode.notes.widget.NoteWidgetProvider_2x;
 import net.micode.notes.widget.NoteWidgetProvider_4x;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * 实现便签的编辑界面及其菜单功能
+ */
 public class NoteEditActivity extends AppCompatActivity implements OnClickListener,
         NoteSettingChangedListener, OnTextViewChangeListener {
+    //自定义类 ViewHolder 来减少 findViewById() 的使用以及避免过多地 inflate view，从而实现目标。
     private class HeadViewHolder {
         public TextView tvModified;
 
@@ -84,7 +96,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
 
         public ImageView ibSetBgColor;
     }
-
+    //定义一个存放可供选择的背景色的Map数组
     private static final Map<Integer, Integer> sBgSelectorBtnsMap = new HashMap<Integer, Integer>();
     static {
         sBgSelectorBtnsMap.put(R.id.iv_bg_yellow, ResourceParser.YELLOW);
@@ -93,7 +105,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         sBgSelectorBtnsMap.put(R.id.iv_bg_green, ResourceParser.GREEN);
         sBgSelectorBtnsMap.put(R.id.iv_bg_white, ResourceParser.WHITE);
     }
-
+    //定义一个存放标识已经选择背景色的图标样式Map数组
     private static final Map<Integer, Integer> sBgSelectorSelectionMap = new HashMap<Integer, Integer>();
     static {
         sBgSelectorSelectionMap.put(ResourceParser.YELLOW, R.id.iv_bg_yellow_select);
@@ -102,7 +114,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         sBgSelectorSelectionMap.put(ResourceParser.GREEN, R.id.iv_bg_green_select);
         sBgSelectorSelectionMap.put(ResourceParser.WHITE, R.id.iv_bg_white_select);
     }
-
+    //定义一个存放字体大小的Map数组
     private static final Map<Integer, Integer> sFontSizeBtnsMap = new HashMap<Integer, Integer>();
     static {
         sFontSizeBtnsMap.put(R.id.ll_font_large, ResourceParser.TEXT_LARGE);
@@ -110,7 +122,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         sFontSizeBtnsMap.put(R.id.ll_font_normal, ResourceParser.TEXT_MEDIUM);
         sFontSizeBtnsMap.put(R.id.ll_font_super, ResourceParser.TEXT_SUPER);
     }
-
+    //定义一个存放标识已被选择字体大小的图标的Map数组
     private static final Map<Integer, Integer> sFontSelectorSelectionMap = new HashMap<Integer, Integer>();
     static {
         sFontSelectorSelectionMap.put(ResourceParser.TEXT_LARGE, R.id.iv_large_select);
@@ -120,6 +132,9 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     }
 
     private static final String TAG = "NoteEditActivity";
+
+    //被截取图片的View
+    private LinearLayout mLinearLayout;
 
     private HeadViewHolder mNoteHeaderHolder;
 
@@ -141,7 +156,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     private static final String PREFERENCE_FONT_SIZE = "pref_font_size";
 
     private static final int SHORTCUT_ICON_TITLE_MAX_LEN = 10;
-
+    //定义相应ASCII码
     public static final String TAG_CHECKED = String.valueOf('\u221A');
     public static final String TAG_UNCHECKED = String.valueOf('\u25A1');
 
@@ -150,6 +165,11 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     private String mUserQuery;
     private Pattern mPattern;
 
+    /**
+     * 在界面创建时调用的方法，完成界面的创建
+     *
+     * @param savedInstanceState Bundle是用来传递数据的类型
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,11 +186,18 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
      * Current activity may be killed when the memory is low. Once it is killed, for another time
      * user load this activity, we should restore the former state
      */
+    /**
+     *  当内存不足时，当前活动可能会被杀死。 一旦它被杀死，另一次用户加载此活动，我们应该恢复以前的状态，将使用onSaveInstanceState()中保存的数据进行恢复
+     *
+     * @param savedInstanceState 已被保存的数据实例
+     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        //如果保存的数据实例不为空
         if (savedInstanceState != null && savedInstanceState.containsKey(Intent.EXTRA_UID)) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
+            //从已保存的实例中恢复状态成员
             intent.putExtra(Intent.EXTRA_UID, savedInstanceState.getLong(Intent.EXTRA_UID));
             if (!initActivityState(intent)) {
                 finish();
@@ -197,7 +224,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
                 noteId = Long.parseLong(intent.getStringExtra(SearchManager.EXTRA_DATA_KEY));
                 mUserQuery = intent.getStringExtra(SearchManager.USER_QUERY);
             }
-
+            //如果要查询的便签id不存在，则弹出消息“要查看的便签不存在”
             if (!DataUtils.visibleInNoteDatabase(getContentResolver(), noteId, Notes.TYPE_NOTE)) {
                 Intent jump = new Intent(this, NotesListActivity.class);
                 startActivity(jump);
@@ -212,6 +239,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
                     return false;
                 }
             }
+            //调用系统的输入法输入
             getWindow().setSoftInputMode(
                     WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
                             | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -226,6 +254,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
                     ResourceParser.getDefaultBgId(this));
 
             // Parse call-record note
+            //解析呼叫记录的便签
             String phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
             long callDate = intent.getLongExtra(Notes.INTENT_EXTRA_CALL_DATE, 0);
             if (callDate != 0 && phoneNumber != null) {
@@ -255,7 +284,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
                     WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
                             | WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         } else {
-            Log.e(TAG, "Intent not specified action, should not support");
+            Log.e(TAG, "Intent not specified action, should not support and");
             finish();
             return false;
         }
@@ -269,7 +298,11 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         initNoteScreen();
     }
 
+    /**
+     * 初始化便签界面
+     */
     private void initNoteScreen() {
+        //设置字体大小
         mNoteEditor.setTextAppearance(this, TextAppearanceResources
                 .getTexAppearanceResource(mFontSizeId));
         if (mWorkingNote.getCheckListMode() == TextNote.MODE_CHECK_LIST) {
@@ -283,7 +316,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         }
         mHeadViewPanel.setBackgroundResource(mWorkingNote.getTitleBgResId());
         mNoteEditorPanel.setBackgroundResource(mWorkingNote.getBgColorResId());
-
+        //设置最近修改的日期
         mNoteHeaderHolder.tvModified.setText(DateUtils.formatDateTime(this,
                 mWorkingNote.getModifiedDate(), DateUtils.FORMAT_SHOW_DATE
                         | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_TIME
@@ -319,18 +352,28 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         initActivityState(intent);
     }
 
+    /**
+     * 当应用遇到意外情况（如：内存不足、用户直接按Home键、按下电源按键（关闭屏幕显示）时、屏幕方向切换时，例如从竖屏切换到横屏时。等非主动销毁Activity的情况时）
+     *  而是由系统销毁一个Activity时，该方法onSaveInstanceState()会被调用。与上面的onRestoreInstanceState相对应
+     *
+     * @param outState 需要被保存的数据。
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        // 调用父类交给系统处理，这样系统能保存视图层次结构状态
         super.onSaveInstanceState(outState);
         /**
          * For new note without note id, we should firstly save it to
          * generate a id. If the editing note is not worth saving, there
          * is no id which is equivalent to create new note
          */
+        //对于没有便签ID的新便签，我们应该首先保存它以生成id。如果编辑的便签不值得保存，则没有id等同于创建新便签
         if (!mWorkingNote.existInDatabase()) {
             saveNote();
         }
+        // 保存用户自定义的状态
         outState.putLong(Intent.EXTRA_UID, mWorkingNote.getNoteId());
+        //输出日志消息
         Log.d(TAG, "Save working note id: " + mWorkingNote.getNoteId() + " onSaveInstanceState");
     }
 
@@ -365,13 +408,21 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     }
 
     private void initResources() {
+
         mHeadViewPanel = findViewById(R.id.note_title);
+
         mNoteHeaderHolder = new HeadViewHolder();
+        //绑定修改日期的TextView视图
         mNoteHeaderHolder.tvModified = (TextView) findViewById(R.id.tv_modified_date);
+        //绑定闹钟图标ImageView视图
         mNoteHeaderHolder.ivAlertIcon = (ImageView) findViewById(R.id.iv_alert_icon);
+        //绑定闹钟时间TextView视图
         mNoteHeaderHolder.tvAlertDate = (TextView) findViewById(R.id.tv_alert_date);
+        //绑定选取背景色ImageView视图
         mNoteHeaderHolder.ibSetBgColor = (ImageView) findViewById(R.id.btn_set_bg_color);
+        //设置响应背景色选取的监听器
         mNoteHeaderHolder.ibSetBgColor.setOnClickListener(this);
+        //绑定文本编辑的EditText视图
         mNoteEditor = (EditText) findViewById(R.id.note_edit_view);
         mNoteEditorPanel = findViewById(R.id.sv_note_edit);
         mNoteBgColorSelector = findViewById(R.id.note_bg_color_selector);
@@ -431,7 +482,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         if (id == R.id.btn_set_bg_color) {
             mNoteBgColorSelector.setVisibility(View.VISIBLE);
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
-                    -                    View.VISIBLE);
+                    View.VISIBLE);
         } else if (sBgSelectorBtnsMap.containsKey(id)) {
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
                     View.GONE);
@@ -539,6 +590,12 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
                 getWorkingText();
                 sendTo(this, mWorkingNote.getContent());
                 break;
+            case R.id.menu_image_share:
+                Bitmap bitmap = captureView(mNoteEditorPanel);
+                Uri uri = saveBitmap(bitmap, "image");
+                Log.d("uri:", String.valueOf(uri));
+                shareImg("分享", "我的主题", "分享内容", uri);
+                break;
             case R.id.menu_send_to_desktop:
                 sendToDesktop();
                 break;
@@ -573,6 +630,20 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         intent.putExtra(Intent.EXTRA_TEXT, info);
         intent.setType("text/plain");
         context.startActivity(intent);
+    }
+
+    /**
+     * 图片分享
+     * @param uri 图片Uri
+     */
+    private void sendTo(Uri uri){
+        if (uri == null) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(intent);
     }
 
     private void createNewNote() {
@@ -870,5 +941,69 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
 
     private void showToast(int resId, int duration) {
         Toast.makeText(this, resId, duration).show();
+    }
+
+    /**
+     * 截取指定View为图片
+     *
+     * @param view
+     * @return
+     * @throws Throwable
+     */
+    public static Bitmap captureView(View view){
+        Bitmap bm = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        view.draw(new Canvas(bm));
+        return bm;
+    }
+
+    /** * 将图片存到本地 */
+    private static Uri saveBitmap(Bitmap bm, String picName) {
+        try {
+            String dir=Environment.getExternalStorageDirectory().getAbsolutePath()+"/DCIM/"+picName+".png";
+            File f = new File(dir);
+            if (!f.exists()) {
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+            }
+            FileOutputStream out = new FileOutputStream(f);
+            bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+            Uri uri = Uri.fromFile(f);
+            return uri;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();    }
+        return null;
+    }
+
+    /**
+     * 实现图片分享
+     * @param dlgTitle
+     * @param subject
+     * @param content
+     * @param uri
+     */
+    private void shareImg(String dlgTitle, String subject, String content,
+                          Uri uri) {
+        if (uri == null) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        if (subject != null && !"".equals(subject)) {
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        }
+        if (content != null && !"".equals(content)) {
+            intent.putExtra(Intent.EXTRA_TEXT, content);
+        }
+        // 设置弹出框标题
+        if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
+            startActivity(Intent.createChooser(intent, dlgTitle));
+        } else { // 系统默认标题
+            startActivity(intent);
+        }
     }
 }

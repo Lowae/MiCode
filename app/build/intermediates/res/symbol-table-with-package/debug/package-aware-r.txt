@@ -683,6 +683,7 @@ id menu_delete
 id menu_delete_remind
 id menu_export_text
 id menu_font_size
+id menu_image_share
 id menu_list_mode
 id menu_new_folder
 id menu_new_note
@@ -917,6 +918,7 @@ string menu_font_normal
 string menu_font_size
 string menu_font_small
 string menu_font_super
+string menu_image_share
 string menu_list_mode
 string menu_move
 string menu_move_parent_folder

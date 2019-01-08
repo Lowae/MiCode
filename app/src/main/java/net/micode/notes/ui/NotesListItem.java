@@ -29,7 +29,9 @@ import net.micode.notes.data.Notes;
 import net.micode.notes.tool.DataUtils;
 import net.micode.notes.tool.ResourceParser.NoteItemBgResources;
 
-
+/**
+ * 该类主要是对便签列表中的每个item(便签或文件夹)的样式进行设置
+ */
 public class NotesListItem extends LinearLayout {
     private ImageView mAlert;
     private TextView mTitle;
@@ -38,8 +40,13 @@ public class NotesListItem extends LinearLayout {
     private NoteItemData mItemData;
     private CheckBox mCheckBox;
 
+    /**
+     * 构造便签列表中的每个item对象
+     * @param context
+     */
     public NotesListItem(Context context) {
         super(context);
+        //绑定视图xml文件
         inflate(context, R.layout.note_item, this);
         mAlert = (ImageView) findViewById(R.id.iv_alert_icon);
         mTitle = (TextView) findViewById(R.id.tv_title);
@@ -49,15 +56,19 @@ public class NotesListItem extends LinearLayout {
     }
 
     public void bind(Context context, NoteItemData data, boolean choiceMode, boolean checked) {
+        //如果是便签item则复选框可见
         if (choiceMode && data.getType() == Notes.TYPE_NOTE) {
             mCheckBox.setVisibility(View.VISIBLE);
             mCheckBox.setChecked(checked);
+        //如果是文件夹item则复选框不可见
         } else {
             mCheckBox.setVisibility(View.GONE);
         }
 
         mItemData = data;
+        //如果是用于存储通话记录的文件夹
         if (data.getId() == Notes.ID_CALL_RECORD_FOLDER) {
+            //设置item的样式
             mCallName.setVisibility(View.GONE);
             mAlert.setVisibility(View.VISIBLE);
             mTitle.setTextAppearance(context, R.style.TextAppearancePrimaryItem);
@@ -69,6 +80,7 @@ public class NotesListItem extends LinearLayout {
             mCallName.setText(data.getCallName());
             mTitle.setTextAppearance(context,R.style.TextAppearanceSecondaryItem);
             mTitle.setText(DataUtils.getFormattedSnippet(data.getSnippet()));
+            //如果该便签设有闹钟，则显示闹钟图标
             if (data.hasAlert()) {
                 mAlert.setImageResource(R.drawable.clock);
                 mAlert.setVisibility(View.VISIBLE);
@@ -78,13 +90,15 @@ public class NotesListItem extends LinearLayout {
         } else {
             mCallName.setVisibility(View.GONE);
             mTitle.setTextAppearance(context, R.style.TextAppearancePrimaryItem);
-
+            //如果是普通文件夹
             if (data.getType() == Notes.TYPE_FOLDER) {
+                //设置显示名字为“文件名（便签个数）”
                 mTitle.setText(data.getSnippet()
                         + context.getString(R.string.format_folder_files_count,
                                 data.getNotesCount()));
                 mAlert.setVisibility(View.GONE);
             } else {
+                //如果是普通闹钟便签
                 mTitle.setText(DataUtils.getFormattedSnippet(data.getSnippet()));
                 if (data.hasAlert()) {
                     mAlert.setImageResource(R.drawable.clock);
@@ -99,6 +113,10 @@ public class NotesListItem extends LinearLayout {
         setBackground(data);
     }
 
+    /**
+     * 根据便签内背景色来设置每个便签item的背景颜色
+     * @param data
+     */
     private void setBackground(NoteItemData data) {
         int id = data.getBgColorId();
         if (data.getType() == Notes.TYPE_NOTE) {
@@ -112,6 +130,7 @@ public class NotesListItem extends LinearLayout {
                 setBackgroundResource(NoteItemBgResources.getNoteBgNormalRes(id));
             }
         } else {
+            //如果是文件夹，则采用默认背景颜色
             setBackgroundResource(NoteItemBgResources.getFolderBgRes());
         }
     }
