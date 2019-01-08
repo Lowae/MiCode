@@ -1,7 +1,7 @@
 #Internal package file, do not edit.
-#Sat Jan 05 21:00:54 CST 2019
+#Tue Jan 08 09:07:09 CST 2019
 0.baseType=DIRECTORY
-0.base=F\:\\MiCode\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+0.base=E\:\\Micode1\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 0.path=classes.dex
 0.set=DEX
 count=1

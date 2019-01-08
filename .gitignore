@@ -7,7 +7,7 @@
 *.iml
 out
 gen
-.gitignore
+.gitignorerm
 app/build
 gradle
 build.gradle

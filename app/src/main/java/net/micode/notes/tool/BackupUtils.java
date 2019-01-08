@@ -122,17 +122,18 @@ public class BackupUtils {
         //数据列调用日期为2
         private static final int DATA_COLUMN_PHONE_NUMBER = 4;
         //数据列电话号码为4
-        private final String [] TEXT_FORMAT;
-        private static final int FORMAT_FOLDER_NAME          = 0;
-        private static final int FORMAT_NOTE_DATE            = 1;
-        private static final int FORMAT_NOTE_CONTENT         = 2;
+        private final String [] TEXT_FORMAT;//文本格式
+
+        private static final int FORMAT_FOLDER_NAME          = 0;//设置文件夹名称格式为0
+        private static final int FORMAT_NOTE_DATE            = 1;//设置便笺日期格式为1
+        private static final int FORMAT_NOTE_CONTENT         = 2;//设置便笺内容格式为2
 
         private Context mContext;
         private String mFileName;
         private String mFileDirectory;
 
         public TextExport(Context context) {
-            TEXT_FORMAT = context.getResources().getStringArray(R.array.format_for_exported_note);
+            TEXT_FORMAT = context.getResources().getStringArray(R.array.format_for_exported_note);//获取资源获取字符串数组
             mContext = context;
             mFileName = "";
             mFileDirectory = "";
@@ -140,28 +141,28 @@ public class BackupUtils {
 
         private String getFormat(int id) {
             return TEXT_FORMAT[id];
-        }
+        }//获取格式
 
         /**
-         * Export the folder identified by folder id to text
+         * Export the folder identified by folder id to text//将文件夹ID标识的文件夹导出到文本
          */
-        private void exportFolderToText(String folderId, PrintStream ps) {
-            // Query notes belong to this folder
+        private void exportFolderToText(String folderId, PrintStream ps) {//将文件夹导出到文本
+            // Query notes belong to this folder//查询注释属于此文件夹
             Cursor notesCursor = mContext.getContentResolver().query(Notes.CONTENT_NOTE_URI,
                     NOTE_PROJECTION, NoteColumns.PARENT_ID + "=?", new String[] {
                         folderId
-                    }, null);
+                    }, null);//获得ContentResolver对象的值赋给注释光标
 
-            if (notesCursor != null) {
+            if (notesCursor != null) {//如果注释光标的值不为空
                 if (notesCursor.moveToFirst()) {
                     do {
-                        // Print note's last modified date
+                        // Print note's last modified date//打印便笺的上次修改日期
                         ps.println(String.format(getFormat(FORMAT_NOTE_DATE), DateFormat.format(
                                 mContext.getString(R.string.format_datetime_mdhm),
                                 notesCursor.getLong(NOTE_COLUMN_MODIFIED_DATE))));
-                        // Query data belong to this note
+                        // Query data belong to this note//查询数据属于此说明
                         String noteId = notesCursor.getString(NOTE_COLUMN_ID);
-                        exportNoteToText(noteId, ps);
+                        exportNoteToText(noteId, ps);//将便笺导出到文本
                     } while (notesCursor.moveToNext());
                 }
                 notesCursor.close();
@@ -169,9 +170,9 @@ public class BackupUtils {
         }
 
         /**
-         * Export note identified by id to a print stream
+         * Export note identified by id to a print stream//将ID标识的便笺导出到打印流
          */
-        private void exportNoteToText(String noteId, PrintStream ps) {
+        private void exportNoteToText(String noteId, PrintStream ps) {//将便笺导出到文本
             Cursor dataCursor = mContext.getContentResolver().query(Notes.CONTENT_DATA_URI,
                     DATA_PROJECTION, DataColumns.NOTE_ID + "=?", new String[] {
                         noteId
@@ -182,7 +183,7 @@ public class BackupUtils {
                     do {
                         String mimeType = dataCursor.getString(DATA_COLUMN_MIME_TYPE);
                         if (DataConstants.CALL_NOTE.equals(mimeType)) {
-                            // Print phone number
+                            // Print phone number//打印电话号码
                             String phoneNumber = dataCursor.getString(DATA_COLUMN_PHONE_NUMBER);
                             long callDate = dataCursor.getLong(DATA_COLUMN_CALL_DATE);
                             String location = dataCursor.getString(DATA_COLUMN_CONTENT);

@@ -1,4 +1,4 @@
-#Sat Jan 05 21:00:54 CST 2019
-base.0=F\:\\MiCode\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+#Tue Jan 08 09:07:09 CST 2019
+base.0=E\:\\Micode1\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
