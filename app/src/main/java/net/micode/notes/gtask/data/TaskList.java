@@ -34,15 +34,22 @@ public class TaskList extends Node {
     private static final String TAG = TaskList.class.getSimpleName();
 
     private int mIndex;
-
+    /**
+     * 构建任务清单数组
+     */
     private ArrayList<Task> mChildren;
 
+    /**
+     *新建任务
+     */
     public TaskList() {
         super();
         mChildren = new ArrayList<Task>();
         mIndex = 1;
     }
-
+    /**
+     *创建任务清单方法
+     */
     public JSONObject getCreateAction(int actionId) {
         JSONObject js = new JSONObject();
 
@@ -74,6 +81,9 @@ public class TaskList extends Node {
         return js;
     }
 
+    /**
+     *更新任务清单方法
+     */
     public JSONObject getUpdateAction(int actionId) {
         JSONObject js = new JSONObject();
 
@@ -102,7 +112,9 @@ public class TaskList extends Node {
 
         return js;
     }
-
+    /**
+     *获取任务清单信息
+     * */
     public void setContentByRemoteJSON(JSONObject js) {
         if (js != null) {
             try {
@@ -128,7 +140,9 @@ public class TaskList extends Node {
             }
         }
     }
-
+    /**
+     *根据任务清单获取内容
+     */
     public void setContentByLocalJSON(JSONObject js) {
         if (js == null || !js.has(GTaskStringUtils.META_HEAD_NOTE)) {
             Log.w(TAG, "setContentByLocalJSON: nothing is avaiable");
@@ -156,7 +170,9 @@ public class TaskList extends Node {
             e.printStackTrace();
         }
     }
-
+    /**
+     *根据便签内容列出清单
+     */
     public JSONObject getLocalJSONFromContent() {
         try {
             JSONObject js = new JSONObject();
@@ -183,6 +199,9 @@ public class TaskList extends Node {
         }
     }
 
+    /**
+     *获取同步信息
+     */
     public int getSyncAction(Cursor c) {
         try {
             if (c.getInt(SqlNote.LOCAL_MODIFIED_COLUMN) == 0) {
@@ -215,11 +234,16 @@ public class TaskList extends Node {
 
         return SYNC_ACTION_ERROR;
     }
-
+    /**
+     *获取子任务数量
+     */
     public int getChildTaskCount() {
         return mChildren.size();
     }
 
+    /**
+     *增添子任务
+     */
     public boolean addChildTask(Task task) {
         boolean ret = false;
         if (task != null && !mChildren.contains(task)) {
@@ -234,6 +258,9 @@ public class TaskList extends Node {
         return ret;
     }
 
+    /**
+     *根据索引增添子任务
+     * */
     public boolean addChildTask(Task task, int index) {
         if (index < 0 || index > mChildren.size()) {
             Log.e(TAG, "add child task: invalid index");
@@ -260,6 +287,9 @@ public class TaskList extends Node {
         return true;
     }
 
+    /**
+     *删除子任务
+     */
     public boolean removeChildTask(Task task) {
         boolean ret = false;
         int index = mChildren.indexOf(task);
@@ -281,6 +311,9 @@ public class TaskList extends Node {
         return ret;
     }
 
+    /**
+     *移动子任务
+     */
     public boolean moveChildTask(Task task, int index) {
 
         if (index < 0 || index >= mChildren.size()) {
@@ -298,7 +331,9 @@ public class TaskList extends Node {
             return true;
         return (removeChildTask(task) && addChildTask(task, index));
     }
-
+    /**
+     *查找子任务
+     */
     public Task findChildTaskByGid(String gid) {
         for (int i = 0; i < mChildren.size(); i++) {
             Task t = mChildren.get(i);
@@ -309,9 +344,15 @@ public class TaskList extends Node {
         return null;
     }
 
+    /**
+     *获取子任务索引
+     */
     public int getChildTaskIndex(Task task) {
         return mChildren.indexOf(task);
     }
+    /**
+     *根据索引查找子任务
+     */
 
     public Task getChildTaskByIndex(int index) {
         if (index < 0 || index >= mChildren.size()) {
@@ -321,6 +362,9 @@ public class TaskList extends Node {
         return mChildren.get(index);
     }
 
+    /**
+     *通过组号查找子任务
+     */
     public Task getChilTaskByGid(String gid) {
         for (Task task : mChildren) {
             if (task.getGid().equals(gid))
@@ -329,14 +373,22 @@ public class TaskList extends Node {
         return null;
     }
 
+    /**
+     *获取任务清单
+     */
     public ArrayList<Task> getChildTaskList() {
         return this.mChildren;
     }
 
+    /**
+     *设置索引值
+     */
     public void setIndex(int index) {
         this.mIndex = index;
     }
-
+    /**
+     *获取索引值
+     */
     public int getIndex() {
         return this.mIndex;
     }

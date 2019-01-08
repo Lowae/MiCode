@@ -38,8 +38,14 @@ import org.json.JSONObject;
 public class SqlData {
     private static final String TAG = SqlData.class.getSimpleName();
 
+    /**
+     *设定使无效ID
+     */
     private static final int INVALID_ID = -99999;
 
+    /**
+     *构造数据列
+     */
     public static final String[] PROJECTION_DATA = new String[] {
             DataColumns.ID, DataColumns.MIME_TYPE, DataColumns.CONTENT, DataColumns.DATA1,
             DataColumns.DATA3
@@ -71,6 +77,9 @@ public class SqlData {
 
     private ContentValues mDiffDataValues;
 
+    /**
+     *定义一个数据库数据
+     */
     public SqlData(Context context) {
         mContentResolver = context.getContentResolver();
         mIsCreate = true;
@@ -82,6 +91,7 @@ public class SqlData {
         mDiffDataValues = new ContentValues();
     }
 
+
     public SqlData(Context context, Cursor c) {
         mContentResolver = context.getContentResolver();
         mIsCreate = false;
@@ -89,6 +99,9 @@ public class SqlData {
         mDiffDataValues = new ContentValues();
     }
 
+    /**
+     *从光标处点击获取信息
+     */
     private void loadFromCursor(Cursor c) {
         mDataId = c.getLong(DATA_ID_COLUMN);
         mDataMimeType = c.getString(DATA_MIME_TYPE_COLUMN);
@@ -97,6 +110,9 @@ public class SqlData {
         mDataContentData3 = c.getString(DATA_CONTENT_DATA_3_COLUMN);
     }
 
+    /**
+     *上传内容至数据库
+     */
     public void setContent(JSONObject js) throws JSONException {
         long dataId = js.has(DataColumns.ID) ? js.getLong(DataColumns.ID) : INVALID_ID;
         if (mIsCreate || mDataId != dataId) {
@@ -130,6 +146,9 @@ public class SqlData {
         mDataContentData3 = dataContentData3;
     }
 
+    /**
+     *从数据库同步内容
+     */
     public JSONObject getContent() throws JSONException {
         if (mIsCreate) {
             Log.e(TAG, "it seems that we haven't created this in database yet");
@@ -144,6 +163,9 @@ public class SqlData {
         return js;
     }
 
+    /**
+     *提交版本信息
+     */
     public void commit(long noteId, boolean validateVersion, long version) {
 
         if (mIsCreate) {
@@ -183,6 +205,9 @@ public class SqlData {
         mIsCreate = false;
     }
 
+    /**
+     *获取数据ID
+     */
     public long getId() {
         return mDataId;
     }
