@@ -5,6 +5,7 @@
 # IntelliJ project files
 .idea
 *.iml
+.gradle
 out
 gen
 .gitignore
@@ -16,4 +17,4 @@ gradlew.bat
 import-summary.txt
 local.properties
 settings.gradle
-.gradle
+
