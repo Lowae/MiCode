@@ -35,33 +35,33 @@ import net.micode.notes.tool.ResourceParser.NoteBgResources;
 public class WorkingNote {
     // Note for the working note
     private Note mNote;
-    // Note Id
+    // Note Id便签ID
     private long mNoteId;
-    // Note content
+    // Note content便签内容
     private String mContent;
-    // Note mode
+    // Note mode便签模式
     private int mMode;
-
+    //便签提醒日期
     private long mAlertDate;
-
+    //便签修改日期
     private long mModifiedDate;
-
+    //便签颜色ID
     private int mBgColorId;
-
+    //便签控件ID
     private int mWidgetId;
-
+    //便签控件类型
     private int mWidgetType;
-
+    //便签文件夹ID
     private long mFolderId;
-
+    //便签环境
     private Context mContext;
-
+    //便签标签名
     private static final String TAG = "WorkingNote";
-
+    //便签被删除
     private boolean mIsDeleted;
-
+    //设置更改监听器
     private NoteSettingChangedListener mNoteSettingStatusListener;
-
+    //设置状态监听器
     public static final String[] DATA_PROJECTION = new String[] {
             DataColumns.ID,
             DataColumns.CONTENT,
@@ -101,7 +101,7 @@ public class WorkingNote {
 
     private static final int NOTE_MODIFIED_DATE_COLUMN = 5;
 
-    // New note construct
+    // New note construct新建便签结构
     private WorkingNote(Context context, long folderId) {
         mContext = context;
         mAlertDate = 0;
@@ -114,7 +114,7 @@ public class WorkingNote {
         mWidgetType = Notes.TYPE_WIDGET_INVALIDE;
     }
 
-    // Existing note construct
+    // Existing note construct现有便签构造
     private WorkingNote(Context context, long noteId, long folderId) {
         mContext = context;
         mNoteId = noteId;
@@ -149,7 +149,7 @@ public class WorkingNote {
     private void loadNoteData() {
         Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_DATA_URI, DATA_PROJECTION,
                 DataColumns.NOTE_ID + "=?", new String[] {
-                    String.valueOf(mNoteId)
+                        String.valueOf(mNoteId)
                 }, null);
 
         if (cursor != null) {
@@ -175,7 +175,7 @@ public class WorkingNote {
     }
 
     public static WorkingNote createEmptyNote(Context context, long folderId, int widgetId,
-            int widgetType, int defaultBgColorId) {
+                                              int widgetType, int defaultBgColorId) {
         WorkingNote note = new WorkingNote(context, folderId);
         note.setBgColorId(defaultBgColorId);
         note.setWidgetId(widgetId);
@@ -199,7 +199,7 @@ public class WorkingNote {
             mNote.syncNote(mContext, mNoteId);
 
             /**
-             * Update widget content if there exist any widget of this note
+             * Update widget content if there exist any widget of this note如果此标签中存在任何小部件，则更新小部件内容
              */
             if (mWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID
                     && mWidgetType != Notes.TYPE_WIDGET_INVALIDE
@@ -243,7 +243,7 @@ public class WorkingNote {
         mIsDeleted = mark;
         if (mWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID
                 && mWidgetType != Notes.TYPE_WIDGET_INVALIDE && mNoteSettingStatusListener != null) {
-                mNoteSettingStatusListener.onWidgetChanged();
+            mNoteSettingStatusListener.onWidgetChanged();
         }
     }
 
@@ -344,24 +344,24 @@ public class WorkingNote {
 
     public interface NoteSettingChangedListener {
         /**
-         * Called when the background color of current note has just changed
+         * Called when the background color of current note has just changed当当前便笺的背景色刚刚更改时调用
          */
         void onBackgroundColorChanged();
 
         /**
-         * Called when user set clock
+         * Called when user set clock当用户设置时钟时调用
          */
         void onClockAlertChanged(long date, boolean set);
 
         /**
-         * Call when user create note from widget
+         * Call when user create note from widget当用户从小部件创建便签时调用
          */
         void onWidgetChanged();
 
         /**
-         * Call when switch between check list mode and normal mode
-         * @param oldMode is previous mode before change
-         * @param newMode is new mode
+         * Call when switch between check list mode and normal mode在检查列表模式和正常模式之间切换时调用
+         * @param oldMode is previous mode before change旧模式是更改前的模式
+         * @param newMode is new mode新模式是新模式
          */
         void onCheckListModeChanged(int oldMode, int newMode);
     }
