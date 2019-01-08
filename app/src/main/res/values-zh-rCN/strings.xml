@@ -61,6 +61,7 @@
     <string name="folder_exist">文件夹 %1$s 已存在，请重新命名</string>
     <string name="menu_share">分享</string>
     <string name="menu_image_share">图片分享</string>
+    <string name="menu_image_insert">图片插入</string>
     <string name="menu_send_to_desktop">发送到桌面</string>
     <string name="menu_alert">提醒我</string>
     <string name="menu_remove_remind">删除提醒</string>

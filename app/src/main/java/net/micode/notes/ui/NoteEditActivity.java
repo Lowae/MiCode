@@ -27,13 +27,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -133,8 +136,8 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
 
     private static final String TAG = "NoteEditActivity";
 
-    //被截取图片的View
-    private LinearLayout mLinearLayout;
+    //需要插入图片的View
+    private ImageView mInsertImage;
 
     private HeadViewHolder mNoteHeaderHolder;
 
@@ -180,6 +183,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
             return;
         }
         initResources();
+        load();
     }
 
     /**
@@ -215,6 +219,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         mWorkingNote = null;
         if (TextUtils.equals(Intent.ACTION_VIEW, intent.getAction())) {
             long noteId = intent.getLongExtra(Intent.EXTRA_UID, 0);
+            Log.d("noteID: ", String.valueOf(noteId));
             mUserQuery = "";
 
             /**
@@ -411,6 +416,8 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
 
         mHeadViewPanel = findViewById(R.id.note_title);
 
+        //绑定被插入图片的ImageView视图
+        mInsertImage = (ImageView) findViewById(R.id.insert_image);
         mNoteHeaderHolder = new HeadViewHolder();
         //绑定修改日期的TextView视图
         mNoteHeaderHolder.tvModified = (TextView) findViewById(R.id.tv_modified_date);
@@ -594,10 +601,13 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
                 Bitmap bitmap = captureView(mNoteEditorPanel);
                 Uri uri = saveBitmap(bitmap, "image");
                 Log.d("uri:", String.valueOf(uri));
-                shareImg("分享", "我的主题", "分享内容", uri);
+                sendTo(this, uri);
                 break;
             case R.id.menu_send_to_desktop:
                 sendToDesktop();
+                break;
+            case R.id.menu_image_insert:
+                pickImageFromAlbum();
                 break;
             case R.id.menu_alert:
                 setReminder();
@@ -636,14 +646,14 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
      * 图片分享
      * @param uri 图片Uri
      */
-    private void sendTo(Uri uri){
+    private void sendTo(Context context, Uri uri){
         if (uri == null) {
             return;
         }
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(intent);
+        context.startActivity(intent);
     }
 
     private void createNewNote() {
@@ -960,6 +970,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     private static Uri saveBitmap(Bitmap bm, String picName) {
         try {
             String dir=Environment.getExternalStorageDirectory().getAbsolutePath()+"/DCIM/"+picName+".png";
+            Log.d("dir: ", dir);
             File f = new File(dir);
             if (!f.exists()) {
                 f.getParentFile().mkdirs();
@@ -977,33 +988,79 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
             e.printStackTrace();    }
         return null;
     }
-
     /**
-     * 实现图片分享
-     * @param dlgTitle
-     * @param subject
-     * @param content
-     * @param uri
+     * 从相机中获取图片
      */
-    private void shareImg(String dlgTitle, String subject, String content,
-                          Uri uri) {
-        if (uri == null) {
+    public void pickImageFromAlbum() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 222);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(NoteEditActivity.this, "点击取消从相册选择", Toast.LENGTH_LONG).show();
             return;
         }
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        if (subject != null && !"".equals(subject)) {
-            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+
+        try {
+            Uri imageUri = data.getData();
+            Log.e("TAG", imageUri.toString());
+            String imagePath = getImagePath(imageUri, null);
+            displayImage(imagePath);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (content != null && !"".equals(content)) {
-            intent.putExtra(Intent.EXTRA_TEXT, content);
+    }
+
+    /**
+     * save保存图片
+     * @param imagePath
+     */
+    private void save(String imagePath){
+        SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();//获得SHaredPreferences.Editor对象
+        editor.putBoolean("imageChange",true);//添加一个名为imageChange的boolean值，数值为true
+        editor.putString("imagePath",imagePath);//保存imagePath图片路径
+        editor.apply();//提交
+    }
+
+    /**
+     * 加载图片
+     */
+    private void load(){
+        SharedPreferences preferences = getSharedPreferences("data",MODE_PRIVATE);//获得SharedPreferences的对象
+        //括号里的判断是去找imageChange这个对应的数值，若是找不到，则是返回false，找到了的话就是我们上面定义的true，就会执行其中的语句
+        if(preferences.getBoolean("imageChange",false)){
+            String imagePath = preferences.getString("imagePath","");//取出保存的imagePath，若是找不到，则是返回一个空
+            displayImage(imagePath);//调用显示图片方法，为ImageView设置图片
         }
-        // 设置弹出框标题
-        if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
-            startActivity(Intent.createChooser(intent, dlgTitle));
-        } else { // 系统默认标题
-            startActivity(intent);
+    }
+
+    //展示图片
+    private void displayImage(String imagePath){
+        if(imagePath != null){
+            save(imagePath);
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            mInsertImage.setImageBitmap(bitmap);
+        }else {
+            Toast.makeText(NoteEditActivity.this, "获取图片失败", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //获得图片路径
+    public String getImagePath(Uri uri, String selection) {
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);   //内容提供器
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));   //获取路径
+            }
+        }
+        cursor.close();
+        return path;
     }
 }

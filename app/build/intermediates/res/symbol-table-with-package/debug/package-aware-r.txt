@@ -653,7 +653,9 @@ id icon
 id icon_group
 id ifRoom
 id image
+id image_insert
 id info
+id insert_image
 id iv_alert_icon
 id iv_bg_blue
 id iv_bg_blue_select
@@ -683,6 +685,7 @@ id menu_delete
 id menu_delete_remind
 id menu_export_text
 id menu_font_size
+id menu_image_insert
 id menu_image_share
 id menu_list_mode
 id menu_new_folder
@@ -918,6 +921,7 @@ string menu_font_normal
 string menu_font_size
 string menu_font_small
 string menu_font_super
+string menu_image_insert
 string menu_image_share
 string menu_list_mode
 string menu_move

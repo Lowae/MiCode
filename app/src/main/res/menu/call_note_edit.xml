@@ -43,6 +43,10 @@
         android:title="@string/menu_send_to_desktop"/>
 
     <item
+        android:id="@+id/image_insert"
+        android:title="@string/menu_image_insert"/>
+
+    <item
         android:id="@+id/menu_alert"
         android:title="@string/menu_alert" />
 
