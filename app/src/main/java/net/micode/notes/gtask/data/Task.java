@@ -30,6 +30,9 @@ import net.micode.notes.tool.GTaskStringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+/**
+ * 补充关于便签的增添查改操作
+ */
 
 
 public class Task extends Node {
@@ -45,6 +48,9 @@ public class Task extends Node {
 
     private TaskList mParent;
 
+    /**
+     *定义一个空的任务对象
+     */
     public Task() {
         super();
         mCompleted = false;
@@ -54,6 +60,9 @@ public class Task extends Node {
         mMetaInfo = null;
     }
 
+    /**
+     *创建一个新的操作
+     */
     public JSONObject getCreateAction(int actionId) {
         JSONObject js = new JSONObject();
 
@@ -94,7 +103,12 @@ public class Task extends Node {
                 js.put(GTaskStringUtils.GTASK_JSON_PRIOR_SIBLING_ID, mPriorSibling.getGid());
             }
 
-        } catch (JSONException e) {
+        }
+        /**
+         *抛出异常则创建失败
+         */
+
+        catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
             throw new ActionFailureException("fail to generate task-create jsonobject");
@@ -102,6 +116,10 @@ public class Task extends Node {
 
         return js;
     }
+
+    /**
+     * 更新编辑便签类
+     */
 
     public JSONObject getUpdateAction(int actionId) {
         JSONObject js = new JSONObject();
@@ -134,7 +152,9 @@ public class Task extends Node {
 
         return js;
     }
-
+    /**
+     * 远程获取操作内容
+     */
     public void setContentByRemoteJSON(JSONObject js) {
         if (js != null) {
             try {
@@ -175,6 +195,10 @@ public class Task extends Node {
         }
     }
 
+    /**
+     *编辑本地便签
+     */
+
     public void setContentByLocalJSON(JSONObject js) {
         if (js == null || !js.has(GTaskStringUtils.META_HEAD_NOTE)
                 || !js.has(GTaskStringUtils.META_HEAD_DATA)) {
@@ -204,6 +228,9 @@ public class Task extends Node {
         }
     }
 
+    /**
+     *获取本地便签信息
+     */
     public JSONObject getLocalJSONFromContent() {
         String name = getName();
         try {
@@ -247,6 +274,9 @@ public class Task extends Node {
         }
     }
 
+    /**
+     *元信息赋值
+     */
     public void setMetaInfo(MetaData metaData) {
         if (metaData != null && metaData.getNotes() != null) {
             try {
@@ -258,6 +288,9 @@ public class Task extends Node {
         }
     }
 
+    /**
+     *同步操作
+     */
     public int getSyncAction(Cursor c) {
         try {
             JSONObject noteInfo = null;
@@ -311,6 +344,9 @@ public class Task extends Node {
         return SYNC_ACTION_ERROR;
     }
 
+    /**
+     *判断是否需要保存
+     */
     public boolean isWorthSaving() {
         return mMetaInfo != null || (getName() != null && getName().trim().length() > 0)
                 || (getNotes() != null && getNotes().trim().length() > 0);

@@ -31,13 +31,13 @@ public class Notes {
      * {@link Notes#ID_TEMPARAY_FOLDER } is for notes belonging no folder
      * {@link Notes#ID_CALL_RECORD_FOLDER} is to store call records
      */
-    //默认根文件夹
+    //默认根文件夹ID
     public static final int ID_ROOT_FOLDER = 0;
-    //临时文件夹
+    //临时文件夹ID
     public static final int ID_TEMPARAY_FOLDER = -1;
-    //存储通话记录
+    //存储通话记录文件夹的ID
     public static final int ID_CALL_RECORD_FOLDER = -2;
-    //回收站
+    //回收站ID
     public static final int ID_TRASH_FOLER = -3;
 
     //可选择的日期

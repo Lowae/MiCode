@@ -19,6 +19,10 @@ package net.micode.notes.gtask.data;
 import android.database.Cursor;
 
 import org.json.JSONObject;
+/**
+ * 定义一个关于便签的类
+ * 包括便签的各种属性和方法
+ */
 
 public abstract class Node {
     public static final int SYNC_ACTION_NONE = 0;
@@ -54,9 +58,15 @@ public abstract class Node {
         mDeleted = false;
     }
 
+    /**
+     * 创建便签和编辑便签方法
+     */
     public abstract JSONObject getCreateAction(int actionId);
 
     public abstract JSONObject getUpdateAction(int actionId);
+    /**
+     * 创建便签和编辑便签方法
+     */
 
     public abstract void setContentByRemoteJSON(JSONObject js);
 
