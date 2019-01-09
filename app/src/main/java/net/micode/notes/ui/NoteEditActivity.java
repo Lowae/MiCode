@@ -77,19 +77,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  * 实现便签的编辑界面及其菜单功能
  */
 public class NoteEditActivity extends AppCompatActivity implements OnClickListener,
         NoteSettingChangedListener, OnTextViewChangeListener {
-    //自定义类 ViewHolder 来减少 findViewById() 的使用以及避免过多地 inflate view，从而实现目标。
+    //自定义类 ViewHolder 来减少 findViewById() 的使用以及避免过多地 inflate（绑定） view，从而实现目标。
     private class HeadViewHolder {
         public TextView tvModified;
 
@@ -183,7 +183,6 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
             return;
         }
         initResources();
-        load();
     }
 
     /**
@@ -216,10 +215,11 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
          * If the user specified the {@link Intent#ACTION_VIEW} but not provided with id,
          * then jump to the NotesListActivity
          */
+        //如果用户指定了{@link Intent＃ACTION_VIEW}但未提供id，则跳转到NotesListActivity
         mWorkingNote = null;
         if (TextUtils.equals(Intent.ACTION_VIEW, intent.getAction())) {
             long noteId = intent.getLongExtra(Intent.EXTRA_UID, 0);
-            Log.d("noteID: ", String.valueOf(noteId));
+//            Log.e("noteId1:", String.valueOf(noteId));
             mUserQuery = "";
 
             /**
@@ -227,9 +227,10 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
              */
             if (intent.hasExtra(SearchManager.EXTRA_DATA_KEY)) {
                 noteId = Long.parseLong(intent.getStringExtra(SearchManager.EXTRA_DATA_KEY));
+//                Log.e("noteID2: ", String.valueOf(noteId));
                 mUserQuery = intent.getStringExtra(SearchManager.USER_QUERY);
             }
-            //如果要查询的便签id不存在，则弹出消息“要查看的便签不存在”
+            //如果要查询的便签id不存在，则弹出消息“要查看的便签不存在”,并跳转到便签列表界面
             if (!DataUtils.visibleInNoteDatabase(getContentResolver(), noteId, Notes.TYPE_NOTE)) {
                 Intent jump = new Intent(this, NotesListActivity.class);
                 startActivity(jump);
@@ -238,6 +239,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
                 return false;
             } else {
                 mWorkingNote = WorkingNote.load(this, noteId);
+//                Log.e("noteId3:", String.valueOf(noteId));
                 if (mWorkingNote == null) {
                     Log.e(TAG, "load note failed with note id" + noteId);
                     finish();
@@ -454,6 +456,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
             mFontSizeId = ResourceParser.BG_DEFAULT_FONT_SIZE;
         }
         mEditTextList = (LinearLayout) findViewById(R.id.note_edit_list);
+        load();
     }
 
     @Override
@@ -1024,6 +1027,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     private void save(String imagePath){
         SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();//获得SHaredPreferences.Editor对象
         editor.putBoolean("imageChange",true);//添加一个名为imageChange的boolean值，数值为true
+//        editor.putLong("noteId",noteId);
         editor.putString("imagePath",imagePath);//保存imagePath图片路径
         editor.apply();//提交
     }

@@ -42,12 +42,13 @@ public class Note {
      * Create a new note id for adding a new note to databases：为向数据库添加新便笺创建新便笺ID
      */
     public static synchronized long getNewNoteId(Context context, long folderId) {
-        // Create a new note in the database：在数据库中创建新便笺
-        ContentValues values = new ContentValues();////往数据库中插入数据
+        // Create a new note in the database：
+        // 在数据库中创建新便笺
+        ContentValues values = new ContentValues();//往数据库中插入数据
         long createdTime = System.currentTimeMillis();//获取当前系统时间
         values.put(NoteColumns.CREATED_DATE, createdTime);//创造日期
         values.put(NoteColumns.MODIFIED_DATE, createdTime);//修改日期
-        values.put(NoteColumns.TYPE, Notes.TYPE_NOTE);//两种类型：便签，文件
+        values.put(NoteColumns.TYPE, Notes.TYPE_NOTE);//两种类型：便签，文件夹
         values.put(NoteColumns.LOCAL_MODIFIED, 1);//局部修改
         values.put(NoteColumns.PARENT_ID, folderId);//文件ID就是父ID
         Uri uri = context.getContentResolver().insert(Notes.CONTENT_NOTE_URI, values);
@@ -113,12 +114,12 @@ public class Note {
 
         /**
          * In theory, once data changed, the note should be updated on {@link NoteColumns#LOCAL_MODIFIED} and
-         * {@link NoteColumns#MODIFIED_DATE}. For data safety, though update note fails, we also update the
-         * note data info
+         *          * {@link NoteColumns#MODIFIED_DATE}. For data safety, though update note fails, we also update the
+         *          * note data info
          */
-        //理论上，一旦数据发生变化，注释应在链接注释栏本地修改和
-        //*链接注释列修改日期。为了数据安全，虽然更新说明失败，但我们也更新了
-        //*备注数据信息
+        //理论上，一旦数据发生变化，便签应在链接注释栏本地修改和
+        //链接注释列修改日期。为了数据安全，虽然更新说明失败，但我们也更新了
+        //备注数据信息
         if (context.getContentResolver().update(//Update用于修改表中的数据
                 ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), mNoteDiffValues, null,
                 null) == 0) {

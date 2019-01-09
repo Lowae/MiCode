@@ -180,6 +180,7 @@ public class Notes {
          * <P> 数据类型 : INTEGER (long) </P>
          */
         public static final String VERSION = "version";
+
     }
 
     public interface DataColumns {
