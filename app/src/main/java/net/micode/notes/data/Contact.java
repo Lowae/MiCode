@@ -29,7 +29,7 @@ public class Contact {
     private static HashMap<String, String> sContactCache;
     private static final String TAG = "Contact";
 
-    //把电话和邮箱信息赋给CALLER_ID_SELECTION
+    //定义的静态常量，用于数据库查询语句的基本模板，后面使用时将替换该语句中的一些值
     private static final String CALLER_ID_SELECTION = "PHONE_NUMBERS_EQUAL(" + Phone.NUMBER
     + ",?) AND " + Data.MIMETYPE + "='" + Phone.CONTENT_ITEM_TYPE + "'"
     + " AND " + Data.RAW_CONTACT_ID + " IN "
@@ -37,7 +37,7 @@ public class Contact {
             + " FROM phone_lookup"
             + " WHERE min_match = '+')";
 
-    //返回电话号码并实现后五位的替换
+    //用于获取
     public static String getContact(Context context, String phoneNumber) {
         if(sContactCache == null) {
             sContactCache = new HashMap<String, String>();
@@ -47,7 +47,7 @@ public class Contact {
             return sContactCache.get(phoneNumber);
         }
 
-        //把电话号码后五位替换为"+++++"
+        //把数据库查询语句的模板最后的“+”替换为获取的电话号码
         String selection = CALLER_ID_SELECTION.replace("+",
                 PhoneNumberUtils.toCallerIDMinMatch(phoneNumber));
         //查询给定的URI，在结果集上返回

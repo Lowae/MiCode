@@ -198,7 +198,7 @@ public class WorkingNote {
         if (isWorthSaving()) {
             if (!existInDatabase()) {
                 if ((mNoteId = Note.getNewNoteId(mContext, mFolderId)) == 0) {
-                    Log.e(TAG, "Create new note fail with id:" + mNoteId);//创建新便笺的ID失败
+                    Log.e(TAG, "Create new note fail with id:" + mNoteId);//使用新ID创建便签失败
                     return false;
                 }
             }
@@ -206,7 +206,8 @@ public class WorkingNote {
             mNote.syncNote(mContext, mNoteId);
 
             /**
-             * Update widget content if there exist any widget of this note如果此标签中存在任何小部件，则更新小部件内容
+             * Update widget content if there exist any widget of this note
+             * 如果此标签中存在任何桌面小部件，则更新桌面小部件内容
              */
             if (mWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID
                     && mWidgetType != Notes.TYPE_WIDGET_INVALIDE
@@ -287,7 +288,7 @@ public class WorkingNote {
             mNote.setNoteValue(NoteColumns.WIDGET_ID, String.valueOf(mWidgetId));
         }
     }
-    //设置工作文本
+    //设置清单模式的文本
     public void setWorkingText(String text) {
         if (!TextUtils.equals(mContent, text)) {
             mContent = text;

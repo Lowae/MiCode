@@ -27,11 +27,20 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 
 import net.micode.notes.R;
 
+/**
+ * 实现下拉式菜单
+ */
 public class DropdownMenu {
     private Button mButton;
     private PopupMenu mPopupMenu;
     private Menu mMenu;
 
+    /**
+     * 构造方法，初始化菜单的控件资源
+     * @param context
+     * @param button
+     * @param menuId
+     */
     public DropdownMenu(Context context, Button button, int menuId) {
         mButton = button;
         mButton.setBackgroundResource(R.drawable.dropdown_icon);
@@ -45,6 +54,10 @@ public class DropdownMenu {
         });
     }
 
+    /**
+     * 设置菜单内按钮的点击事件监听器
+     * @param listener
+     */
     public void setOnDropdownMenuItemClickListener(OnMenuItemClickListener listener) {
         if (mPopupMenu != null) {
             mPopupMenu.setOnMenuItemClickListener(listener);

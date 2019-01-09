@@ -224,8 +224,8 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
     /**
      * 此类的构造方法
      * @param context
-     * @param DB_NAME,数据库名称
-     * @param DB_VERSION,数据库版本
+     * @param DB_NAME 数据库名称
+     * @param DB_VERSION 数据库版本
      */
 
     public NotesDatabaseHelper(Context context) {

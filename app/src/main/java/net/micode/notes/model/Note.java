@@ -49,10 +49,9 @@ public class Note {
         values.put(NoteColumns.CREATED_DATE, createdTime);//创造日期
         values.put(NoteColumns.MODIFIED_DATE, createdTime);//修改日期
         values.put(NoteColumns.TYPE, Notes.TYPE_NOTE);//两种类型：便签，文件夹
-        values.put(NoteColumns.LOCAL_MODIFIED, 1);//局部修改
+        values.put(NoteColumns.LOCAL_MODIFIED, 1);//本地是否修改的标识
         values.put(NoteColumns.PARENT_ID, folderId);//文件ID就是父ID
         Uri uri = context.getContentResolver().insert(Notes.CONTENT_NOTE_URI, values);
-
         long noteId = 0;
         try {
             noteId = Long.valueOf(uri.getPathSegments().get(1));
@@ -70,12 +69,12 @@ public class Note {
         mNoteDiffValues = new ContentValues();
         mNoteData = new NoteData();
     }
-
+    //记录文本值的键盘输入，局部修改以及修改日期
     public void setNoteValue(String key, String value) {
         mNoteDiffValues.put(key, value);
         mNoteDiffValues.put(NoteColumns.LOCAL_MODIFIED, 1);
         mNoteDiffValues.put(NoteColumns.MODIFIED_DATE, System.currentTimeMillis());
-    }//记录文本值的键盘输入，局部修改以及修改日期
+    }
 
     public void setTextData(String key, String value) {
         mNoteData.setTextData(key, value);
@@ -103,11 +102,18 @@ public class Note {
         return mNoteDiffValues.size() > 0 || mNoteData.isLocalModified();
     }
 
+    /**
+     * 同步更新便签信息
+     * @param context
+     * @param noteId 需要被更新便签信息的id
+     * @return
+     */
     public boolean syncNote(Context context, long noteId) {
+        //便签名长度小于0，显示“Wrong note id:”
         if (noteId <= 0) {
             throw new IllegalArgumentException("Wrong note id:" + noteId);
         }
-        //便签名长度小于0，显示错误名为：
+
         if (!isLocalModified()) {
             return true;
         }
@@ -117,13 +123,17 @@ public class Note {
          *          * {@link NoteColumns#MODIFIED_DATE}. For data safety, though update note fails, we also update the
          *          * note data info
          */
-        //理论上，一旦数据发生变化，便签应在链接注释栏本地修改和
-        //链接注释列修改日期。为了数据安全，虽然更新说明失败，但我们也更新了
-        //备注数据信息
-        if (context.getContentResolver().update(//Update用于修改表中的数据
-                ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), mNoteDiffValues, null,
-                null) == 0) {
-            //通过withappendedId方法将noteId添加到uri中，返回带有id的uri
+        /**
+         *         理论上，一旦数据发生变化，便签应在链接注释栏本地修改和
+         *         链接注释列修改日期。为了数据安全，虽然更新说明失败，但我们也更新了
+         *         备注数据信息
+         */
+        //Update用于修改表中的数据
+        if (context.getContentResolver().update(
+                //通过withappendedId方法将noteId添加到uri中，返回带有id的uri
+                ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId)
+                , mNoteDiffValues, null, null) == 0) {
+
             Log.e(TAG, "Update note error, should not happen");//更新说明错误，不应发生
             // Do not return, fall through//不要返回
         }
