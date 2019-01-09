@@ -37,7 +37,7 @@ public class Contact {
             + " FROM phone_lookup"
             + " WHERE min_match = '+')";
 
-    //用于获取
+    //用于获取联系人信息
     public static String getContact(Context context, String phoneNumber) {
         if(sContactCache == null) {
             sContactCache = new HashMap<String, String>();
