@@ -536,6 +536,7 @@ drawable font_normal
 drawable font_size_selector_bg
 drawable font_small
 drawable font_super
+drawable ic_launcher_background
 drawable icon_app
 drawable list_background
 drawable list_blue_down
@@ -844,6 +845,9 @@ menu note_list
 menu note_list_dropdown
 menu note_list_options
 menu sub_folder
+mipmap ic_launcher
+mipmap ic_launcher_foreground
+mipmap ic_launcher_round
 plurals search_results_title
 raw introduction
 string abc_action_bar_home_description
