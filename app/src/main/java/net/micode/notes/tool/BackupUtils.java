@@ -117,7 +117,7 @@ public class BackupUtils {
        //数据栏内容为0
 
         private static final int DATA_COLUMN_MIME_TYPE = 1;
-        //
+        //数据列的协议类型为1
         private static final int DATA_COLUMN_CALL_DATE = 2;
         //数据列调用日期为2
         private static final int DATA_COLUMN_PHONE_NUMBER = 4;
@@ -165,7 +165,7 @@ public class BackupUtils {
                         exportNoteToText(noteId, ps);//将便笺导出到文本
                     } while (notesCursor.moveToNext());
                 }
-                notesCursor.close();
+                notesCursor.close();//关闭注释光标
             }
         }
 
@@ -178,41 +178,41 @@ public class BackupUtils {
                         noteId
                     }, null);
 
-            if (dataCursor != null) {
+            if (dataCursor != null) {//如果数据光标不为空
                 if (dataCursor.moveToFirst()) {
                     do {
-                        String mimeType = dataCursor.getString(DATA_COLUMN_MIME_TYPE);
+                        String mimeType = dataCursor.getString(DATA_COLUMN_MIME_TYPE);//获取数据列的协议类型
                         if (DataConstants.CALL_NOTE.equals(mimeType)) {
                             // Print phone number//打印电话号码
-                            String phoneNumber = dataCursor.getString(DATA_COLUMN_PHONE_NUMBER);
-                            long callDate = dataCursor.getLong(DATA_COLUMN_CALL_DATE);
-                            String location = dataCursor.getString(DATA_COLUMN_CONTENT);
+                            String phoneNumber = dataCursor.getString(DATA_COLUMN_PHONE_NUMBER);//获取数据列电话号码
+                            long callDate = dataCursor.getLong(DATA_COLUMN_CALL_DATE);//获取数据列调用日期
+                            String location = dataCursor.getString(DATA_COLUMN_CONTENT);//获取数据列内容
 
                             if (!TextUtils.isEmpty(phoneNumber)) {
                                 ps.println(String.format(getFormat(FORMAT_NOTE_CONTENT),
                                         phoneNumber));
                             }
-                            // Print call date
+                            // Print call date//打印通话日期
                             ps.println(String.format(getFormat(FORMAT_NOTE_CONTENT), DateFormat
                                     .format(mContext.getString(R.string.format_datetime_mdhm),
                                             callDate)));
-                            // Print call attachment location
+                            // Print call attachment location//打印呼叫附件位置
                             if (!TextUtils.isEmpty(location)) {
                                 ps.println(String.format(getFormat(FORMAT_NOTE_CONTENT),
-                                        location));
+                                        location));//打印呼叫附件位置
                             }
                         } else if (DataConstants.NOTE.equals(mimeType)) {
-                            String content = dataCursor.getString(DATA_COLUMN_CONTENT);
+                            String content = dataCursor.getString(DATA_COLUMN_CONTENT);//获取数据列内容
                             if (!TextUtils.isEmpty(content)) {
                                 ps.println(String.format(getFormat(FORMAT_NOTE_CONTENT),
-                                        content));
+                                        content));//打印呼叫附件位置
                             }
                         }
                     } while (dataCursor.moveToNext());
                 }
-                dataCursor.close();
+                dataCursor.close();//关闭数据光标
             }
-            // print a line separator between note
+            // print a line separator between note//在便笺之间打印行分隔符
             try {
                 ps.write(new byte[] {
                         Character.LINE_SEPARATOR, Character.LETTER_NUMBER
@@ -223,20 +223,20 @@ public class BackupUtils {
         }
 
         /**
-         * Note will be exported as text which is user readable
+         * Note will be exported as text which is user readable//注释将导出为用户可读的文本
          */
-        public int exportToText() {
-            if (!externalStorageAvailable()) {
-                Log.d(TAG, "Media was not mounted");
-                return STATE_SD_CARD_UNMOUONTED;
+        public int exportToText() {//导出到文本
+            if (!externalStorageAvailable()) {//如果外部储存不可用
+                Log.d(TAG, "Media was not mounted");//显示未装入媒体
+                return STATE_SD_CARD_UNMOUONTED;//未安装SD卡
             }
 
-            PrintStream ps = getExportToTextPrintStream();
+            PrintStream ps = getExportToTextPrintStream();//获取导出到文本打印流
             if (ps == null) {
-                Log.e(TAG, "get print stream error");
-                return STATE_SYSTEM_ERROR;
+                Log.e(TAG, "get print stream error");//获取打印流错误
+                return STATE_SYSTEM_ERROR;//状态系统错误
             }
-            // First export folder and its notes
+            // First export folder and its notes//第一个导出文件夹及其注释
             Cursor folderCursor = mContext.getContentResolver().query(
                     Notes.CONTENT_NOTE_URI,
                     NOTE_PROJECTION,
@@ -247,24 +247,25 @@ public class BackupUtils {
             if (folderCursor != null) {
                 if (folderCursor.moveToFirst()) {
                     do {
-                        // Print folder's name
+                        // Print folder's name//打印文件夹的名字
                         String folderName = "";
-                        if(folderCursor.getLong(NOTE_COLUMN_ID) == Notes.ID_CALL_RECORD_FOLDER) {
-                            folderName = mContext.getString(R.string.call_record_folder_name);
+                        if(folderCursor.getLong(NOTE_COLUMN_ID) == Notes.ID_CALL_RECORD_FOLDER) {//如果注释列ID和ID呼叫记录文件夹相同
+                            folderName = mContext.getString(R.string.call_record_folder_name);//文件夹名为呼叫记录文件夹名称
                         } else {
-                            folderName = folderCursor.getString(NOTE_COLUMN_SNIPPET);
+                            folderName = folderCursor.getString(NOTE_COLUMN_SNIPPET);//否则为备注列代码段
                         }
                         if (!TextUtils.isEmpty(folderName)) {
                             ps.println(String.format(getFormat(FORMAT_FOLDER_NAME), folderName));
+                            //如果文件名不为空则设置文件夹名称格式和文件夹名字
                         }
-                        String folderId = folderCursor.getString(NOTE_COLUMN_ID);
-                        exportFolderToText(folderId, ps);
+                        String folderId = folderCursor.getString(NOTE_COLUMN_ID);//设置注释列ID
+                        exportFolderToText(folderId, ps);//将文件夹导出到文本
                     } while (folderCursor.moveToNext());
                 }
-                folderCursor.close();
+                folderCursor.close();//关闭文件夹游标
             }
 
-            // Export notes in root's folder
+            // Export notes in root's folder//导出根文件夹中的注释
             Cursor noteCursor = mContext.getContentResolver().query(
                     Notes.CONTENT_NOTE_URI,
                     NOTE_PROJECTION,
@@ -276,13 +277,13 @@ public class BackupUtils {
                     do {
                         ps.println(String.format(getFormat(FORMAT_NOTE_DATE), DateFormat.format(
                                 mContext.getString(R.string.format_datetime_mdhm),
-                                noteCursor.getLong(NOTE_COLUMN_MODIFIED_DATE))));
-                        // Query data belong to this note
-                        String noteId = noteCursor.getString(NOTE_COLUMN_ID);
-                        exportNoteToText(noteId, ps);
+                                noteCursor.getLong(NOTE_COLUMN_MODIFIED_DATE))));//设置便笺日期格式
+                        // Query data belong to this note//导出根文件夹中的注释
+                        String noteId = noteCursor.getString(NOTE_COLUMN_ID);//设置注释列ID
+                        exportNoteToText(noteId, ps);//将便笺导出到文本
                     } while (noteCursor.moveToNext());
                 }
-                noteCursor.close();
+                noteCursor.close();//关闭便签游标
             }
             ps.close();
 
@@ -290,59 +291,59 @@ public class BackupUtils {
         }
 
         /**
-         * Get a print stream pointed to the file {@generateExportedTextFile}
+         * Get a print stream pointed to the file {@generateExportedTextFile}//获取指向文件@GenerateExportedTextFile的打印流
          */
-        private PrintStream getExportToTextPrintStream() {
+        private PrintStream getExportToTextPrintStream() {//获取导出到文本打印流
             File file = generateFileMountedOnSDcard(mContext, R.string.file_path,
-                    R.string.file_name_txt_format);
+                    R.string.file_name_txt_format);//生成安装在SD卡上的文件
             if (file == null) {
-                Log.e(TAG, "create file to exported failed");
+                Log.e(TAG, "create file to exported failed");//如果文件为空则创建要导出的文件失败
                 return null;
             }
-            mFileName = file.getName();
-            mFileDirectory = mContext.getString(R.string.file_path);
+            mFileName = file.getName();//给文件命名
+            mFileDirectory = mContext.getString(R.string.file_path);//设置文件目录
             PrintStream ps = null;
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 ps = new PrintStream(fos);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            } catch (FileNotFoundException e) {//找不到文件异常
+                e.printStackTrace();//打印堆栈跟踪
                 return null;
-            } catch (NullPointerException e) {
-                e.printStackTrace();
+            } catch (NullPointerException e) {//空指针异常
+                e.printStackTrace();//打印堆栈跟踪
                 return null;
-            }
+            }//排除异常
             return ps;
         }
     }
 
     /**
-     * Generate the text file to store imported data
+     * Generate the text file to store imported data//生成文本文件以存储导入的数据
      */
-    private static File generateFileMountedOnSDcard(Context context, int filePathResId, int fileNameFormatResId) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Environment.getExternalStorageDirectory());
-        sb.append(context.getString(filePathResId));
-        File filedir = new File(sb.toString());
+    private static File generateFileMountedOnSDcard(Context context, int filePathResId, int fileNameFormatResId) {//生成安装在SD卡上的文件
+        StringBuilder sb = new StringBuilder();//字符串生成器
+        sb.append(Environment.getExternalStorageDirectory());//获取外部存储目录
+        sb.append(context.getString(filePathResId));//获取文件路径资源ID
+        File filedir = new File(sb.toString());//创建新文件列表
         sb.append(context.getString(
                 fileNameFormatResId,
                 DateFormat.format(context.getString(R.string.format_date_ymd),
-                        System.currentTimeMillis())));
-        File file = new File(sb.toString());
+                        System.currentTimeMillis())));//添加文件格式和日期
+        File file = new File(sb.toString());//创建新文件
 
         try {
-            if (!filedir.exists()) {
+            if (!filedir.exists()) {//文件列表不存在
                 filedir.mkdir();
             }
-            if (!file.exists()) {
+            if (!file.exists()) {//文件不存在
                 file.createNewFile();
             }
             return file;
         } catch (SecurityException e) {
-            e.printStackTrace();
+            e.printStackTrace();//打印堆栈跟踪
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            e.printStackTrace();//打印堆栈跟踪
+        }//排除异常
 
         return null;
     }
