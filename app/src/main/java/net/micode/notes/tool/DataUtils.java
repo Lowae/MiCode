@@ -97,7 +97,7 @@ public class DataUtils {
         }
 
         try {
-            ContentProviderResult[] results = resolver.applyBatch(Notes.AUTHORITY, operationList);
+            ContentProviderResult[] results = resolver.applyBatch(Notes.AUTHORITY, operationList);//通过applyBatch()函数来应用批量操作
             if (results == null || results.length == 0 || results[0] == null) {
                 Log.d(TAG, "delete notes failed, ids:" + ids.toString());//删除便签错误，id：
                 return false;
@@ -119,7 +119,7 @@ public class DataUtils {
                 new String[] { "COUNT(*)" },
                 NoteColumns.TYPE + "=? AND " + NoteColumns.PARENT_ID + "<>?",
                 new String[] { String.valueOf(Notes.TYPE_FOLDER), String.valueOf(Notes.ID_TRASH_FOLER)},
-                null);//游标查询
+                null);//游标查询文件夹类型和父ID
 
         int count = 0;
         if(cursor != null) {//游标不为空
@@ -141,7 +141,7 @@ public class DataUtils {
                 null,
                 NoteColumns.TYPE + "=? AND " + NoteColumns.PARENT_ID + "<>" + Notes.ID_TRASH_FOLER,
                 new String [] {String.valueOf(type)},
-                null);//查询便签
+                null);//查询便签id
 
         boolean exist = false;
         if (cursor != null) {//游标不为空
@@ -153,56 +153,56 @@ public class DataUtils {
         return exist;
     }
 
-    public static boolean existInNoteDatabase(ContentResolver resolver, long noteId) {
+    public static boolean existInNoteDatabase(ContentResolver resolver, long noteId) {//判断是否存在于便笺数据库中
         Cursor cursor = resolver.query(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId),
-                null, null, null, null);
+                null, null, null, null);//查询便签的id
 
         boolean exist = false;
-        if (cursor != null) {
+        if (cursor != null) {//游标不为空
             if (cursor.getCount() > 0) {
-                exist = true;
+                exist = true;//存在
             }
-            cursor.close();
+            cursor.close();//关闭游标
         }
         return exist;
     }
 
-    public static boolean existInDataDatabase(ContentResolver resolver, long dataId) {
+    public static boolean existInDataDatabase(ContentResolver resolver, long dataId) {//判断数据库中的数据是否存在
         Cursor cursor = resolver.query(ContentUris.withAppendedId(Notes.CONTENT_DATA_URI, dataId),
-                null, null, null, null);
+                null, null, null, null);//查询
 
         boolean exist = false;
-        if (cursor != null) {
+        if (cursor != null) {//游标不为空
             if (cursor.getCount() > 0) {
-                exist = true;
+                exist = true;//存在
             }
-            cursor.close();
+            cursor.close();//关闭游标
         }
         return exist;
     }
 
-    public static boolean checkVisibleFolderName(ContentResolver resolver, String name) {
+    public static boolean checkVisibleFolderName(ContentResolver resolver, String name) {//检查可见文件夹名称
         Cursor cursor = resolver.query(Notes.CONTENT_NOTE_URI, null,
                 NoteColumns.TYPE + "=" + Notes.TYPE_FOLDER +
                 " AND " + NoteColumns.PARENT_ID + "<>" + Notes.ID_TRASH_FOLER +
                 " AND " + NoteColumns.SNIPPET + "=?",
-                new String[] { name }, null);
+                new String[] { name }, null);//查询类型、文件夹类型、父ID、垃圾桶ID、片段
         boolean exist = false;
-        if(cursor != null) {
+        if(cursor != null) {//游标不为空
             if(cursor.getCount() > 0) {
-                exist = true;
+                exist = true;//存在
             }
-            cursor.close();
+            cursor.close();//关闭游标
         }
         return exist;
     }
 
-    public static HashSet<AppWidgetAttribute> getFolderNoteWidget(ContentResolver resolver, long folderId) {
+    public static HashSet<AppWidgetAttribute> getFolderNoteWidget(ContentResolver resolver, long folderId) {//获取文件夹注释小部件
         Cursor c = resolver.query(Notes.CONTENT_NOTE_URI,
                 new String[] { NoteColumns.WIDGET_ID, NoteColumns.WIDGET_TYPE },
                 NoteColumns.PARENT_ID + "=?",
                 new String[] { String.valueOf(folderId) },
-                null);
+                null);//查询小控件id和类型
 
         HashSet<AppWidgetAttribute> set = null;
         if (c != null) {
@@ -215,51 +215,52 @@ public class DataUtils {
                         widget.widgetType = c.getInt(1);
                         set.add(widget);
                     } catch (IndexOutOfBoundsException e) {
-                        Log.e(TAG, e.toString());
+                        Log.e(TAG, e.toString());//显示错误参数
                     }
-                } while (c.moveToNext());
+                } while (c.moveToNext());//排除异常
             }
-            c.close();
+            c.close();//关闭游标
         }
         return set;
     }
 
-    public static String getCallNumberByNoteId(ContentResolver resolver, long noteId) {
+    public static String getCallNumberByNoteId(ContentResolver resolver, long noteId) {//按便笺ID获取电话号码
         Cursor cursor = resolver.query(Notes.CONTENT_DATA_URI,
                 new String [] { CallNote.PHONE_NUMBER },
                 CallNote.NOTE_ID + "=? AND " + CallNote.MIME_TYPE + "=?",
                 new String [] { String.valueOf(noteId), CallNote.CONTENT_ITEM_TYPE },
-                null);
+                null);//根据便签的ID类型查询电话号码
 
         if (cursor != null && cursor.moveToFirst()) {
             try {
                 return cursor.getString(0);
             } catch (IndexOutOfBoundsException e) {
-                Log.e(TAG, "Get call number fails " + e.toString());
+                Log.e(TAG, "Get call number fails " + e.toString());//获取呼叫号码失败
             } finally {
-                cursor.close();
+                cursor.close();//关闭游标
             }
-        }
+        }//排除异常
         return "";
     }
 
     public static long getNoteIdByPhoneNumberAndCallDate(ContentResolver resolver, String phoneNumber, long callDate) {
+        //通过电话号码和通话日期获取便条ID
         Cursor cursor = resolver.query(Notes.CONTENT_DATA_URI,
                 new String [] { CallNote.NOTE_ID },
                 CallNote.CALL_DATE + "=? AND " + CallNote.MIME_TYPE + "=? AND PHONE_NUMBERS_EQUAL("
                 + CallNote.PHONE_NUMBER + ",?)",
                 new String [] { String.valueOf(callDate), CallNote.CONTENT_ITEM_TYPE, phoneNumber },
-                null);
+                null);//通过电话号码和通话日期获取便条ID
 
-        if (cursor != null) {
+        if (cursor != null) {//游标不为空
             if (cursor.moveToFirst()) {
                 try {
                     return cursor.getLong(0);
                 } catch (IndexOutOfBoundsException e) {
-                    Log.e(TAG, "Get call note id fails " + e.toString());
+                    Log.e(TAG, "Get call note id fails " + e.toString());//获取通话记录ID失败
                 }
             }
-            cursor.close();
+            cursor.close();//关闭游标
         }
         return 0;
     }
@@ -269,9 +270,9 @@ public class DataUtils {
                 new String [] { NoteColumns.SNIPPET },
                 NoteColumns.ID + "=?",
                 new String [] { String.valueOf(noteId)},
-                null);
+                null);//按ID获取代码段
 
-        if (cursor != null) {
+        if (cursor != null) {//游标不为空
             String snippet = "";
             if (cursor.moveToFirst()) {
                 snippet = cursor.getString(0);
@@ -279,15 +280,15 @@ public class DataUtils {
             cursor.close();
             return snippet;
         }
-        throw new IllegalArgumentException("Note is not found with id: " + noteId);
-    }
+        throw new IllegalArgumentException("Note is not found with id: " + noteId);//找不到ID为便签ID的便笺
+    }//排除异常
 
-    public static String getFormattedSnippet(String snippet) {
+    public static String getFormattedSnippet(String snippet) {//获取格式化的代码段
         if (snippet != null) {
-            snippet = snippet.trim();
-            int index = snippet.indexOf('\n');
+            snippet = snippet.trim();//片段修剪
+            int index = snippet.indexOf('\n');//int indexOf(String str) 返回第一次出现的指定子字符串在此字符串中的索引位置。
             if (index != -1) {
-                snippet = snippet.substring(0, index);
+                snippet = snippet.substring(0, index);//substring() 方法返回的子串包括 start 处的字符，但不包括 stop 处的字符
             }
         }
         return snippet;
