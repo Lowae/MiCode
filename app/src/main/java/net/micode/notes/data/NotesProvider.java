@@ -339,7 +339,12 @@ public class NotesProvider extends ContentProvider {
         return (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : "");
     }
 
-    //提升便签版本
+    /**
+     * 提升便签版本
+     * @param id
+     * @param selection
+     * @param selectionArgs
+     */
     private void increaseNoteVersion(long id, String selection, String[] selectionArgs) {
         StringBuilder sql = new StringBuilder(120);
         //连接一系列字符串

@@ -15,8 +15,8 @@
      limitations under the License.
 -->
 
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_new_folder"
         android:title="@string/menu_create_folder"/>
@@ -36,4 +36,9 @@
     <item
         android:id="@+id/menu_search"
         android:title="@string/menu_search"/>
+    <item
+        android:id="@+id/menu_weather"
+        android:title="@string/menu_weather"
+        android:icon="@drawable/menu_weather"
+        app:showAsAction="ifRoom"/>
 </menu>

@@ -1143,7 +1143,6 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(NoteEditActivity.this, "点击取消从相册选择", Toast.LENGTH_LONG).show();
             return;
         }
 
