@@ -15,7 +15,10 @@
  */
 
 package net.micode.notes.gtask.exception;
-
+/**
+ * 接收一个报错信息并抛出
+ *
+ */
 public class ActionFailureException extends RuntimeException {
     private static final long serialVersionUID = 4425249765923293627L;
 

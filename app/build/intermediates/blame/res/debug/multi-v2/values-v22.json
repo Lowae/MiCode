@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\micode\\Micode\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v22\\values-v22.xml",
+            "outputFile": "C:\\Users\\Kevin\\AndroidStudioProjects\\micode\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v22\\values-v22.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\76905\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\8f592b41c7455e3457c7b458878a6035\\res\\values-v22\\values-v22.xml",
+                    "source": "C:\\Users\\Kevin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\265f673e4a30b99a1cfa77c0c3aa54e6\\res\\values-v22\\values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",
