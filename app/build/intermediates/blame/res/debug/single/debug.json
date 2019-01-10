@@ -536,6 +536,10 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_scrubber_control_to_pressed_mtrl_000.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_new_note_pressed1.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\new_note_pressed1.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_edit_red.9.png.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\edit_red.9.png"
     },
@@ -1080,6 +1084,10 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\new_note_normal.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_new_note_normal1.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\new_note_normal1.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_scrubber_track_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_scrubber_track_mtrl_alpha.9.png"
     },
@@ -1214,10 +1222,6 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_list_menu_item_icon.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\abc_list_menu_item_icon.xml"
-    },
-    {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_custom_big.xml.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\notification_template_custom_big.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_ic_menu_copy_mtrl_am_alpha.png.flat",

@@ -959,7 +959,7 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
     }
 
     /**
-     * 当文本内容发送改变时调用
+     * 当文本内容发生改变时调用
      * @param index
      * @param hasText
      */
