@@ -16,7 +16,7 @@
 
 package net.micode.notes.tool;
 
-public class GTaskStringUtils {
+public class GTaskStringUtils {//gtask字符串实用程序
 
     public final static String GTASK_JSON_ACTION_ID = "action_id";
 

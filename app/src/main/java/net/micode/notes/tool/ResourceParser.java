@@ -23,23 +23,24 @@ import net.micode.notes.R;
 import net.micode.notes.ui.NotesPreferenceActivity;
 
 public class ResourceParser {
+//static修饰的属性强调它们只有一个，final修饰的属性表明是一个常数（创建后不能被修改）。
+// static final修饰的属性表示一旦给值，就不可修改，并且可以通过类名访问。
+    public static final int YELLOW           = 0;//定义静态常量YELLOW为0
+    public static final int BLUE             = 1;//定义静态常量BLUE 为1
+    public static final int WHITE            = 2;//定义静态常量WHITE 为2
+    public static final int GREEN            = 3;//定义静态常量GREEN为3
+    public static final int RED              = 4;//定义静态常量RED为4
 
-    public static final int YELLOW           = 0;
-    public static final int BLUE             = 1;
-    public static final int WHITE            = 2;
-    public static final int GREEN            = 3;
-    public static final int RED              = 4;
+    public static final int BG_DEFAULT_COLOR = YELLOW;//默认颜色为黄色
 
-    public static final int BG_DEFAULT_COLOR = YELLOW;
+    public static final int TEXT_SMALL       = 0;//定义静态常量TEXT_SMALL 为0
+    public static final int TEXT_MEDIUM      = 1;//定义静态常量TEXT_MEDIUM 为1
+    public static final int TEXT_LARGE       = 2;//定义静态常量TEXT_LARGE为2
+    public static final int TEXT_SUPER       = 3;//定义静态常量TEXT_SUPER为3
 
-    public static final int TEXT_SMALL       = 0;
-    public static final int TEXT_MEDIUM      = 1;
-    public static final int TEXT_LARGE       = 2;
-    public static final int TEXT_SUPER       = 3;
+    public static final int BG_DEFAULT_FONT_SIZE = TEXT_MEDIUM;//默认字体大小为中号字体
 
-    public static final int BG_DEFAULT_FONT_SIZE = TEXT_MEDIUM;
-
-    public static class NoteBgResources {
+    public static class NoteBgResources {//备注BG资源
         private final static int [] BG_EDIT_RESOURCES = new int [] {
             R.drawable.edit_yellow,
             R.drawable.edit_blue,
