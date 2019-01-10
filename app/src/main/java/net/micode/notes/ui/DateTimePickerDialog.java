@@ -29,6 +29,9 @@ import android.content.DialogInterface.OnClickListener;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 
+/**
+ * 实现日期选择对话框的类，用于在设置闹钟时，弹出该对话框来设置闹钟提醒日期
+ */
 public class DateTimePickerDialog extends AlertDialog implements OnClickListener {
 
     private Calendar mDate = Calendar.getInstance();

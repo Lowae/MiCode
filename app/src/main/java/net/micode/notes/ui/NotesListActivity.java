@@ -55,6 +55,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -112,6 +113,8 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
     private BackgroundQueryHandler mBackgroundQueryHandler;
 
     private NotesListAdapter mNotesListAdapter;
+
+    private WebView mWebView;
 
     private ListView mNotesListView;
 
@@ -244,7 +247,11 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
      */
    private void initResources() {
        mContentResolver = this.getContentResolver();
-        mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
+       mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
+       mWebView = (WebView) findViewById(R.id.webview_weather);
+       mWebView.loadUrl("https://tianqiapi.com/api.php?style=tg&skin=pitaya");
+//       mWebView.setBackground(R.drawable.list_background);
+       mWebView.setBackgroundColor(0);
         mCurrentFolderId = Notes.ID_ROOT_FOLDER;
         mNotesListView = (ListView) findViewById(R.id.notes_list);
         mNotesListView.addFooterView(LayoutInflater.from(this).inflate(R.layout.note_list_footer, null),
