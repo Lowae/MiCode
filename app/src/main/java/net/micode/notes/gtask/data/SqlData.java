@@ -38,9 +38,6 @@ import org.json.JSONObject;
 public class SqlData {
     private static final String TAG = SqlData.class.getSimpleName();
 
-    /**
-     *设定使无效ID
-     */
     private static final int INVALID_ID = -99999;
 
     /**
@@ -78,7 +75,7 @@ public class SqlData {
     private ContentValues mDiffDataValues;
 
     /**
-     *定义一个数据库数据
+     * 构造方法，定义一个数据库数据
      */
     public SqlData(Context context) {
         mContentResolver = context.getContentResolver();
@@ -91,7 +88,11 @@ public class SqlData {
         mDiffDataValues = new ContentValues();
     }
 
-
+    /**
+     * 重写构造方法，传入的参数有Cursor时，将根据Cursor来构造便签数据
+     * @param context
+     * @param c
+     */
     public SqlData(Context context, Cursor c) {
         mContentResolver = context.getContentResolver();
         mIsCreate = false;
@@ -100,7 +101,7 @@ public class SqlData {
     }
 
     /**
-     *从光标处点击获取信息
+     *从结果集Cursor中获取信息
      */
     private void loadFromCursor(Cursor c) {
         mDataId = c.getLong(DATA_ID_COLUMN);

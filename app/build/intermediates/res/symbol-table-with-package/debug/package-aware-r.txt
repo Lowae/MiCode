@@ -536,6 +536,7 @@ drawable font_normal
 drawable font_size_selector_bg
 drawable font_small
 drawable font_super
+drawable ic_launcher_background
 drawable icon_app
 drawable list_background
 drawable list_blue_down
@@ -564,7 +565,9 @@ drawable menu_delete
 drawable menu_move
 drawable new_note
 drawable new_note_normal
+drawable new_note_normal1
 drawable new_note_pressed
+drawable new_note_pressed1
 drawable note_edit_color_selector_panel
 drawable notification
 drawable notification_action_background
@@ -653,7 +656,9 @@ id icon
 id icon_group
 id ifRoom
 id image
+id image_insert
 id info
+id insert_image
 id iv_alert_icon
 id iv_bg_blue
 id iv_bg_blue_select
@@ -683,6 +688,7 @@ id menu_delete
 id menu_delete_remind
 id menu_export_text
 id menu_font_size
+id menu_image_insert
 id menu_image_share
 id menu_list_mode
 id menu_new_folder
@@ -704,6 +710,7 @@ id note_bg_color_selector
 id note_edit_list
 id note_edit_view
 id note_item
+id note_list_framelayout
 id note_title
 id notes_list
 id notification_background
@@ -841,6 +848,9 @@ menu note_list
 menu note_list_dropdown
 menu note_list_options
 menu sub_folder
+mipmap ic_launcher
+mipmap ic_launcher_foreground
+mipmap ic_launcher_round
 plurals search_results_title
 raw introduction
 string abc_action_bar_home_description
@@ -918,6 +928,7 @@ string menu_font_normal
 string menu_font_size
 string menu_font_small
 string menu_font_super
+string menu_image_insert
 string menu_image_share
 string menu_list_mode
 string menu_move

@@ -17,7 +17,7 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true"
-        android:drawable="@drawable/new_note_pressed" />
+        android:drawable="@drawable/new_note_pressed1" />
     <item
-        android:drawable="@drawable/new_note_normal" />
+        android:drawable="@drawable/new_note_normal1" />
 </selector>

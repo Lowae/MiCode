@@ -39,12 +39,13 @@ import net.micode.notes.tool.DataUtils;
 
 import java.io.IOException;
 
-
+//实现闹钟提醒界面
 public class AlarmAlertActivity extends Activity implements OnClickListener, OnDismissListener {
     private long mNoteId;
     private String mSnippet;
     private static final int SNIPPET_PREW_MAX_LEN = 60;
     MediaPlayer mPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

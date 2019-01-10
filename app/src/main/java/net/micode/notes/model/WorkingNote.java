@@ -35,11 +35,14 @@ import net.micode.notes.tool.ResourceParser.NoteBgResources;
 public class WorkingNote {
     // Note for the working note
     private Note mNote;
-    // Note Id便签ID
+    // Note Id
+    // 便签ID
     private long mNoteId;
-    // Note content便签内容
+    // Note content
+    // 便签内容
     private String mContent;
-    // Note mode便签模式
+    // Note mode
+    // 便签模式
     private int mMode;
     //便签提醒日期
     private long mAlertDate;
@@ -75,10 +78,10 @@ public class WorkingNote {
     public static final String[] NOTE_PROJECTION = new String[] {
             NoteColumns.PARENT_ID,                      //起始ID
             NoteColumns.ALERTED_DATE,                  //闹钟日期
-            NoteColumns.BG_COLOR_ID,                   //颜色ID
-            NoteColumns.WIDGET_ID,                      //小控件ID
-            NoteColumns.WIDGET_TYPE,                     //小控件类型
-            NoteColumns.MODIFIED_DATE                   //改进之后的日期
+            NoteColumns.BG_COLOR_ID,                   //背景颜色ID
+            NoteColumns.WIDGET_ID,                      //桌面小部件ID
+            NoteColumns.WIDGET_TYPE,                     //桌面小部件类型
+            NoteColumns.MODIFIED_DATE                   //最新的修改日期
     };
     //定义一些变量的初始值
     private static final int DATA_ID_COLUMN = 0;
@@ -101,7 +104,8 @@ public class WorkingNote {
 
     private static final int NOTE_MODIFIED_DATE_COLUMN = 5;
 
-    // New note construct新建便签结构
+    // New note construct
+    // 新建便签结构
     private WorkingNote(Context context, long folderId) {
         mContext = context;
         mAlertDate = 0;
@@ -114,7 +118,8 @@ public class WorkingNote {
         mWidgetType = Notes.TYPE_WIDGET_INVALIDE;
     }
 
-    // Existing note construct现有便签构造
+    // Existing note construct
+    // 现有便签构造
     private WorkingNote(Context context, long noteId, long folderId) {
         mContext = context;
         mNoteId = noteId;
@@ -184,7 +189,7 @@ public class WorkingNote {
         note.setWidgetType(widgetType);
         return note;
     }
-    //标签入口
+    //处理便签数据
     public static WorkingNote load(Context context, long id) {
         return new WorkingNote(context, id, 0);
     }
@@ -193,7 +198,7 @@ public class WorkingNote {
         if (isWorthSaving()) {
             if (!existInDatabase()) {
                 if ((mNoteId = Note.getNewNoteId(mContext, mFolderId)) == 0) {
-                    Log.e(TAG, "Create new note fail with id:" + mNoteId);//创建新便笺的ID失败
+                    Log.e(TAG, "Create new note fail with id:" + mNoteId);//使用新ID创建便签失败
                     return false;
                 }
             }
@@ -201,7 +206,8 @@ public class WorkingNote {
             mNote.syncNote(mContext, mNoteId);
 
             /**
-             * Update widget content if there exist any widget of this note如果此标签中存在任何小部件，则更新小部件内容
+             * Update widget content if there exist any widget of this note
+             * 如果此标签中存在任何桌面小部件，则更新桌面小部件内容
              */
             if (mWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID
                     && mWidgetType != Notes.TYPE_WIDGET_INVALIDE
@@ -248,7 +254,7 @@ public class WorkingNote {
             mNoteSettingStatusListener.onWidgetChanged();
         }
     }
-     //设置颜色ID
+     //设置背景颜色ID
     public void setBgColorId(int id) {
         if (id != mBgColorId) {
             mBgColorId = id;
@@ -268,21 +274,21 @@ public class WorkingNote {
             mNote.setTextData(TextNote.MODE, String.valueOf(mMode));
         }
     }
-     //设置控件类型
+     //设置桌面小部件类型
     public void setWidgetType(int type) {
         if (type != mWidgetType) {
             mWidgetType = type;
             mNote.setNoteValue(NoteColumns.WIDGET_TYPE, String.valueOf(mWidgetType));
         }
     }
-     //设置控件ID
+     //设置桌面小部件ID
     public void setWidgetId(int id) {
         if (id != mWidgetId) {
             mWidgetId = id;
             mNote.setNoteValue(NoteColumns.WIDGET_ID, String.valueOf(mWidgetId));
         }
     }
-    //设置工作文本
+    //设置清单模式的文本
     public void setWorkingText(String text) {
         if (!TextUtils.equals(mContent, text)) {
             mContent = text;
@@ -346,22 +352,26 @@ public class WorkingNote {
 
     public interface NoteSettingChangedListener {
         /**
-         * Called when the background color of current note has just changed当当前便笺的背景色刚刚更改时调用
+         * Called when the background color of current note has just changed
+         * 当当前便笺的背景色刚刚更改时调用
          */
         void onBackgroundColorChanged();
 
         /**
-         * Called when user set clock当用户设置时钟时调用
+         * Called when user set clock
+         * 当用户设置时钟时调用
          */
         void onClockAlertChanged(long date, boolean set);
 
         /**
-         * Call when user create note from widget当用户从小部件创建便签时调用
+         * Call when user create note from widget
+         * 当用户从小部件创建便签时调用
          */
         void onWidgetChanged();
 
         /**
-         * Call when switch between check list mode and normal mode在检查列表模式和正常模式之间切换时调用
+         * Call when switch between check list mode and normal mode
+         * 在清单模式和正常模式之间切换时调用
          * @param oldMode is previous mode before change旧模式是更改前的模式
          * @param newMode is new mode新模式是新模式
          */

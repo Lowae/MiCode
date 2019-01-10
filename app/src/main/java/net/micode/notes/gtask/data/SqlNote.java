@@ -200,19 +200,24 @@ public class SqlNote {
         mVersion = c.getLong(VERSION_COLUMN);
     }
 
+    //加载数据信息
     private void loadDataContent() {
         Cursor c = null;
+        //删除mDataList所有元素。 此调用返回后，mDataList将为空。
         mDataList.clear();
         try {
+            //数据库查询语句，通过便签id来获取便签的整个数据信息
             c = mContentResolver.query(Notes.CONTENT_DATA_URI, SqlData.PROJECTION_DATA,
                     "(note_id=?)", new String[] {
                         String.valueOf(mId)
                     }, null);
             if (c != null) {
+                //如果查询结果为空，提示“it seems that the note has not data”
                 if (c.getCount() == 0) {
                     Log.w(TAG, "it seems that the note has not data");
                     return;
                 }
+                //继续查询下一个
                 while (c.moveToNext()) {
                     SqlData data = new SqlData(mContext, c);
                     mDataList.add(data);
@@ -226,6 +231,11 @@ public class SqlNote {
         }
     }
 
+    /**
+     * 从JSONObject中获取便签数据信息
+     * @param js
+     * @return
+     */
     public boolean setContent(JSONObject js) {
         try {
             JSONObject note = js.getJSONObject(GTaskStringUtils.META_HEAD_NOTE);
