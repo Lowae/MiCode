@@ -37,45 +37,45 @@ import java.util.HashSet;
 
 public class DataUtils {
     public static final String TAG = "DataUtils";
-    public static boolean batchDeleteNotes(ContentResolver resolver, HashSet<Long> ids) {
+    public static boolean batchDeleteNotes(ContentResolver resolver, HashSet<Long> ids) {//批量删除注释
         if (ids == null) {
-            Log.d(TAG, "the ids is null");
+            Log.d(TAG, "the ids is null");//id为空
             return true;
         }
         if (ids.size() == 0) {
-            Log.d(TAG, "no id is in the hashset");
+            Log.d(TAG, "no id is in the hashset");//容器中没有id
             return true;
         }
 
-        ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
+        ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();//给数组列表分配空间
         for (long id : ids) {
             if(id == Notes.ID_ROOT_FOLDER) {
-                Log.e(TAG, "Don't delete system folder root");
+                Log.e(TAG, "Don't delete system folder root");//不删除系统文件夹根目录
                 continue;
             }
             ContentProviderOperation.Builder builder = ContentProviderOperation
-                    .newDelete(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id));
+                    .newDelete(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id));//创建复杂对象内容提供程序操作
             operationList.add(builder.build());
         }
         try {
             ContentProviderResult[] results = resolver.applyBatch(Notes.AUTHORITY, operationList);
             if (results == null || results.length == 0 || results[0] == null) {
-                Log.d(TAG, "delete notes failed, ids:" + ids.toString());
+                Log.d(TAG, "delete notes failed, ids:" + ids.toString());//删除便签失败，ID:
                 return false;
-            }
+            }//删除便签
             return true;
         } catch (RemoteException e) {
             Log.e(TAG, String.format("%s: %s", e.toString(), e.getMessage()));
         } catch (OperationApplicationException e) {
             Log.e(TAG, String.format("%s: %s", e.toString(), e.getMessage()));
-        }
+        }//排除异常
         return false;
     }
 
-    public static void moveNoteToFoler(ContentResolver resolver, long id, long srcFolderId, long desFolderId) {
+    public static void moveNoteToFoler(ContentResolver resolver, long id, long srcFolderId, long desFolderId) {//将便签移到文件夹内
         ContentValues values = new ContentValues();
-        values.put(NoteColumns.PARENT_ID, desFolderId);
-        values.put(NoteColumns.ORIGIN_PARENT_ID, srcFolderId);
+        values.put(NoteColumns.PARENT_ID, desFolderId);//输入des文件夹id
+        values.put(NoteColumns.ORIGIN_PARENT_ID, srcFolderId);//输入src文件夹id
         values.put(NoteColumns.LOCAL_MODIFIED, 1);
         resolver.update(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id), values, null, null);
     }
