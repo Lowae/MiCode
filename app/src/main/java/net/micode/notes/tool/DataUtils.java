@@ -58,7 +58,7 @@ public class DataUtils {
             operationList.add(builder.build());
         }
         try {
-            ContentProviderResult[] results = resolver.applyBatch(Notes.AUTHORITY, operationList);
+            ContentProviderResult[] results = resolver.applyBatch(Notes.AUTHORITY, operationList);//批量操作
             if (results == null || results.length == 0 || results[0] == null) {
                 Log.d(TAG, "delete notes failed, ids:" + ids.toString());//删除便签失败，ID:
                 return false;
@@ -77,29 +77,29 @@ public class DataUtils {
         values.put(NoteColumns.PARENT_ID, desFolderId);//输入des文件夹id
         values.put(NoteColumns.ORIGIN_PARENT_ID, srcFolderId);//输入src文件夹id
         values.put(NoteColumns.LOCAL_MODIFIED, 1);
-        resolver.update(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id), values, null, null);
+        resolver.update(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id), values, null, null);//更新ID
     }
 
     public static boolean batchMoveToFolder(ContentResolver resolver, HashSet<Long> ids,
-            long folderId) {
+            long folderId) {//批量移动到文件夹
         if (ids == null) {
-            Log.d(TAG, "the ids is null");
+            Log.d(TAG, "the ids is null");//id为空
             return true;
         }
 
-        ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
+        ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();//给数组列表分配空间
         for (long id : ids) {
             ContentProviderOperation.Builder builder = ContentProviderOperation
-                    .newUpdate(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id));
+                    .newUpdate(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id));//创建复杂对象内容提供程序操作
             builder.withValue(NoteColumns.PARENT_ID, folderId);
             builder.withValue(NoteColumns.LOCAL_MODIFIED, 1);
-            operationList.add(builder.build());
+            operationList.add(builder.build());//添加操作表
         }
 
         try {
             ContentProviderResult[] results = resolver.applyBatch(Notes.AUTHORITY, operationList);
             if (results == null || results.length == 0 || results[0] == null) {
-                Log.d(TAG, "delete notes failed, ids:" + ids.toString());
+                Log.d(TAG, "delete notes failed, ids:" + ids.toString());//删除便签错误，id：
                 return false;
             }
             return true;
@@ -107,48 +107,48 @@ public class DataUtils {
             Log.e(TAG, String.format("%s: %s", e.toString(), e.getMessage()));
         } catch (OperationApplicationException e) {
             Log.e(TAG, String.format("%s: %s", e.toString(), e.getMessage()));
-        }
+        }//排除异常
         return false;
     }
 
     /**
-     * Get the all folder count except system folders {@link Notes#TYPE_SYSTEM}}
+     * Get the all folder count except system folders {@link Notes#TYPE_SYSTEM}}//获取除系统文件夹@link notes type系统以外的所有文件夹计数
      */
-    public static int getUserFolderCount(ContentResolver resolver) {
+    public static int getUserFolderCount(ContentResolver resolver) {//获取用户文件夹计数
         Cursor cursor =resolver.query(Notes.CONTENT_NOTE_URI,
                 new String[] { "COUNT(*)" },
                 NoteColumns.TYPE + "=? AND " + NoteColumns.PARENT_ID + "<>?",
                 new String[] { String.valueOf(Notes.TYPE_FOLDER), String.valueOf(Notes.ID_TRASH_FOLER)},
-                null);
+                null);//游标查询
 
         int count = 0;
-        if(cursor != null) {
+        if(cursor != null) {//游标不为空
             if(cursor.moveToFirst()) {
                 try {
-                    count = cursor.getInt(0);
+                    count = cursor.getInt(0);//获取文件夹计数
                 } catch (IndexOutOfBoundsException e) {
-                    Log.e(TAG, "get folder count failed:" + e.toString());
+                    Log.e(TAG, "get folder count failed:" + e.toString());//获取文件夹计数失败
                 } finally {
-                    cursor.close();
+                    cursor.close();//关闭游标
                 }
             }
         }
-        return count;
+        return count;//返回文件夹数量
     }
 
-    public static boolean visibleInNoteDatabase(ContentResolver resolver, long noteId, int type) {
+    public static boolean visibleInNoteDatabase(ContentResolver resolver, long noteId, int type) {//在便签数据库中可见
         Cursor cursor = resolver.query(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId),
                 null,
                 NoteColumns.TYPE + "=? AND " + NoteColumns.PARENT_ID + "<>" + Notes.ID_TRASH_FOLER,
                 new String [] {String.valueOf(type)},
-                null);
+                null);//查询便签
 
         boolean exist = false;
-        if (cursor != null) {
+        if (cursor != null) {//游标不为空
             if (cursor.getCount() > 0) {
                 exist = true;
             }
-            cursor.close();
+            cursor.close();//关闭游标
         }
         return exist;
     }
