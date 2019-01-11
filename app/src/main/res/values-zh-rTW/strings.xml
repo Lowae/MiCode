@@ -43,6 +43,7 @@
     <string name="menu_sync_cancel">取消同步</string>
     <string name="menu_setting">設置</string>
     <string name="menu_search">搜尋</string>
+    <string name="menu_weather">天氣</string>
     <string name="menu_delete">刪除</string>
     <string name="menu_move">移動到文件夾</string>
     <string name="menu_select_title">選中了 %d 項</string>

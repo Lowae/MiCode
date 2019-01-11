@@ -15,8 +15,8 @@
      limitations under the License.
 -->
 
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menu_new_note"
@@ -40,7 +40,9 @@
 
     <item
         android:id="@+id/menu_image_share"
-        android:title="@string/menu_image_share"/>
+        android:title="@string/menu_image_share"
+        android:icon="@drawable/image_share"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_send_to_desktop"
@@ -48,7 +50,9 @@
 
     <item
         android:id="@+id/menu_image_insert"
-        android:title="@string/menu_image_insert"/>
+        android:title="@string/menu_image_insert"
+        android:icon="@drawable/image_insert"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_alert"

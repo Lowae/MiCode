@@ -15,18 +15,24 @@
      limitations under the License.
 -->
 
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/note_list_framelayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/list_background">
 
+    <WebView
+        android:id="@+id/webview_weather"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/webview_background">
+    </WebView>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_below="@id/webview_weather">
         <TextView
             android:id="@+id/tv_title_bar"
             android:layout_width="fill_parent"
@@ -56,10 +62,12 @@
 
     <Button
         android:id="@+id/btn_new_note"
-        android:background="@drawable/new_note"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:focusable="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="30dp"/>
-</FrameLayout>
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/new_note"
+        android:focusable="false" />
+</RelativeLayout>

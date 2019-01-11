@@ -27,9 +27,12 @@ import android.database.Cursor;
 import net.micode.notes.data.Notes;
 import net.micode.notes.data.Notes.NoteColumns;
 
-
+/**
+ * 广播接收器
+ */
 public class AlarmInitReceiver extends BroadcastReceiver {
 
+    //定义一个存放便签id及闹钟提醒日期的数组
     private static final String [] PROJECTION = new String [] {
         NoteColumns.ID,
         NoteColumns.ALERTED_DATE
@@ -41,6 +44,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         long currentDate = System.currentTimeMillis();
+        //查询便签数据库Data中的闹钟提醒日期，放回Cursor结果集
         Cursor c = context.getContentResolver().query(Notes.CONTENT_NOTE_URI,
                 PROJECTION,
                 NoteColumns.ALERTED_DATE + ">? AND " + NoteColumns.TYPE + "=" + Notes.TYPE_NOTE,
@@ -50,12 +54,14 @@ public class AlarmInitReceiver extends BroadcastReceiver {
         if (c != null) {
             if (c.moveToFirst()) {
                 do {
+                    //获取结果集中的闹钟提醒日期
                     long alertDate = c.getLong(COLUMN_ALERTED_DATE);
                     Intent sender = new Intent(context, AlarmReceiver.class);
                     sender.setData(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, c.getLong(COLUMN_ID)));
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, sender, 0);
                     AlarmManager alermManager = (AlarmManager) context
                             .getSystemService(Context.ALARM_SERVICE);
+                    //设置闹钟提醒
                     alermManager.set(AlarmManager.RTC_WAKEUP, alertDate, pendingIntent);
                 } while (c.moveToNext());
             }

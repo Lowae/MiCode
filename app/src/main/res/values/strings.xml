@@ -46,6 +46,7 @@
     <string name="menu_sync_cancel">Cancel syncing</string>
     <string name="menu_setting">Settings</string>
     <string name="menu_search">Search</string>
+    <string name="menu_weather">Weather</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_move">Move to folder</string>
     <string name="menu_select_title">%d selected</string>

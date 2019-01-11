@@ -42,6 +42,7 @@
     <string name="menu_sync_cancel">取消同步</string>
     <string name="menu_setting">设置</string>
     <string name="menu_search">搜索</string>
+    <string name="menu_weather">天气</string>
     <string name="menu_delete">删除</string>
     <string name="menu_move">移动到文件夹</string>
     <string name="menu_select_title">选中了 %d 项</string>
