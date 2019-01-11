@@ -17,8 +17,9 @@
 package net.micode.notes.tool;
 
 public class GTaskStringUtils {//gtask字符串实用程序
-
-    public final static String GTASK_JSON_ACTION_ID = "action_id";
+    // static修饰的属性强调它们只有一个，final修饰的属性表明是一个常数（创建后不能被修改）。
+    // static final修饰的属性表示一旦给值，就不可修改，并且可以通过类名访问。
+    public final static String GTASK_JSON_ACTION_ID = "action_id";//GTASK JSON操作ID
 
     public final static String GTASK_JSON_ACTION_LIST = "action_list";
 
