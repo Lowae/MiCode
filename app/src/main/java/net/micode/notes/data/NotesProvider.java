@@ -73,21 +73,21 @@ public class NotesProvider extends ContentProvider {
      * 该字符串表示搜索便签结果
      */
     private static final String NOTES_SEARCH_PROJECTION = NoteColumns.ID + ","
-        + NoteColumns.ID + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA + ","
-        + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ","
-        + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ","
-        + R.drawable.search_result + " AS " + SearchManager.SUGGEST_COLUMN_ICON_1 + ","
-        + "'" + Intent.ACTION_VIEW + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_ACTION + ","
-        + "'" + Notes.TextNote.CONTENT_TYPE + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA;
+            + NoteColumns.ID + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA + ","
+            + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ","
+            + "TRIM(REPLACE(" + NoteColumns.SNIPPET + ", x'0A','')) AS " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ","
+            + R.drawable.search_result + " AS " + SearchManager.SUGGEST_COLUMN_ICON_1 + ","
+            + "'" + Intent.ACTION_VIEW + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_ACTION + ","
+            + "'" + Notes.TextNote.CONTENT_TYPE + "' AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA;
 
     /**
      *该字符串表示搜索片段的结果
      */
     private static String NOTES_SNIPPET_SEARCH_QUERY = "SELECT " + NOTES_SEARCH_PROJECTION
-        + " FROM " + TABLE.NOTE
-        + " WHERE " + NoteColumns.SNIPPET + " LIKE ?"
-        + " AND " + NoteColumns.PARENT_ID + "<>" + Notes.ID_TRASH_FOLER
-        + " AND " + NoteColumns.TYPE + "=" + Notes.TYPE_NOTE;
+            + " FROM " + TABLE.NOTE
+            + " WHERE " + NoteColumns.SNIPPET + " LIKE ?"
+            + " AND " + NoteColumns.PARENT_ID + "<>" + Notes.ID_TRASH_FOLER
+            + " AND " + NoteColumns.TYPE + "=" + Notes.TYPE_NOTE;
 
     /**
      * 表示一个窗口正在生成
@@ -100,16 +100,16 @@ public class NotesProvider extends ContentProvider {
 
     /**
      * 光标搜索,返回搜索到的位置
-     * @param uri
-     * @param projection
-     * @param selection
-     * @param selectionArgs
-     * @param sortOrder
+     * @param uri uri指用来标识便签的uri
+     * @param projection projection指返回列的列表
+     * @param selection selection指被选中的字符串
+     * @param selectionArgs selectionArgs指被选中的字符串数组
+     * @param sortOrder sortOrder指如何排序行
      * @return
      */
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-            String sortOrder) {
+                        String sortOrder) {
         Cursor c = null;
         SQLiteDatabase db = mHelper.getReadableDatabase();
         String id = null;
@@ -117,37 +117,39 @@ public class NotesProvider extends ContentProvider {
          * 尝试与uri相匹配
          */
         switch (mMatcher.match(uri)) {
-                //匹配到1
+            //匹配到1
             case URI_NOTE:
                 c = db.query(TABLE.NOTE, projection, selection, selectionArgs, null, null,
                         sortOrder);
                 break;
-                //匹配到2
+            //匹配到2
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
                 c = db.query(TABLE.NOTE, projection, NoteColumns.ID + "=" + id
                         + parseSelection(selection), selectionArgs, null, null, sortOrder);
                 break;
-                //匹配到3
+            //匹配到3
             case URI_DATA:
                 c = db.query(TABLE.DATA, projection, selection, selectionArgs, null, null,
                         sortOrder);
                 break;
-                //匹配到4
+            //匹配到4
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
                 c = db.query(TABLE.DATA, projection, DataColumns.ID + "=" + id
                         + parseSelection(selection), selectionArgs, null, null, sortOrder);
                 break;
-                //匹配到5或6
+            //匹配到5或6
             case URI_SEARCH:
             case URI_SEARCH_SUGGEST:
+                //当行排序规则非空或返回列的列表非空
                 if (sortOrder != null || projection != null) {
                     throw new IllegalArgumentException(
                             "do not specify sortOrder, selection, selectionArgs, or projection" + "with this query");
                 }
 
                 String searchString = null;
+                //当函数结果匹配到6
                 if (mMatcher.match(uri) == URI_SEARCH_SUGGEST) {
                     if (uri.getPathSegments().size() > 1) {
                         searchString = uri.getPathSegments().get(1);
@@ -174,6 +176,7 @@ public class NotesProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
+        //当行查询结果非空
         if (c != null) {
             c.setNotificationUri(getContext().getContentResolver(), uri);
         }
@@ -182,9 +185,9 @@ public class NotesProvider extends ContentProvider {
 
     /**
      * 插入value到uri中
-     * @param uri
+     * @param uri uri指用来标识便签的uri
      * @param values values指被插入的值
-     * @return
+     * @return return 指操作完成后生成的新uri
      */
     @Override
     public Uri insert(Uri uri, ContentValues values) {
@@ -195,8 +198,10 @@ public class NotesProvider extends ContentProvider {
             case URI_NOTE:
                 insertedId = noteId = db.insert(TABLE.NOTE, null, values);
                 break;
-                //匹配到2
+            //匹配到2
             case URI_DATA:
+
+                //判断Values中是否包含某便签ID
                 if (values.containsKey(DataColumns.NOTE_ID)) {
                     noteId = values.getAsLong(DataColumns.NOTE_ID);
                 } else {
@@ -207,14 +212,16 @@ public class NotesProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
-        // 通知便签的uri
+       //当便签id合法
         if (noteId > 0) {
+            // 通知便签的uri
             getContext().getContentResolver().notifyChange(
                     ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), null);
         }
 
-        // 通知数据的uri
+        //当数据id合法
         if (dataId > 0) {
+            // 通知数据的uri
             getContext().getContentResolver().notifyChange(
                     ContentUris.withAppendedId(Notes.CONTENT_DATA_URI, dataId), null);
         }
@@ -224,9 +231,9 @@ public class NotesProvider extends ContentProvider {
 
     /**
      * 删除操作
-     * @param uri
-     * @param selection
-     * @param selectionArgs
+     * @param uri uri指用来标识便签的uri
+     * @param selection selection指被选中的字符串
+     * @param selectionArgs selectionArgs指被选中的字符串数组
      * @return
      */
     @Override
@@ -241,25 +248,26 @@ public class NotesProvider extends ContentProvider {
                 selection = "(" + selection + ") AND " + NoteColumns.ID + ">0 ";
                 count = db.delete(TABLE.NOTE, selection, selectionArgs);
                 break;
-                //当匹配到2
+            //当匹配到2
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
                 /**
                  * 小于0ID是系统文件,不允许删除
                  */
                 long noteId = Long.valueOf(id);
+                //当便签id不合法
                 if (noteId <= 0) {
                     break;
                 }
                 count = db.delete(TABLE.NOTE,
                         NoteColumns.ID + "=" + id + parseSelection(selection), selectionArgs);
                 break;
-                //当匹配到3
+            //当匹配到3
             case URI_DATA:
                 count = db.delete(TABLE.DATA, selection, selectionArgs);
                 deleteData = true;
                 break;
-                //当匹配到4
+            //当匹配到4
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
                 count = db.delete(TABLE.DATA,
@@ -269,7 +277,9 @@ public class NotesProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
+        //当便签数大于0
         if (count > 0) {
+            //当删除数据成功
             if (deleteData) {
                 getContext().getContentResolver().notifyChange(Notes.CONTENT_NOTE_URI, null);
             }
@@ -280,10 +290,10 @@ public class NotesProvider extends ContentProvider {
 
     /**
      * 更新数据
-     * @param uri
-     * @param values
-     * @param selection
-     * @param selectionArgs
+     * @param uri 指标签对应的uri
+     * @param values values指列名称到新列值的映射
+     * @param selection selection表示被选中的字符串
+     * @param selectionArgs selectionArgs表示被选中的字符串数组
      * @return
      */
     @Override
@@ -298,19 +308,19 @@ public class NotesProvider extends ContentProvider {
                 increaseNoteVersion(-1, selection, selectionArgs);
                 count = db.update(TABLE.NOTE, values, selection, selectionArgs);
                 break;
-                //匹配到2
+            //匹配到2
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
                 increaseNoteVersion(Long.valueOf(id), selection, selectionArgs);
                 count = db.update(TABLE.NOTE, values, NoteColumns.ID + "=" + id
                         + parseSelection(selection), selectionArgs);
                 break;
-                //匹配到3
+            //匹配到3
             case URI_DATA:
                 count = db.update(TABLE.DATA, values, selection, selectionArgs);
                 updateData = true;
                 break;
-                //匹配到4
+            //匹配到4
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
                 count = db.update(TABLE.DATA, values, DataColumns.ID + "=" + id
@@ -321,6 +331,7 @@ public class NotesProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
+        //当便签数大于0
         if (count > 0) {
             if (updateData) {//当更新数据成功后通知相关uri
                 getContext().getContentResolver().notifyChange(Notes.CONTENT_NOTE_URI, null);
@@ -341,9 +352,9 @@ public class NotesProvider extends ContentProvider {
 
     /**
      * 提升便签版本
-     * @param id
-     * @param selection
-     * @param selectionArgs
+     * @param id id指标识每个便签的唯一id
+     * @param selection selection表示被选中的字符串
+     * @param selectionArgs selectionArgs表示被选中的字符串数组
      */
     private void increaseNoteVersion(long id, String selection, String[] selectionArgs) {
         StringBuilder sql = new StringBuilder(120);
@@ -354,12 +365,15 @@ public class NotesProvider extends ContentProvider {
         sql.append(NoteColumns.VERSION);
         sql.append("=" + NoteColumns.VERSION + "+1 ");
 
+        //当id合法或被选中字符串非空
         if (id > 0 || !TextUtils.isEmpty(selection)) {
             sql.append(" WHERE ");
         }
+        //当id合法
         if (id > 0) {
             sql.append(NoteColumns.ID + "=" + String.valueOf(id));
         }
+        //当选中的字符串非空
         if (!TextUtils.isEmpty(selection)) {
             String selectString = id > 0 ? parseSelection(selection) : selection;
             for (String args : selectionArgs) {
