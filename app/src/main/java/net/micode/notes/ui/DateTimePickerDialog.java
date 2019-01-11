@@ -19,6 +19,7 @@ package net.micode.notes.ui;
 import java.util.Calendar;
 
 import net.micode.notes.R;
+import net.micode.notes.tool.DataUtils;
 import net.micode.notes.ui.DateTimePicker;
 import net.micode.notes.ui.DateTimePicker.OnDateTimeChangedListener;
 
@@ -43,13 +44,20 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
         void OnDateTimeSet(AlertDialog dialog, long date);
     }
 
+    /**
+     * 构造方法，完成对时间选择对话框的初始化工作
+     * @param context
+     * @param date
+     */
     public DateTimePickerDialog(Context context, long date) {
         super(context);
         mDateTimePicker = new DateTimePicker(context);
         setView(mDateTimePicker);
+        //设置日期选择的监听器
         mDateTimePicker.setOnDateTimeChangedListener(new OnDateTimeChangedListener() {
             public void onDateTimeChanged(DateTimePicker view, int year, int month,
                     int dayOfMonth, int hourOfDay, int minute) {
+                //设置年月日等日期信息
                 mDate.set(Calendar.YEAR, year);
                 mDate.set(Calendar.MONTH, month);
                 mDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -61,8 +69,12 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
         mDate.setTimeInMillis(date);
         mDate.set(Calendar.SECOND, 0);
         mDateTimePicker.setCurrentDate(mDate.getTimeInMillis());
-        setButton(context.getString(R.string.datetime_dialog_ok), this);
-        setButton2(context.getString(R.string.datetime_dialog_cancel), (OnClickListener)null);
+        //设置“设置”按钮
+//        setButton(context.getString(R.string.datetime_dialog_ok), this);原代码中此方法已被弃用，故采用下面新方法设置按钮
+        setButton(BUTTON_POSITIVE,context.getString(R.string.datetime_dialog_ok), this);
+        //设置“取消”按钮
+//        setButton2(context.getString(R.string.datetime_dialog_cancel), (OnClickListener)null);原代码中此方法已被弃用，故采用下面新方法设置按钮
+        setButton(BUTTON_NEGATIVE, context.getString(R.string.datetime_dialog_cancel), (OnClickListener) null);
         set24HourView(DateFormat.is24HourFormat(this.getContext()));
         updateTitle(mDate.getTimeInMillis());
     }
@@ -75,6 +87,10 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
         mOnDateTimeSetListener = callBack;
     }
 
+    /**
+     * 更新标题栏为当前时间
+     * @param date
+     */
     private void updateTitle(long date) {
         int flag =
             DateUtils.FORMAT_SHOW_YEAR |

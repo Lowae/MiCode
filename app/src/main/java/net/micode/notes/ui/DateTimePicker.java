@@ -68,32 +68,50 @@ public class DateTimePicker extends FrameLayout {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
             mDate.add(Calendar.DAY_OF_YEAR, newVal - oldVal);
+            //更新日期显示格式
             updateDateControl();
+            //更细日期
             onDateTimeChanged();
         }
     };
 
+    /**
+     * 用于监听数值变化，通过此接口可以得到变化前的值和当前值
+     */
     private NumberPicker.OnValueChangeListener mOnHourChangedListener = new NumberPicker.OnValueChangeListener() {
+        /**
+         * 当数值发生变化时被调用，用于调整数值变化
+         * @param picker
+         * @param oldVal
+         * @param newVal
+         */
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
             boolean isDateChanged = false;
             Calendar cal = Calendar.getInstance();
+            //如果是24小时制
             if (!mIs24HourView) {
+                //以年份为日期界限天数加1
                 if (!mIsAm && oldVal == HOURS_IN_HALF_DAY - 1 && newVal == HOURS_IN_HALF_DAY) {
                     cal.setTimeInMillis(mDate.getTimeInMillis());
                     cal.add(Calendar.DAY_OF_YEAR, 1);
                     isDateChanged = true;
-                } else if (mIsAm && oldVal == HOURS_IN_HALF_DAY && newVal == HOURS_IN_HALF_DAY - 1) {
+                }
+                //以年份为日期界限天数加1
+                else if (mIsAm && oldVal == HOURS_IN_HALF_DAY && newVal == HOURS_IN_HALF_DAY - 1) {
                     cal.setTimeInMillis(mDate.getTimeInMillis());
                     cal.add(Calendar.DAY_OF_YEAR, -1);
                     isDateChanged = true;
                 }
+                //如果小时制发生改变，则转换日期格式
                 if (oldVal == HOURS_IN_HALF_DAY - 1 && newVal == HOURS_IN_HALF_DAY ||
                         oldVal == HOURS_IN_HALF_DAY && newVal == HOURS_IN_HALF_DAY - 1) {
                     mIsAm = !mIsAm;
                     updateAmPmControl();
                 }
-            } else {
+            }
+            //如果为12小时制
+            else {
                 if (oldVal == HOURS_IN_ALL_DAY - 1 && newVal == 0) {
                     cal.setTimeInMillis(mDate.getTimeInMillis());
                     cal.add(Calendar.DAY_OF_YEAR, 1);
@@ -104,6 +122,7 @@ public class DateTimePicker extends FrameLayout {
                     isDateChanged = true;
                 }
             }
+            //获取新的日期格式（当小时制发生改变时）
             int newHour = mHourSpinner.getValue() % HOURS_IN_HALF_DAY + (mIsAm ? 0 : HOURS_IN_HALF_DAY);
             mDate.set(Calendar.HOUR_OF_DAY, newHour);
             onDateTimeChanged();
@@ -434,11 +453,16 @@ public class DateTimePicker extends FrameLayout {
         updateAmPmControl();
     }
 
+    /**
+     * 用于更新日期的显示格式
+     */
     private void updateDateControl() {
         Calendar cal = Calendar.getInstance();
+        //以毫秒为单位返回此Calendar的时间值。同时设置此日历的当前时间。
         cal.setTimeInMillis(mDate.getTimeInMillis());
         cal.add(Calendar.DAY_OF_YEAR, -DAYS_IN_ALL_WEEK / 2 - 1);
         mDateSpinner.setDisplayedValues(null);
+        //设置日期显示格式
         for (int i = 0; i < DAYS_IN_ALL_WEEK; ++i) {
             cal.add(Calendar.DAY_OF_YEAR, 1);
             mDateDisplayValues[i] = (String) DateFormat.format("MM.dd EEEE", cal);
@@ -448,6 +472,9 @@ public class DateTimePicker extends FrameLayout {
         mDateSpinner.invalidate();
     }
 
+    /**
+     * 如果是12小时制，则显示上午AM,下午PM
+     */
     private void updateAmPmControl() {
         if (mIs24HourView) {
             mAmPmSpinner.setVisibility(View.GONE);
@@ -458,6 +485,9 @@ public class DateTimePicker extends FrameLayout {
         }
     }
 
+    /**
+     * 12小时制和24小时制相互转换
+     */
     private void updateHourControl() {
         if (mIs24HourView) {
             mHourSpinner.setMinValue(HOUR_SPINNER_MIN_VAL_24_HOUR_VIEW);
