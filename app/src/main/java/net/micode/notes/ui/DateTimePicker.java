@@ -80,7 +80,7 @@ public class DateTimePicker extends FrameLayout {
      */
     private NumberPicker.OnValueChangeListener mOnHourChangedListener = new NumberPicker.OnValueChangeListener() {
         /**
-         * 当数值发生变化时被调用，用于调整数值变化
+         * 当数值也就是小时发生变化时被调用，用于调整数值变化
          * @param picker
          * @param oldVal
          * @param newVal
@@ -134,17 +134,23 @@ public class DateTimePicker extends FrameLayout {
         }
     };
 
+    /**
+     * 当分钟发生变化时被调用，调整变化值
+     */
     private NumberPicker.OnValueChangeListener mOnMinuteChangedListener = new NumberPicker.OnValueChangeListener() {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+            //获取时间选择器的分钟的最小值和最大值
             int minValue = mMinuteSpinner.getMinValue();
             int maxValue = mMinuteSpinner.getMaxValue();
             int offset = 0;
+            //如旧值为最大值，新值为最小值，则小时值加1（offset+1）
             if (oldVal == maxValue && newVal == minValue) {
                 offset += 1;
             } else if (oldVal == minValue && newVal == maxValue) {
                 offset -= 1;
             }
+            //如果产生了小时值变化，则更新小时日期
             if (offset != 0) {
                 mDate.add(Calendar.HOUR_OF_DAY, offset);
                 mHourSpinner.setValue(getCurrentHour());
@@ -163,16 +169,22 @@ public class DateTimePicker extends FrameLayout {
         }
     };
 
+    /**
+     * 当12小时制中AM和PM需要转换时调用，实现12小时制中的AM与PM的转换
+     */
     private NumberPicker.OnValueChangeListener mOnAmPmChangedListener = new NumberPicker.OnValueChangeListener() {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
             mIsAm = !mIsAm;
+            //如果是下午，则减去12小时，切换成下午PM时间
             if (mIsAm) {
                 mDate.add(Calendar.HOUR_OF_DAY, -HOURS_IN_HALF_DAY);
             } else {
                 mDate.add(Calendar.HOUR_OF_DAY, HOURS_IN_HALF_DAY);
             }
+            //更新时间制
             updateAmPmControl();
+            //更新日期
             onDateTimeChanged();
         }
     };

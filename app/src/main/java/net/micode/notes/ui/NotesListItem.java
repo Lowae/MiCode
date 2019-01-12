@@ -18,6 +18,7 @@ package net.micode.notes.ui;
 
 import android.content.Context;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -98,7 +99,7 @@ public class NotesListItem extends LinearLayout {
                                 data.getNotesCount()));
                 mAlert.setVisibility(View.GONE);
             } else {
-                //如果是普通闹钟便签
+                //如果是普通便签
                 mTitle.setText(DataUtils.getFormattedSnippet(data.getSnippet()));
                 if (data.hasAlert()) {
                     mAlert.setImageResource(R.drawable.clock);

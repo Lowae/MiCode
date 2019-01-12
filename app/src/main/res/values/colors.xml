@@ -16,5 +16,5 @@
 -->
 
 <resources>
-    <color name="user_query_highlight">#335b5b5b</color>
+    <color name="user_query_highlight">#FF0000</color>
 </resources>

@@ -25,6 +25,9 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+/**
+ *
+ */
 public class Contact {
     private static HashMap<String, String> sContactCache;
     private static final String TAG = "Contact";

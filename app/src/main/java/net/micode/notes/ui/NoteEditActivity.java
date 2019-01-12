@@ -32,6 +32,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -60,11 +61,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.aip.asrwakeup3.core.util.MyLogger;
+
 import net.micode.notes.R;
 import net.micode.notes.data.Notes;
 import net.micode.notes.data.Notes.TextNote;
+import net.micode.notes.model.Note;
 import net.micode.notes.model.WorkingNote;
 import net.micode.notes.model.WorkingNote.NoteSettingChangedListener;
+import net.micode.notes.recog.ActivityUiDialog;
 import net.micode.notes.tool.DataUtils;
 import net.micode.notes.tool.ResourceParser;
 import net.micode.notes.tool.ResourceParser.TextAppearanceResources;
@@ -77,6 +82,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -87,7 +93,7 @@ import java.util.regex.Pattern;
 /**
  * 实现便签的编辑界面及其菜单功能
  */
-public class NoteEditActivity extends AppCompatActivity implements OnClickListener,
+public class NoteEditActivity extends ActivityUiDialog implements OnClickListener,
         NoteSettingChangedListener, OnTextViewChangeListener {
     //自定义类 ViewHolder 来减少 findViewById() 的使用以及避免过多地 inflate（绑定） view，从而实现目标。
     private class HeadViewHolder {
@@ -219,7 +225,6 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
         mWorkingNote = null;
         if (TextUtils.equals(Intent.ACTION_VIEW, intent.getAction())) {
             long noteId = intent.getLongExtra(Intent.EXTRA_UID, 0);
-//            Log.e("noteId1:", String.valueOf(noteId));
             mUserQuery = "";
 
             /**
@@ -227,7 +232,6 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
              */
             if (intent.hasExtra(SearchManager.EXTRA_DATA_KEY)) {
                 noteId = Long.parseLong(intent.getStringExtra(SearchManager.EXTRA_DATA_KEY));
-//                Log.e("noteID2: ", String.valueOf(noteId));
                 mUserQuery = intent.getStringExtra(SearchManager.USER_QUERY);
             }
             //如果要查询的便签id不存在，则弹出消息“要查看的便签不存在”,并跳转到便签列表界面
@@ -319,6 +323,8 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
             mNoteEditor.setText(getHighlightQueryResult(mWorkingNote.getContent(), mUserQuery));
             mNoteEditor.setSelection(mNoteEditor.getText().length());
         }
+//        Typeface font = Typeface.create(Typeface.SANS_SERIF,Typeface.BOLD_ITALIC);
+//        mNoteEditor.getPaint().setTypeface(font);
         for (Integer id : sBgSelectorSelectionMap.keySet()) {
             findViewById(sBgSelectorSelectionMap.get(id)).setVisibility(View.GONE);
         }
@@ -693,6 +699,19 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
             //删除提醒
             case R.id.menu_delete_remind:
                 mWorkingNote.setAlertDate(0, false);
+                break;
+            //字体设置
+            case R.id.menu_font:
+                break;
+            case R.id.menu_speech_input:
+                start();
+//                Intent intent = new Intent(NoteEditActivity.this, ActivityUiDialog.class);
+//                startActivity(intent);
+                Log.e("消息:", getMessage()+"11");
+//                if(!(getMessage() == "")){
+//                    Log.e("appen",getMessage()+"——————");
+//                    mNoteEditor.a;
+//                }
                 break;
             default:
                 break;
@@ -1153,6 +1172,22 @@ public class NoteEditActivity extends AppCompatActivity implements OnClickListen
             displayImage(imagePath);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (requestCode == 2) {
+            running = false;
+            String message = "";
+            if (resultCode == RESULT_OK) {
+                ArrayList results = data.getStringArrayListExtra("results");
+                if (results != null && results.size() > 0) {
+                    message += results.get(0);
+                }
+            } else {
+                message += "没有结果";
+            }
+            MyLogger.info(message);
+            mNoteEditor.append(message);
+            mWorkingNote.setWorkingText(mNoteEditor.getText().toString());
         }
     }
 

@@ -61,4 +61,14 @@
     <item
         android:id="@+id/menu_delete_remind"
         android:title="@string/menu_remove_remind" />
+
+    <item
+        android:id="@+id/menu_font"
+        android:title="@string/menu_font"
+        android:icon="@drawable/menu_font"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_speech_input"
+        android:title="@string/menu_speech_input"/>
 </menu>

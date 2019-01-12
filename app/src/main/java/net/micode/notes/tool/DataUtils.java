@@ -282,6 +282,11 @@ public class DataUtils {
         throw new IllegalArgumentException("Note is not found with id: " + noteId);
     }
 
+    /**
+     * 获取格式化后的便签内容字符串信息，即获取从0开始到第一个换行符索引处的索引字符串
+     * @param snippet
+     * @return
+     */
     public static String getFormattedSnippet(String snippet) {
         if (snippet != null) {
             snippet = snippet.trim();

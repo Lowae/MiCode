@@ -250,11 +250,11 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
      */
    private void initResources() {
        mContentResolver = this.getContentResolver();
+       //定义查询Handler类，用于完成便签及文件夹内文本内容的展示
        mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
        mWebView = (WebView) findViewById(R.id.webview_weather);
        mWebView.loadUrl("https://tianqiapi.com/api.php?style=tg&skin=pitaya");
        mWebView.setVisibility(View.GONE);
-//       mWebView.setBackground(R.drawable.list_background);
        mWebView.setBackgroundColor(0);
         mCurrentFolderId = Notes.ID_ROOT_FOLDER;
         mNotesListView = (ListView) findViewById(R.id.notes_list);
@@ -406,7 +406,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
             return true;
         }
     }
-    //设置
+    //设置新建便签的按钮触摸监听器
     private class NewNoteOnTouchListener implements OnTouchListener {
 
         public boolean onTouch(View v, MotionEvent event) {
@@ -469,6 +469,9 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
 
     };
 
+    /**
+     * 开始查询数据库中便签信息，并依照文件类型及修改日期降序排列
+     */
     private void startAsyncNotesListQuery() {
         String selection = (mCurrentFolderId == Notes.ID_ROOT_FOLDER) ? ROOT_FOLDER_SELECTION
                 : NORMAL_SELECTION;
@@ -479,7 +482,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
     }
 
     /**
-     *  静态类，用于异步查询背景，继承AsyncQueryHandler，AsyncQueryHandler用于异步对DB数据库进行操作，加快其数据处理的速度
+     *  静态类，用于异步查询背景信息，如便签和文件夹的展示，继承AsyncQueryHandler，AsyncQueryHandler用于异步对DB数据库进行操作，加快其数据处理的速度
      */
     private final class BackgroundQueryHandler extends AsyncQueryHandler {
         public BackgroundQueryHandler(ContentResolver contentResolver) {
@@ -539,7 +542,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         });
         builder.show();
     }
-    //新建便签
+    //新建便签后弹出新便签界面
     private void createNewNote() {
         Intent intent = new Intent(this, NoteEditActivity.class);
         intent.setAction(Intent.ACTION_INSERT_OR_EDIT);
@@ -956,6 +959,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
             case R.id.menu_search:
                 onSearchRequested();
                 break;
+            //实现查看天气功能
             case R.id.menu_weather:
                 if(weather == 0){
                     mWebView.setVisibility(View.VISIBLE);
