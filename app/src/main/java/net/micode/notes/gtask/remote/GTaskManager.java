@@ -51,17 +51,17 @@ import java.util.Map;
 public class GTaskManager {
     private static final String TAG = GTaskManager.class.getSimpleName();
 
-    public static final int STATE_SUCCESS = 0;
+    public static final int STATE_SUCCESS = 0;//成功
 
-    public static final int STATE_NETWORK_ERROR = 1;
+    public static final int STATE_NETWORK_ERROR = 1;//网络连接故障
 
-    public static final int STATE_INTERNAL_ERROR = 2;
+    public static final int STATE_INTERNAL_ERROR = 2;//程序运行错误
 
-    public static final int STATE_SYNC_IN_PROGRESS = 3;
+    public static final int STATE_SYNC_IN_PROGRESS = 3;//上传进程中
 
-    public static final int STATE_SYNC_CANCELLED = 4;
+    public static final int STATE_SYNC_CANCELLED = 4;//取消上传
 
-    private static GTaskManager mInstance = null;
+    private static GTaskManager mInstance = null;//任务管理器实例
 
     private Activity mActivity;
 
@@ -87,6 +87,7 @@ public class GTaskManager {
 
     private HashMap<Long, String> mNidToGid;
 
+    //*定义任务管理器类
     private GTaskManager() {
         mSyncing = false;
         mCancelled = false;
@@ -99,6 +100,7 @@ public class GTaskManager {
         mNidToGid = new HashMap<Long, String>();
     }
 
+    //*实例化一个任务管理器对象
     public static synchronized GTaskManager getInstance() {
         if (mInstance == null) {
             mInstance = new GTaskManager();
@@ -106,11 +108,12 @@ public class GTaskManager {
         return mInstance;
     }
 
+    //*获取自动令牌
     public synchronized void setActivityContext(Activity activity) {
-        // used for getting authtoken
         mActivity = activity;
     }
 
+    //*任务管理器实行同步操作方法
     public int sync(Context context, GTaskASyncTask asyncTask) {
         if (mSyncing) {
             Log.d(TAG, "Sync is in progress");
@@ -131,21 +134,23 @@ public class GTaskManager {
             GTaskClient client = GTaskClient.getInstance();
             client.resetUpdateArray();
 
-            // login google task
+            // 登录谷歌任务
             if (!mCancelled) {
                 if (!client.login(mActivity)) {
                     throw new NetworkFailureException("login google task failed");
                 }
             }
 
-            // get the task list from google
+            // 从谷歌获得任务清单
             asyncTask.publishProgess(mContext.getString(R.string.sync_progress_init_list));
             initGTaskList();
 
-            // do content sync work
+            // 同步内容
             asyncTask.publishProgess(mContext.getString(R.string.sync_progress_syncing));
             syncContent();
-        } catch (NetworkFailureException e) {
+        }
+        //异常报错（网络异常、操作异常、运行异常）
+        catch (NetworkFailureException e) {
             Log.e(TAG, e.toString());
             return STATE_NETWORK_ERROR;
         } catch (ActionFailureException e) {
@@ -167,6 +172,7 @@ public class GTaskManager {
 
         return mCancelled ? STATE_SYNC_CANCELLED : STATE_SUCCESS;
     }
+
 
     private void initGTaskList() throws NetworkFailureException {
         if (mCancelled)
