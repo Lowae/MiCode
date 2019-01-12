@@ -47,6 +47,7 @@ import android.view.Display;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
@@ -55,6 +56,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -106,12 +108,15 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
     private enum ListEditState {
         NOTE_LIST, SUB_FOLDER, CALL_RECORD_FOLDER
     };
+    private static int weather = 0;
 
     private ListEditState mState;
 
     private BackgroundQueryHandler mBackgroundQueryHandler;
 
     private NotesListAdapter mNotesListAdapter;
+
+    private WebView mWebView;
 
     private ListView mNotesListView;
 
@@ -165,6 +170,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
         //当用户是第一次使用时，会插入该App的相关介绍
         setAppInfoFromRawRes();
     }
+
 
     /**
      * 该方法用于接收子Activity传回来的数据，并进行处理
@@ -244,7 +250,12 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
      */
    private void initResources() {
        mContentResolver = this.getContentResolver();
-        mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
+       mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
+       mWebView = (WebView) findViewById(R.id.webview_weather);
+       mWebView.loadUrl("https://tianqiapi.com/api.php?style=tg&skin=pitaya");
+       mWebView.setVisibility(View.GONE);
+//       mWebView.setBackground(R.drawable.list_background);
+       mWebView.setBackgroundColor(0);
         mCurrentFolderId = Notes.ID_ROOT_FOLDER;
         mNotesListView = (ListView) findViewById(R.id.notes_list);
         mNotesListView.addFooterView(LayoutInflater.from(this).inflate(R.layout.note_list_footer, null),
@@ -883,6 +894,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
+
         if (mState == ListEditState.NOTE_LIST) {
             //绑定菜单的视图文件
             getMenuInflater().inflate(R.menu.note_list, menu);
@@ -944,6 +956,14 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
             case R.id.menu_search:
                 onSearchRequested();
                 break;
+            case R.id.menu_weather:
+                if(weather == 0){
+                    mWebView.setVisibility(View.VISIBLE);
+                    weather = 1;
+                }else {
+                    mWebView.setVisibility(View.GONE);
+                    weather = 0;
+                }
             default:
                 break;
         }
@@ -1105,6 +1125,7 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         if (view instanceof NotesListItem) {
             mFocusNoteDataItem = ((NotesListItem) view).getItemData();
+            //如果长按的对象是便签
             if (mFocusNoteDataItem.getType() == Notes.TYPE_NOTE && !mNotesListAdapter.isInChoiceMode()) {
                 if (mNotesListView.startActionMode(mModeCallBack) != null) {
                     mModeCallBack.onItemCheckedStateChanged(null, position, id, true);
@@ -1112,7 +1133,8 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
                 } else {
                     Log.e(TAG, "startActionMode fails");
                 }
-            } else if (mFocusNoteDataItem.getType() == Notes.TYPE_FOLDER) {
+            }//如果长按的对象是文件夹
+            else if (mFocusNoteDataItem.getType() == Notes.TYPE_FOLDER) {
                 mNotesListView.setOnCreateContextMenuListener(mFolderOnCreateContextMenuListener);
             }
         }

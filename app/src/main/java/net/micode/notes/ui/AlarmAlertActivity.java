@@ -43,6 +43,7 @@ import java.io.IOException;
 public class AlarmAlertActivity extends Activity implements OnClickListener, OnDismissListener {
     private long mNoteId;
     private String mSnippet;
+    //设置的最大显示长度
     private static final int SNIPPET_PREW_MAX_LEN = 60;
     MediaPlayer mPlayer;
 
@@ -50,11 +51,14 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。该处为设置标题为“无标题”
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         final Window win = getWindow();
+        //设置此标识可以在锁屏唤醒屏幕时优先于密码输入界面展示该界面（闹钟界面）
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
+        //如果屏幕未亮起，将唤醒屏幕并亮起
         if (!isScreenOn()) {
             win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
@@ -64,6 +68,7 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
 
         Intent intent = getIntent();
 
+        //获取便签id，并根据便签id获取便签的文本信息，若便签文本信息长度超过最大长度，则显示“。。。”省略后面的文本
         try {
             mNoteId = Long.valueOf(intent.getData().getPathSegments().get(1));
             mSnippet = DataUtils.getSnippetById(this.getContentResolver(), mNoteId);
@@ -75,6 +80,7 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
             return;
         }
 
+        //调用媒体播放器播放闹钟铃声
         mPlayer = new MediaPlayer();
         if (DataUtils.visibleInNoteDatabase(getContentResolver(), mNoteId, Notes.TYPE_NOTE)) {
             showActionDialog();
@@ -84,25 +90,36 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         }
     }
 
+    /**
+     *  判断屏幕是否亮起
+     */
     private boolean isScreenOn() {
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         return pm.isScreenOn();
     }
 
+    /**
+     * 播放闹钟铃声
+     */
     private void playAlarmSound() {
+        //获取当前的默认铃声的Uri
         Uri url = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM);
-
+        //当未勿扰模式（静音模式）时，设置为不播放音频
         int silentModeStreams = Settings.System.getInt(getContentResolver(),
                 Settings.System.MODE_RINGER_STREAMS_AFFECTED, 0);
 
         if ((silentModeStreams & (1 << AudioManager.STREAM_ALARM)) != 0) {
+            //不播放音频
             mPlayer.setAudioStreamType(silentModeStreams);
         } else {
+            //播放音频
             mPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
         }
         try {
+            //设置音频的资源路径
             mPlayer.setDataSource(this, url);
             mPlayer.prepare();
+            //设置循环播放
             mPlayer.setLooping(true);
             mPlayer.start();
         } catch (IllegalArgumentException e) {
@@ -120,10 +137,16 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         }
     }
 
+    /**
+     * 显示便签内容的对话框
+     */
     private void showActionDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        //设置标题
         dialog.setTitle(R.string.app_name);
+        //设置内容
         dialog.setMessage(mSnippet);
+        //设置确定及取消按钮
         dialog.setPositiveButton(R.string.notealert_ok, this);
         if (isScreenOn()) {
             dialog.setNegativeButton(R.string.notealert_enter, this);
@@ -131,6 +154,11 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         dialog.show().setOnDismissListener(this);
     }
 
+    /**
+     * 当点击事件发生时的回调
+     * @param dialog
+     * @param which
+     */
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_NEGATIVE:
@@ -144,11 +172,18 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         }
     }
 
+    /**
+     * 销毁对话框，并停止播放音频
+     * @param dialog
+     */
     public void onDismiss(DialogInterface dialog) {
         stopAlarmSound();
         finish();
     }
 
+    /**
+     * 实现停止播放音频功能
+     */
     private void stopAlarmSound() {
         if (mPlayer != null) {
             mPlayer.stop();

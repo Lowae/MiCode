@@ -15,18 +15,24 @@
      limitations under the License.
 -->
 
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/note_list_framelayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/list_background">
 
+    <WebView
+        android:id="@+id/webview_weather"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/webview_background">
+    </WebView>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_below="@id/webview_weather">
         <TextView
             android:id="@+id/tv_title_bar"
             android:layout_width="fill_parent"
@@ -34,9 +40,14 @@
             android:background="@drawable/title_bar_bg"
             android:visibility="gone"
             android:gravity="center_vertical"
-            android:singleLine="true"
             android:textColor="#FFEAD1AE"
-            android:textSize="@dimen/text_font_size_medium" />
+            android:textSize="@dimen/text_font_size_medium"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            />
 
         <ListView
             android:id="@+id/notes_list"
@@ -44,17 +55,19 @@
             android:layout_height="0dip"
             android:layout_weight="1"
             android:cacheColorHint="@null"
-            android:listSelector="@android:color/transparent"
             android:divider="@null"
-            android:fadingEdge="@null" />
+            android:fadingEdge="@null"
+            android:listSelector="@android:color/transparent" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_new_note"
-        android:background="@drawable/new_note"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:focusable="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="30dp"/>
-</FrameLayout>
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/new_note"
+        android:focusable="false" />
+</RelativeLayout>
