@@ -43,6 +43,8 @@ public class SqlNote {
 
     private static final int INVALID_ID = -99999;
 
+    //定义一个便签类
+
     public static final String[] PROJECTION_NOTE = new String[] {
             NoteColumns.ID, NoteColumns.ALERTED_DATE, NoteColumns.BG_COLOR_ID,
             NoteColumns.CREATED_DATE, NoteColumns.HAS_ATTACHMENT, NoteColumns.MODIFIED_DATE,
@@ -52,43 +54,43 @@ public class SqlNote {
             NoteColumns.VERSION
     };
 
-    public static final int ID_COLUMN = 0;
+    public static final int ID_COLUMN = 0;//ID
 
-    public static final int ALERTED_DATE_COLUMN = 1;
+    public static final int ALERTED_DATE_COLUMN = 1;//提醒日期
 
-    public static final int BG_COLOR_ID_COLUMN = 2;
+    public static final int BG_COLOR_ID_COLUMN = 2;//背景颜色
 
-    public static final int CREATED_DATE_COLUMN = 3;
+    public static final int CREATED_DATE_COLUMN = 3;//创建日期
 
-    public static final int HAS_ATTACHMENT_COLUMN = 4;
+    public static final int HAS_ATTACHMENT_COLUMN = 4;//附件
 
-    public static final int MODIFIED_DATE_COLUMN = 5;
+    public static final int MODIFIED_DATE_COLUMN = 5;//修改日期
 
-    public static final int NOTES_COUNT_COLUMN = 6;
+    public static final int NOTES_COUNT_COLUMN = 6;//笔记统计
 
-    public static final int PARENT_ID_COLUMN = 7;
+    public static final int PARENT_ID_COLUMN = 7;//父节点ID
 
-    public static final int SNIPPET_COLUMN = 8;
+    public static final int SNIPPET_COLUMN = 8;//片段
 
-    public static final int TYPE_COLUMN = 9;
+    public static final int TYPE_COLUMN = 9;//类型
 
-    public static final int WIDGET_ID_COLUMN = 10;
+    public static final int WIDGET_ID_COLUMN = 10;//部件ID
 
-    public static final int WIDGET_TYPE_COLUMN = 11;
+    public static final int WIDGET_TYPE_COLUMN = 11;//部件类型
 
-    public static final int SYNC_ID_COLUMN = 12;
+    public static final int SYNC_ID_COLUMN = 12;//同步ID
 
-    public static final int LOCAL_MODIFIED_COLUMN = 13;
+    public static final int LOCAL_MODIFIED_COLUMN = 13;//本地修改
 
-    public static final int ORIGIN_PARENT_ID_COLUMN = 14;
+    public static final int ORIGIN_PARENT_ID_COLUMN = 14;//起源父节点ID
 
-    public static final int GTASK_ID_COLUMN = 15;
+    public static final int GTASK_ID_COLUMN = 15;//任务ID
 
-    public static final int VERSION_COLUMN = 16;
+    public static final int VERSION_COLUMN = 16;//版本
 
-    private Context mContext;
+    private Context mContext;//环境
 
-    private ContentResolver mContentResolver;
+    private ContentResolver mContentResolver;//内容解析器
 
     private boolean mIsCreate;
 
@@ -122,6 +124,7 @@ public class SqlNote {
 
     private ArrayList<SqlData> mDataList;
 
+    //实例化一个
     public SqlNote(Context context) {
         mContext = context;
         mContentResolver = context.getContentResolver();
@@ -166,12 +169,13 @@ public class SqlNote {
 
     }
 
+    //ID索引查询便签内容
     private void loadFromCursor(long id) {
         Cursor c = null;
         try {
             c = mContentResolver.query(Notes.CONTENT_NOTE_URI, PROJECTION_NOTE, "(_id=?)",
                     new String[] {
-                        String.valueOf(id)
+                            String.valueOf(id)
                     }, null);
             if (c != null) {
                 c.moveToNext();
@@ -185,6 +189,7 @@ public class SqlNote {
         }
     }
 
+    //加载光标处的便签内容
     private void loadFromCursor(Cursor c) {
         mId = c.getLong(ID_COLUMN);
         mAlertDate = c.getLong(ALERTED_DATE_COLUMN);
@@ -200,24 +205,20 @@ public class SqlNote {
         mVersion = c.getLong(VERSION_COLUMN);
     }
 
-    //加载数据信息
+    //加载便签内容
     private void loadDataContent() {
         Cursor c = null;
-        //删除mDataList所有元素。 此调用返回后，mDataList将为空。
         mDataList.clear();
         try {
-            //数据库查询语句，通过便签id来获取便签的整个数据信息
             c = mContentResolver.query(Notes.CONTENT_DATA_URI, SqlData.PROJECTION_DATA,
                     "(note_id=?)", new String[] {
-                        String.valueOf(mId)
+                            String.valueOf(mId)
                     }, null);
             if (c != null) {
-                //如果查询结果为空，提示“it seems that the note has not data”
                 if (c.getCount() == 0) {
                     Log.w(TAG, "it seems that the note has not data");
                     return;
                 }
-                //继续查询下一个
                 while (c.moveToNext()) {
                     SqlData data = new SqlData(mContext, c);
                     mDataList.add(data);
@@ -231,18 +232,14 @@ public class SqlNote {
         }
     }
 
-    /**
-     * 从JSONObject中获取便签数据信息
-     * @param js
-     * @return
-     */
+    //修改便签内容
     public boolean setContent(JSONObject js) {
         try {
             JSONObject note = js.getJSONObject(GTaskStringUtils.META_HEAD_NOTE);
             if (note.getInt(NoteColumns.TYPE) == Notes.TYPE_SYSTEM) {
                 Log.w(TAG, "cannot set system folder");
             } else if (note.getInt(NoteColumns.TYPE) == Notes.TYPE_FOLDER) {
-                // for folder we can only update the snnipet and type
+                // 可以只修改文件夹的类型和一部分
                 String snippet = note.has(NoteColumns.SNIPPET) ? note
                         .getString(NoteColumns.SNIPPET) : "";
                 if (mIsCreate || !mSnippet.equals(snippet)) {
@@ -369,6 +366,7 @@ public class SqlNote {
         return true;
     }
 
+    //获取便签内容
     public JSONObject getContent() {
         try {
             JSONObject js = new JSONObject();
@@ -417,39 +415,47 @@ public class SqlNote {
         return null;
     }
 
+    //设置便签的父节点ID
     public void setParentId(long id) {
         mParentId = id;
         mDiffNoteValues.put(NoteColumns.PARENT_ID, id);
     }
 
+    //设置任务ID
     public void setGtaskId(String gid) {
         mDiffNoteValues.put(NoteColumns.GTASK_ID, gid);
     }
 
+    //设置同步ID
     public void setSyncId(long syncId) {
         mDiffNoteValues.put(NoteColumns.SYNC_ID, syncId);
     }
 
+    //修改本地修改数据
     public void resetLocalModified() {
         mDiffNoteValues.put(NoteColumns.LOCAL_MODIFIED, 0);
     }
 
+    //获取ID
     public long getId() {
         return mId;
     }
 
+    //获取父节点ID
     public long getParentId() {
         return mParentId;
     }
-
+    //获取片段
     public String getSnippet() {
         return mSnippet;
     }
 
+    //便签类型
     public boolean isNoteType() {
         return mType == Notes.TYPE_NOTE;
     }
 
+    //提交便签
     public void commit(boolean validateVersion) {
         if (mIsCreate) {
             if (mId == INVALID_ID && mDiffNoteValues.containsKey(NoteColumns.ID)) {
@@ -483,11 +489,11 @@ public class SqlNote {
                 if (!validateVersion) {
                     result = mContentResolver.update(Notes.CONTENT_NOTE_URI, mDiffNoteValues, "("
                             + NoteColumns.ID + "=?)", new String[] {
-                        String.valueOf(mId)
+                            String.valueOf(mId)
                     });
                 } else {
                     result = mContentResolver.update(Notes.CONTENT_NOTE_URI, mDiffNoteValues, "("
-                            + NoteColumns.ID + "=?) AND (" + NoteColumns.VERSION + "<=?)",
+                                    + NoteColumns.ID + "=?) AND (" + NoteColumns.VERSION + "<=?)",
                             new String[] {
                                     String.valueOf(mId), String.valueOf(mVersion)
                             });
@@ -504,7 +510,7 @@ public class SqlNote {
             }
         }
 
-        // refresh local info
+        // 刷新本地信息
         loadFromCursor(mId);
         if (mType == Notes.TYPE_NOTE)
             loadDataContent();
