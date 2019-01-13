@@ -141,7 +141,7 @@ public class GTaskManager {
                 }
             }
 
-            // 从谷歌获得任务清单
+            // 从谷歌获得任务列表
             asyncTask.publishProgess(mContext.getString(R.string.sync_progress_init_list));
             initGTaskList();
 
@@ -173,7 +173,7 @@ public class GTaskManager {
         return mCancelled ? STATE_SYNC_CANCELLED : STATE_SUCCESS;
     }
 
-
+    //*初始化任务列表
     private void initGTaskList() throws NetworkFailureException {
         if (mCancelled)
             return;
@@ -181,7 +181,7 @@ public class GTaskManager {
         try {
             JSONArray jsTaskLists = client.getTaskLists();
 
-            // init meta list first
+            // 初始化元列表
             mMetaList = null;
             for (int i = 0; i < jsTaskLists.length(); i++) {
                 JSONObject object = jsTaskLists.getJSONObject(i);
@@ -193,7 +193,7 @@ public class GTaskManager {
                     mMetaList = new TaskList();
                     mMetaList.setContentByRemoteJSON(object);
 
-                    // load meta data
+                    // 加载元数据
                     JSONArray jsMetas = client.getTaskList(gid);
                     for (int j = 0; j < jsMetas.length(); j++) {
                         object = (JSONObject) jsMetas.getJSONObject(j);
@@ -209,7 +209,7 @@ public class GTaskManager {
                 }
             }
 
-            // create meta list if not existed
+            // 如果没有元列表，先创建元列表
             if (mMetaList == null) {
                 mMetaList = new TaskList();
                 mMetaList.setName(GTaskStringUtils.MIUI_FOLDER_PREFFIX
@@ -217,7 +217,7 @@ public class GTaskManager {
                 GTaskClient.getInstance().createTaskList(mMetaList);
             }
 
-            // init task list
+            // 初始化任务列表
             for (int i = 0; i < jsTaskLists.length(); i++) {
                 JSONObject object = jsTaskLists.getJSONObject(i);
                 String gid = object.getString(GTaskStringUtils.GTASK_JSON_ID);
@@ -225,13 +225,13 @@ public class GTaskManager {
 
                 if (name.startsWith(GTaskStringUtils.MIUI_FOLDER_PREFFIX)
                         && !name.equals(GTaskStringUtils.MIUI_FOLDER_PREFFIX
-                                + GTaskStringUtils.FOLDER_META)) {
+                        + GTaskStringUtils.FOLDER_META)) {
                     TaskList tasklist = new TaskList();
                     tasklist.setContentByRemoteJSON(object);
                     mGTaskListHashMap.put(gid, tasklist);
                     mGTaskHashMap.put(gid, tasklist);
 
-                    // load tasks
+                    // 加载任务
                     JSONArray jsTasks = client.getTaskList(gid);
                     for (int j = 0; j < jsTasks.length(); j++) {
                         object = (JSONObject) jsTasks.getJSONObject(j);
@@ -246,13 +246,16 @@ public class GTaskManager {
                     }
                 }
             }
-        } catch (JSONException e) {
+        }
+        //异常报错
+        catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
             throw new ActionFailureException("initGTaskList: handing JSONObject failed");
         }
     }
 
+    //*同步内容
     private void syncContent() throws NetworkFailureException {
         int syncType;
         Cursor c = null;
@@ -265,7 +268,7 @@ public class GTaskManager {
             return;
         }
 
-        // for local deleted note
+        // 查询本地已删除文件
         try {
             c = mContentResolver.query(Notes.CONTENT_NOTE_URI, SqlNote.PROJECTION_NOTE,
                     "(type<>? AND parent_id=?)", new String[] {
@@ -292,10 +295,10 @@ public class GTaskManager {
             }
         }
 
-        // sync folder first
+        // 同步文件夹
         syncFolder();
 
-        // for note existing in database
+        //查询 数据库中的文件
         try {
             c = mContentResolver.query(Notes.CONTENT_NOTE_URI, SqlNote.PROJECTION_NOTE,
                     "(type=? AND parent_id<>?)", new String[] {
@@ -312,10 +315,10 @@ public class GTaskManager {
                         syncType = node.getSyncAction(c);
                     } else {
                         if (c.getString(SqlNote.GTASK_ID_COLUMN).trim().length() == 0) {
-                            // local add
+                            // 添加远程文件
                             syncType = Node.SYNC_ACTION_ADD_REMOTE;
                         } else {
-                            // remote delete
+                            // 删除本地文件
                             syncType = Node.SYNC_ACTION_DEL_LOCAL;
                         }
                     }
@@ -332,7 +335,7 @@ public class GTaskManager {
             }
         }
 
-        // go through remaining items
+        // 浏览剩余部件
         Iterator<Map.Entry<String, Node>> iter = mGTaskHashMap.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, Node> entry = iter.next();
@@ -340,16 +343,15 @@ public class GTaskManager {
             doContentSync(Node.SYNC_ACTION_ADD_LOCAL, node, null);
         }
 
-        // mCancelled can be set by another thread, so we neet to check one by
-        // one
-        // clear local delete table
+
+        // 清除本地删除列表
         if (!mCancelled) {
             if (!DataUtils.batchDeleteNotes(mContentResolver, mLocalDeleteIdMap)) {
                 throw new ActionFailureException("failed to batch-delete local deleted notes");
             }
         }
 
-        // refresh local sync id
+        // 刷新本地同步ID
         if (!mCancelled) {
             GTaskClient.getInstance().commitUpdate();
             refreshLocalSyncId();
@@ -357,6 +359,7 @@ public class GTaskManager {
 
     }
 
+    //同步文件夹
     private void syncFolder() throws NetworkFailureException {
         Cursor c = null;
         String gid;
@@ -367,7 +370,7 @@ public class GTaskManager {
             return;
         }
 
-        // for root folder
+        // 查询根文件夹
         try {
             c = mContentResolver.query(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI,
                     Notes.ID_ROOT_FOLDER), SqlNote.PROJECTION_NOTE, null, null, null);
@@ -379,7 +382,7 @@ public class GTaskManager {
                     mGTaskHashMap.remove(gid);
                     mGidToNid.put(gid, (long) Notes.ID_ROOT_FOLDER);
                     mNidToGid.put((long) Notes.ID_ROOT_FOLDER, gid);
-                    // for system folder, only update remote name if necessary
+                    // 对于系统文件夹，仅在必要时更新远程名称
                     if (!node.getName().equals(
                             GTaskStringUtils.MIUI_FOLDER_PREFFIX + GTaskStringUtils.FOLDER_DEFAULT))
                         doContentSync(Node.SYNC_ACTION_UPDATE_REMOTE, node, c);
@@ -396,11 +399,11 @@ public class GTaskManager {
             }
         }
 
-        // for call-note folder
+        // 查询通话通知文件夹
         try {
             c = mContentResolver.query(Notes.CONTENT_NOTE_URI, SqlNote.PROJECTION_NOTE, "(_id=?)",
                     new String[] {
-                        String.valueOf(Notes.ID_CALL_RECORD_FOLDER)
+                            String.valueOf(Notes.ID_CALL_RECORD_FOLDER)
                     }, null);
             if (c != null) {
                 if (c.moveToNext()) {
@@ -410,8 +413,7 @@ public class GTaskManager {
                         mGTaskHashMap.remove(gid);
                         mGidToNid.put(gid, (long) Notes.ID_CALL_RECORD_FOLDER);
                         mNidToGid.put((long) Notes.ID_CALL_RECORD_FOLDER, gid);
-                        // for system folder, only update remote name if
-                        // necessary
+                        // 对于系统文件夹，仅在必要时更新远程名称
                         if (!node.getName().equals(
                                 GTaskStringUtils.MIUI_FOLDER_PREFFIX
                                         + GTaskStringUtils.FOLDER_CALL_NOTE))
@@ -430,7 +432,7 @@ public class GTaskManager {
             }
         }
 
-        // for local existing folders
+        // 查询本地文件夹
         try {
             c = mContentResolver.query(Notes.CONTENT_NOTE_URI, SqlNote.PROJECTION_NOTE,
                     "(type=? AND parent_id<>?)", new String[] {
@@ -447,10 +449,10 @@ public class GTaskManager {
                         syncType = node.getSyncAction(c);
                     } else {
                         if (c.getString(SqlNote.GTASK_ID_COLUMN).trim().length() == 0) {
-                            // local add
+                            // 添加远程文件夹
                             syncType = Node.SYNC_ACTION_ADD_REMOTE;
                         } else {
-                            // remote delete
+                            // 删除本地文件夹
                             syncType = Node.SYNC_ACTION_DEL_LOCAL;
                         }
                     }
@@ -466,7 +468,7 @@ public class GTaskManager {
             }
         }
 
-        // for remote add folders
+        // 同步远程文件夹
         Iterator<Map.Entry<String, TaskList>> iter = mGTaskListHashMap.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, TaskList> entry = iter.next();
@@ -482,6 +484,7 @@ public class GTaskManager {
             GTaskClient.getInstance().commitUpdate();
     }
 
+    //执行内容同步方法
     private void doContentSync(int syncType, Node node, Cursor c) throws NetworkFailureException {
         if (mCancelled) {
             return;
@@ -489,19 +492,23 @@ public class GTaskManager {
 
         MetaData meta;
         switch (syncType) {
+            //远程增加
             case Node.SYNC_ACTION_ADD_LOCAL:
                 addLocalNode(node);
                 break;
+            //本地增加
             case Node.SYNC_ACTION_ADD_REMOTE:
                 addRemoteNode(node, c);
                 break;
+            //远程删除
             case Node.SYNC_ACTION_DEL_LOCAL:
                 meta = mMetaHashMap.get(c.getString(SqlNote.GTASK_ID_COLUMN));
                 if (meta != null) {
                     GTaskClient.getInstance().deleteNode(meta);
                 }
                 mLocalDeleteIdMap.add(c.getLong(SqlNote.ID_COLUMN));
-                break;
+                break
+            //本地删除            ;
             case Node.SYNC_ACTION_DEL_REMOTE:
                 meta = mMetaHashMap.get(node.getGid());
                 if (meta != null) {
@@ -509,25 +516,29 @@ public class GTaskManager {
                 }
                 GTaskClient.getInstance().deleteNode(node);
                 break;
+            //远程更新
             case Node.SYNC_ACTION_UPDATE_LOCAL:
                 updateLocalNode(node, c);
                 break;
+            //本地更新
             case Node.SYNC_ACTION_UPDATE_REMOTE:
                 updateRemoteNode(node, c);
                 break;
+            //本地更新
             case Node.SYNC_ACTION_UPDATE_CONFLICT:
-                // merging both modifications maybe a good idea
-                // right now just use local update simply
                 updateRemoteNode(node, c);
                 break;
+            //无操作
             case Node.SYNC_ACTION_NONE:
                 break;
+            //错误操作
             case Node.SYNC_ACTION_ERROR:
             default:
                 throw new ActionFailureException("unkown sync action type");
         }
     }
 
+    // 增加本地节点
     private void addLocalNode(Node node) throws NetworkFailureException {
         if (mCancelled) {
             return;
@@ -555,7 +566,7 @@ public class GTaskManager {
                     if (note.has(NoteColumns.ID)) {
                         long id = note.getLong(NoteColumns.ID);
                         if (DataUtils.existInNoteDatabase(mContentResolver, id)) {
-                            // the id is not available, have to create a new one
+                            // ID不可用，必须创建新的ID
                             note.remove(NoteColumns.ID);
                         }
                     }
@@ -568,8 +579,7 @@ public class GTaskManager {
                         if (data.has(DataColumns.ID)) {
                             long dataId = data.getLong(DataColumns.ID);
                             if (DataUtils.existInDataDatabase(mContentResolver, dataId)) {
-                                // the data id is not available, have to create
-                                // a new one
+                                // 数据ID不可用，必须创建新的ID
                                 data.remove(DataColumns.ID);
                             }
                         }
@@ -590,25 +600,26 @@ public class GTaskManager {
             sqlNote.setParentId(parentId.longValue());
         }
 
-        // create the local node
+        //创建本地节点
         sqlNote.setGtaskId(node.getGid());
         sqlNote.commit(false);
 
-        // update gid-nid mapping
+        // 更新gid-nid 映射
         mGidToNid.put(node.getGid(), sqlNote.getId());
         mNidToGid.put(sqlNote.getId(), node.getGid());
 
-        // update meta
+        // 更新元数据
         updateRemoteMeta(node.getGid(), sqlNote);
     }
 
+    // 更新本地节点
     private void updateLocalNode(Node node, Cursor c) throws NetworkFailureException {
         if (mCancelled) {
             return;
         }
 
         SqlNote sqlNote;
-        // update the note locally
+        // 更新本地便签
         sqlNote = new SqlNote(mContext, c);
         sqlNote.setContent(node.getLocalJSONFromContent());
 
@@ -621,10 +632,11 @@ public class GTaskManager {
         sqlNote.setParentId(parentId.longValue());
         sqlNote.commit(true);
 
-        // update meta info
+        // 更新元信息
         updateRemoteMeta(node.getGid(), sqlNote);
     }
 
+    // 增加远程节点
     private void addRemoteNode(Node node, Cursor c) throws NetworkFailureException {
         if (mCancelled) {
             return;
@@ -633,7 +645,7 @@ public class GTaskManager {
         SqlNote sqlNote = new SqlNote(mContext, c);
         Node n;
 
-        // update remotely
+        // 远程更新任务
         if (sqlNote.isNoteType()) {
             Task task = new Task();
             task.setContentByLocalJSON(sqlNote.getContent());
@@ -648,12 +660,12 @@ public class GTaskManager {
             GTaskClient.getInstance().createTask(task);
             n = (Node) task;
 
-            // add meta
+            // 增加元
             updateRemoteMeta(task.getGid(), sqlNote);
         } else {
             TaskList tasklist = null;
 
-            // we need to skip folder if it has already existed
+            // 如果文件已存在，则跳过它
             String folderName = GTaskStringUtils.MIUI_FOLDER_PREFFIX;
             if (sqlNote.getId() == Notes.ID_ROOT_FOLDER)
                 folderName += GTaskStringUtils.FOLDER_DEFAULT;
@@ -677,7 +689,7 @@ public class GTaskManager {
                 }
             }
 
-            // no match we can add now
+            // 没有可以添加的匹配
             if (tasklist == null) {
                 tasklist = new TaskList();
                 tasklist.setContentByLocalJSON(sqlNote.getContent());
@@ -687,17 +699,18 @@ public class GTaskManager {
             n = (Node) tasklist;
         }
 
-        // update local note
+        // 更新本地便签
         sqlNote.setGtaskId(n.getGid());
         sqlNote.commit(false);
         sqlNote.resetLocalModified();
         sqlNote.commit(true);
 
-        // gid-id mapping
+        // gid-id映射
         mGidToNid.put(n.getGid(), sqlNote.getId());
         mNidToGid.put(sqlNote.getId(), n.getGid());
     }
 
+    // 更新远程节点
     private void updateRemoteNode(Node node, Cursor c) throws NetworkFailureException {
         if (mCancelled) {
             return;
@@ -705,14 +718,14 @@ public class GTaskManager {
 
         SqlNote sqlNote = new SqlNote(mContext, c);
 
-        // update remotely
+        // 远程更新
         node.setContentByLocalJSON(sqlNote.getContent());
         GTaskClient.getInstance().addUpdateNode(node);
 
-        // update meta
+        // 更新元
         updateRemoteMeta(node.getGid(), sqlNote);
 
-        // move task if necessary
+        // 必要时移动任务
         if (sqlNote.isNoteType()) {
             Task task = (Task) node;
             TaskList preParentList = task.getParent();
@@ -731,11 +744,12 @@ public class GTaskManager {
             }
         }
 
-        // clear local modified flag
+        // 清空本地的修改的数据
         sqlNote.resetLocalModified();
         sqlNote.commit(true);
     }
 
+    //更新远程元数据
     private void updateRemoteMeta(String gid, SqlNote sqlNote) throws NetworkFailureException {
         if (sqlNote != null && sqlNote.isNoteType()) {
             MetaData metaData = mMetaHashMap.get(gid);
@@ -752,17 +766,19 @@ public class GTaskManager {
         }
     }
 
+    // 刷新本地同步ID
     private void refreshLocalSyncId() throws NetworkFailureException {
         if (mCancelled) {
             return;
         }
 
-        // get the latest gtask list
+        // 获取最新任务列表
         mGTaskHashMap.clear();
         mGTaskListHashMap.clear();
         mMetaHashMap.clear();
         initGTaskList();
 
+        //查询本地便签来刷新同步ID
         Cursor c = null;
         try {
             c = mContentResolver.query(Notes.CONTENT_NOTE_URI, SqlNote.PROJECTION_NOTE,
@@ -796,6 +812,7 @@ public class GTaskManager {
         }
     }
 
+    //初始化
     public String getSyncAccount() {
         return GTaskClient.getInstance().getSyncAccount().name;
     }
