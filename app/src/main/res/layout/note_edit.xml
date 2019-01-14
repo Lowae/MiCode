@@ -116,7 +116,7 @@
 
             <ImageView
                 android:layout_width="fill_parent"
-                android:layout_height="7dip"
+                android:layout_height="7dp"
                 android:background="@drawable/bg_color_btn_mask" />
         </LinearLayout>
     </LinearLayout>

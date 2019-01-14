@@ -28,16 +28,20 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_list_selector_holo_light.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_common_without_setting.xml.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\layout\\common_without_setting.xml"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_list_yellow_up.9.png.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_yellow_up.9.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_star_black_36dp.png.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_ic_star_black_36dp.png"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\color_switch_thumb_material_light.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\color\\switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_star_black_36dp.png.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_ic_star_black_36dp.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",
@@ -52,12 +56,12 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\selected.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_note_item.xml.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\layout\\note_item.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_note_list.xml.flat",
@@ -68,12 +72,12 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\font_large.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
-        "source": "F:\\MiCode\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_cab_background_top_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_datetime_picker.xml.flat",
@@ -112,20 +116,20 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\color-v23\\abc_tint_edittext.xml"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_switch_to_on_mtrl_00001.9.png.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_2x_green.png.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\widget_2x_green.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "F:\\MiCode\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_switch_to_on_mtrl_00001.9.png.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_2x_red.png.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\widget_2x_red.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
@@ -136,6 +140,10 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\abc_action_bar_up_container.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_bdspeech_mask_light.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-hdpi-v4\\bdspeech_mask_light.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_notification_bg_low_normal.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\notification_bg_low_normal.9.png"
     },
@@ -144,20 +152,24 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\icon_app.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_notification_bg_normal.9.png.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\notification_bg_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\notification_bg_normal.9.png"
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_alert_dialog_material.xml.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\abc_alert_dialog_material.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_notification_bg_normal.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\notification_bg_normal.9.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_alert_dialog_material.xml.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\abc_alert_dialog_material.xml"
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_ic_launcher.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-xhdpi-v4\\ic_launcher.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_text_select_handle_left_mtrl_dark.png.flat",
@@ -166,6 +178,18 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher_background.png.flat",
         "source": "F:\\MiCode\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_left_deep_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_left_deep_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_greenlight_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_greenlight_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_bd_asr_wave.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-xhdpi-v4\\bd_asr_wave.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_list_red_middle.9.png.flat",
@@ -214,6 +238,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_scrubber_control_off_mtrl_alpha.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\abc_scrubber_control_off_mtrl_alpha.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_reddeep_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_reddeep_pressed.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_secondary_text_material_dark.xml.flat",
@@ -296,16 +324,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_ic_star_black_16dp.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\anim_abc_fade_in.xml.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\anim\\abc_fade_in.xml"
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_2x_yellow.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\widget_2x_yellow.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_cab_background_internal_bg.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_2x_yellow.png.flat",
-        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\widget_2x_yellow.png"
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\anim_abc_fade_in.xml.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\anim\\abc_fade_in.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_btn_radio_to_on_mtrl_000.png.flat",
@@ -316,12 +344,16 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_blue_single.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_ic_menu_paste_mtrl_am_alpha.png.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_textfield_search_default_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_ic_menu_paste_mtrl_am_alpha.png.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\raw_bdspeech_speech_end.mp3.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\raw\\bdspeech_speech_end.mp3"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_4x_red.png.flat",
@@ -356,24 +388,28 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_list_selector_holo_dark.xml"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_notification_action_background.xml.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-v21\\notification_action_background.xml"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_alert_dialog_button_bar_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_notification_action_background.xml.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_add_account_text.xml.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\layout\\add_account_text.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_text_select_handle_right_mtrl_dark.png.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxxhdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_text_select_handle_right_mtrl_dark.png.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxxhdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\xml_setting_nlu.xml.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\xml\\setting_nlu.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_ic_star_half_black_16dp.png.flat",
@@ -384,8 +420,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_reddeep_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_reddeep_pressed.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_notification_bg_low.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_reddeep_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_reddeep_normal.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_ic_star_half_black_36dp.png.flat",
@@ -398,6 +442,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11_notification_media_action.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout-v11\\notification_media_action.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_left_deep_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_left_deep_normal.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_switch_to_on_mtrl_00012.9.png.flat",
@@ -426,6 +474,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_notification_bg_normal_pressed.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_bdspeech_mask_deep.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-hdpi-v4\\bdspeech_mask_deep.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_ic_star_black_48dp.png.flat",
@@ -492,6 +544,10 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxxhdpi-v4\\abc_switch_track_mtrl_alpha.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_image_share.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\image_share.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_btn_switch_to_on_mtrl_00012.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png"
     },
@@ -516,8 +572,20 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\anim\\abc_slide_in_top.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_redlight_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_redlight_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_orangedeep_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_orangedeep_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_seekbar_thumb_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_common_mini.xml.flat",
+        "source": "F:\\MiCode\\core\\build\\intermediates\\packaged_res\\debug\\layout\\common_mini.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_edit_blue.9.png.flat",
@@ -554,6 +622,14 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_action.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\notification_action.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_greendeep_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_greendeep_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_orangelight_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_orangelight_pressed.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_ic_menu_share_mtrl_alpha.png.flat",
@@ -616,6 +692,10 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_white_up.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\raw_bdspeech_recognition_error.mp3.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\raw\\bdspeech_recognition_error.mp3"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_btn_radio_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_btn_radio_material.xml"
     },
@@ -630,6 +710,14 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_abc_action_bar_item_background_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_orangelight_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_orangelight_normal.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_ab_share_pack_mtrl_alpha.9.png.flat",
@@ -664,6 +752,14 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\abc_scrubber_track_mtrl_alpha.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_greenlight_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_greenlight_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_menu_paste_mtrl_am_alpha.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
     },
@@ -674,6 +770,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ab_share_pack_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_bd_asr_mic.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-xhdpi-v4\\bd_asr_mic.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_activity_chooser_view_list_item.xml.flat",
@@ -716,8 +816,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\notification_bg.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_bdspeech_help_pressed_light.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-hdpi-v4\\bdspeech_help_pressed_light.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldrtl-xhdpi-v17_abc_spinner_mtrl_am_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-ldrtl-xhdpi-v17\\abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_normal.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_scrubber_control_to_pressed_mtrl_000.png.flat",
@@ -740,6 +848,10 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_yellow_middle.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_menu_weather.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\menu_weather.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_menu_overflow_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_ic_menu_overflow_material.xml"
     },
@@ -752,12 +864,28 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_reddeep_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_reddeep_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_text_select_handle_middle_mtrl_dark.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_text_select_handle_middle_mtrl_dark.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_menu_font.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\menu_font.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_text_select_handle_right_mtrl_dark.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_orangelight_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_orangelight_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_speech_recognize.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\speech_recognize.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_ic_star_half_black_16dp.png.flat",
@@ -784,8 +912,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\abc_action_mode_bar.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_greenlight_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_greenlight_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_popup_menu_item_layout.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout\\abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_left_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_left_pressed.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_text_select_handle_left_mtrl_light.png.flat",
@@ -896,12 +1032,12 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_footer_bg.9.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_4x_yellow.png.flat",
-        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\widget_4x_yellow.png"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_dropdown_icon.9.png.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\dropdown_icon.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_4x_yellow.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\widget_4x_yellow.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_ic_menu_share_mtrl_alpha.png.flat",
@@ -920,8 +1056,20 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_background.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_image_insert.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\image_insert.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher_background.png.flat",
         "source": "F:\\MiCode\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_bdspeech_suggestion_item.xml.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\layout\\bdspeech_suggestion_item.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_greendeep_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_greendeep_pressed.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_list_pressed_holo_light.9.png.flat",
@@ -944,8 +1092,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\xml_setting_online.xml.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\xml\\setting_online.xml"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_ic_star_black_48dp.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\abc_ic_star_black_48dp.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_orangedeep_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_orangedeep_pressed.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\anim_abc_popup_enter.xml.flat",
@@ -1004,6 +1160,10 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_blue_down.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_greenlight_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_greenlight_pressed.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldrtl-xxhdpi-v17_abc_spinner_mtrl_am_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-ldrtl-xxhdpi-v17\\abc_spinner_mtrl_am_alpha.9.png"
     },
@@ -1030,6 +1190,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_notify_panel_notification_icon_bg.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_recognizing.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_recognizing.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_text_select_handle_left_mtrl_light.png.flat",
@@ -1072,12 +1236,20 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_launcher_background.png.flat",
         "source": "F:\\MiCode\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\ic_launcher_background.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_text_select_handle_left_mtrl_light.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxxhdpi-v4\\abc_text_select_handle_left_mtrl_light.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_common.xml.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\layout\\common.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_new_note_normal.png.flat",
@@ -1152,8 +1324,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_scrubber_track_mtrl_alpha.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_bdspeech_help_light.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-hdpi-v4\\bdspeech_help_light.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_notification_bg_low_pressed.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_recognizing_deep.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_recognizing_deep.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_ic_star_half_black_36dp.png.flat",
@@ -1166,6 +1346,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_abc_btn_colored_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_orangedeep_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_orangedeep_pressed.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_primary_text_disable_only_material_light.xml.flat",
@@ -1202,6 +1386,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldrtl-mdpi-v17_abc_ic_menu_cut_mtrl_alpha.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-ldrtl-mdpi-v17\\abc_ic_menu_cut_mtrl_alpha.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\raw_bdspeech_recognition_success.mp3.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\raw\\bdspeech_recognition_success.mp3"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_widget_2x_blue.png.flat",
@@ -1312,12 +1500,20 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\layout\\dialog_edit_text.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_bdspeech_close_v2.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-hdpi-v4\\bdspeech_close_v2.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_list_divider_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_list_divider_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_bdspeech_help_deep.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-hdpi-v4\\bdspeech_help_deep.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_font_super.png.flat",
@@ -1348,20 +1544,28 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\color\\abc_primary_text_material_light.xml"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_ab_share_pack_mtrl_alpha.9.png.flat",
-        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\color-v23_abc_tint_switch_thumb.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\color-v23\\abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_ab_share_pack_mtrl_alpha.9.png.flat",
+        "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_btn_check_to_on_mtrl_000.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_000.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_redlight_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_redlight_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldrtl-xhdpi-v17_abc_ic_menu_copy_mtrl_am_alpha.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-ldrtl-xhdpi-v17\\abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\raw_bdspeech_recognition_cancel.mp3.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\raw\\bdspeech_recognition_cancel.mp3"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
@@ -1386,6 +1590,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\xml_preferences.xml.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\xml\\preferences.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\xml_setting_all.xml.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\xml\\setting_all.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_font_small.png.flat",
@@ -1476,6 +1684,10 @@
         "source": "F:\\MiCode\\app\\src\\main\\res\\layout\\widget_2x.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_redlight_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_redlight_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
@@ -1492,8 +1704,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\layout-v16\\notification_template_custom_big.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_redlight_pressed.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_redlight_pressed.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_edit_title_white.9.png.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\edit_title_white.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_bdspeech_help_pressed_deep.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable-hdpi-v4\\bdspeech_help_pressed_deep.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_scrubber_control_off_mtrl_alpha.png.flat",
@@ -1554,6 +1774,14 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_textfield_search_default_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_orangedeep_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_orangedeep_normal.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_right_greendeep_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_right_greendeep_normal.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21_notification_action.xml.flat",
@@ -1624,6 +1852,14 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_scrubber_primary_mtrl_alpha.9.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_greendeep_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_greendeep_normal.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_digital_bg.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_digital_bg.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
     },
@@ -1642,6 +1878,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_popup_background_mtrl_mult.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\raw_uidialog_recog.txt.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\raw\\uidialog_recog.txt"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11_notification_template_big_media.xml.flat",
@@ -1696,6 +1936,10 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\color\\switch_thumb_material_dark.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bd_asr_popup_bg.xml.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bd_asr_popup_bg.xml"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_notification_icon_background.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\notification_icon_background.xml"
     },
@@ -1746,6 +1990,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_text_select_handle_middle_mtrl_light.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_text_select_handle_middle_mtrl_light.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_left_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_left_normal.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_voice_search_api_material.xml.flat",
@@ -1852,8 +2100,16 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxxhdpi-v4\\abc_ic_star_half_black_36dp.png"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_webview_background.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\webview_background.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_digital_deep_bg.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_digital_deep_bg.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_primary_text_disable_only_material_dark.xml.flat",
@@ -1900,12 +2156,20 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_ic_go_search_api_material.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bdspeech_btn_orangelight_normal.9.png.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\drawable\\bdspeech_btn_orangelight_normal.9.png"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\color-v23_abc_color_highlight_material.xml.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\color-v23\\abc_color_highlight_material.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_star_black_48dp.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xxhdpi-v4\\abc_ic_star_black_48dp.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\layout_bdspeech_digital_layout.xml.flat",
+        "source": "F:\\MiCode\\uidialog\\build\\intermediates\\packaged_res\\debug\\layout\\bdspeech_digital_layout.xml"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\color_primary_text_dark.xml.flat",
@@ -1932,12 +2196,12 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-xhdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png"
     },
     {
-        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_list_green_up.9.png.flat",
-        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_green_up.9.png"
-    },
-    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\menu_call_note_edit.xml.flat",
         "source": "F:\\MiCode\\app\\src\\main\\res\\menu\\call_note_edit.xml"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_list_green_up.9.png.flat",
+        "source": "F:\\MiCode\\app\\src\\main\\res\\drawable-hdpi\\list_green_up.9.png"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\menu_note_edit.xml.flat",
@@ -1956,6 +2220,10 @@
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable\\abc_switch_thumb_material.xml"
     },
     {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\xml_setting_offline.xml.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\xml\\setting_offline.xml"
+    },
+    {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_textfield_default_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\abc_textfield_default_mtrl_alpha.9.png"
     },
@@ -1970,6 +2238,10 @@
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat",
         "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\drawable-mdpi-v4\\notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\raw_bdspeech_recognition_start.mp3.flat",
+        "source": "F:\\MiCode\\uiasr\\build\\intermediates\\packaged_res\\debug\\raw\\bdspeech_recognition_start.mp3"
     },
     {
         "merged": "F:\\MiCode\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",

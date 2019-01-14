@@ -304,6 +304,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         return true;
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -703,6 +704,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
             //字体设置
             case R.id.menu_font:
                 break;
+            //语音输入
             case R.id.menu_speech_input:
                 start();
 //                Intent intent = new Intent(NoteEditActivity.this, ActivityUiDialog.class);
