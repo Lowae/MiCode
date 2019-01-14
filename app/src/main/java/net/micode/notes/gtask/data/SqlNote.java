@@ -124,7 +124,7 @@ public class SqlNote {
 
     private ArrayList<SqlData> mDataList;
 
-    //实例化一个
+    //初始化一个便签
     public SqlNote(Context context) {
         mContext = context;
         mContentResolver = context.getContentResolver();
@@ -146,6 +146,7 @@ public class SqlNote {
         mDataList = new ArrayList<SqlData>();
     }
 
+    //根据环境和光标查询一个便签
     public SqlNote(Context context, Cursor c) {
         mContext = context;
         mContentResolver = context.getContentResolver();
@@ -157,6 +158,7 @@ public class SqlNote {
         mDiffNoteValues = new ContentValues();
     }
 
+    //根据ID查询一个便签
     public SqlNote(Context context, long id) {
         mContext = context;
         mContentResolver = context.getContentResolver();
@@ -169,7 +171,7 @@ public class SqlNote {
 
     }
 
-    //ID索引查询便签内容
+    //ID索引加载便签内容
     private void loadFromCursor(long id) {
         Cursor c = null;
         try {
@@ -188,6 +190,7 @@ public class SqlNote {
                 c.close();
         }
     }
+
 
     //加载光标处的便签内容
     private void loadFromCursor(Cursor c) {
