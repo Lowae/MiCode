@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\micode\\xiaomicode\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fi\\values-fi.xml",
+            "outputFile": "E:\\micode\\micode\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fi\\values-fi.xml",
             "map": [
                 {
                     "source": "C:\\Users\\76905\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\8f592b41c7455e3457c7b458878a6035\\res\\values-fi\\values-fi.xml",

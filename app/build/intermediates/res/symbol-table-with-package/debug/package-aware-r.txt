@@ -642,7 +642,9 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable search_result
 drawable selected
+drawable speech_input
 drawable speech_recognize
+drawable speech_recognize_meitu_1
 drawable title_alert
 drawable title_bar_bg
 drawable webview_background
@@ -688,6 +690,7 @@ id bottom
 id btn
 id btn_new_note
 id btn_set_bg_color
+id btn_speech_input
 id btn_stop
 id buttonPanel
 id cancel_action
