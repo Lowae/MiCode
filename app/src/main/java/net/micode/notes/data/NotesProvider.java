@@ -108,7 +108,7 @@ public class NotesProvider extends ContentProvider {
      * @return
      */
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+    public Cursor quetiry(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         Cursor c = null;
         SQLiteDatabase db = mHelper.getReadableDatabase();
@@ -117,32 +117,34 @@ public class NotesProvider extends ContentProvider {
          * 尝试与uri相匹配
          */
         switch (mMatcher.match(uri)) {
-            //匹配到1
+            //匹配到便签的URI
             case URI_NOTE:
                 c = db.query(TABLE.NOTE, projection, selection, selectionArgs, null, null,
                         sortOrder);
                 break;
-            //匹配到2
+            //匹配到便签子属性的URI
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
                 c = db.query(TABLE.NOTE, projection, NoteColumns.ID + "=" + id
                         + parseSelection(selection), selectionArgs, null, null, sortOrder);
                 break;
-            //匹配到3
+            //匹配到便签内容的URI
             case URI_DATA:
                 c = db.query(TABLE.DATA, projection, selection, selectionArgs, null, null,
                         sortOrder);
                 break;
-            //匹配到4
+            //匹配到便签内容子属性的URI
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
                 c = db.query(TABLE.DATA, projection, DataColumns.ID + "=" + id
                         + parseSelection(selection), selectionArgs, null, null, sortOrder);
                 break;
-            //匹配到5或6
+            //匹配搜索
             case URI_SEARCH:
+                //
             case URI_SEARCH_SUGGEST:
                 //当行排序规则非空或返回列的列表非空
+
                 if (sortOrder != null || projection != null) {
                     throw new IllegalArgumentException(
                             "do not specify sortOrder, selection, selectionArgs, or projection" + "with this query");
@@ -194,11 +196,11 @@ public class NotesProvider extends ContentProvider {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         long dataId = 0, noteId = 0, insertedId = 0;
         switch (mMatcher.match(uri)) {
-            //匹配到1
+            //匹配到便签的URI
             case URI_NOTE:
                 insertedId = noteId = db.insert(TABLE.NOTE, null, values);
                 break;
-            //匹配到2
+            //匹配到便签子属性的URI
             case URI_DATA:
 
                 //判断Values中是否包含某便签ID
@@ -243,12 +245,12 @@ public class NotesProvider extends ContentProvider {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         boolean deleteData = false;
         switch (mMatcher.match(uri)) {
-            //当匹配到1
+            //当匹配到便签的URI
             case URI_NOTE:
                 selection = "(" + selection + ") AND " + NoteColumns.ID + ">0 ";
                 count = db.delete(TABLE.NOTE, selection, selectionArgs);
                 break;
-            //当匹配到2
+            //当匹配到便签子属性的URI
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
                 /**
@@ -262,12 +264,12 @@ public class NotesProvider extends ContentProvider {
                 count = db.delete(TABLE.NOTE,
                         NoteColumns.ID + "=" + id + parseSelection(selection), selectionArgs);
                 break;
-            //当匹配到3
+            //当匹配到便签内容的URI
             case URI_DATA:
                 count = db.delete(TABLE.DATA, selection, selectionArgs);
                 deleteData = true;
                 break;
-            //当匹配到4
+            //当匹配到便签内容子属性的URI
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
                 count = db.delete(TABLE.DATA,
@@ -303,24 +305,24 @@ public class NotesProvider extends ContentProvider {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         boolean updateData = false;
         switch (mMatcher.match(uri)) {
-            //匹配到1
+            //匹配到便签的URI
             case URI_NOTE:
                 increaseNoteVersion(-1, selection, selectionArgs);
                 count = db.update(TABLE.NOTE, values, selection, selectionArgs);
                 break;
-            //匹配到2
+            //匹配到便签子属性的URI
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
                 increaseNoteVersion(Long.valueOf(id), selection, selectionArgs);
                 count = db.update(TABLE.NOTE, values, NoteColumns.ID + "=" + id
                         + parseSelection(selection), selectionArgs);
                 break;
-            //匹配到3
+            //匹配到便签内容的URI
             case URI_DATA:
                 count = db.update(TABLE.DATA, values, selection, selectionArgs);
                 updateData = true;
                 break;
-            //匹配到4
+            //匹配到便签内容子属性的URI
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
                 count = db.update(TABLE.DATA, values, DataColumns.ID + "=" + id

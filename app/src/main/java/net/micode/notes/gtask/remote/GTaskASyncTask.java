@@ -31,6 +31,7 @@ import net.micode.notes.ui.NotesPreferenceActivity;
 
 public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
 
+    //设置同步通知ID
     private static int GTASK_SYNC_NOTIFICATION_ID = 5234235;
 
     public interface OnCompleteListener {
@@ -45,6 +46,7 @@ public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
 
     private OnCompleteListener mOnCompleteListener;
 
+    //同步任务方法
     public GTaskASyncTask(Context context, OnCompleteListener listener) {
         mContext = context;
         mOnCompleteListener = listener;
@@ -53,16 +55,19 @@ public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
         mTaskManager = GTaskManager.getInstance();
     }
 
+    //取消同步方法
     public void cancelSync() {
         mTaskManager.cancelSync();
     }
 
+    //宣布进展
     public void publishProgess(String message) {
         publishProgress(new String[] {
-            message
+                message
         });
     }
 
+    //显示通知
     private void showNotification(int tickerId, String content) {
         Notification notification = new Notification(R.drawable.notification, mContext
                 .getString(tickerId), System.currentTimeMillis());
@@ -82,14 +87,16 @@ public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
         mNotifiManager.notify(GTASK_SYNC_NOTIFICATION_ID, notification);
     }
 
-    @Override
+
+    //*宣布进程，返回同步任务管理器
     protected Integer doInBackground(Void... unused) {
         publishProgess(mContext.getString(R.string.sync_progress_login, NotesPreferenceActivity
                 .getSyncAccountName(mContext)));
         return mTaskManager.sync(mContext, this);
     }
 
-    @Override
+
+    //*收听广播，获取更新进程
     protected void onProgressUpdate(String... progress) {
         showNotification(R.string.ticker_syncing, progress[0]);
         if (mContext instanceof GTaskSyncService) {
@@ -97,7 +104,8 @@ public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
         }
     }
 
-    @Override
+
+    //*执行发送
     protected void onPostExecute(Integer result) {
         if (result == GTaskManager.STATE_SUCCESS) {
             showNotification(R.string.ticker_success, mContext.getString(

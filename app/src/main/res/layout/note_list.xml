@@ -40,9 +40,14 @@
             android:background="@drawable/title_bar_bg"
             android:visibility="gone"
             android:gravity="center_vertical"
-            android:singleLine="true"
             android:textColor="#FFEAD1AE"
-            android:textSize="@dimen/text_font_size_medium" />
+            android:textSize="@dimen/text_font_size_medium"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            />
 
         <ListView
             android:id="@+id/notes_list"
@@ -50,9 +55,9 @@
             android:layout_height="0dip"
             android:layout_weight="1"
             android:cacheColorHint="@null"
-            android:listSelector="@android:color/transparent"
             android:divider="@null"
-            android:fadingEdge="@null" />
+            android:fadingEdge="@null"
+            android:listSelector="@android:color/transparent" />
     </LinearLayout>
 
     <Button

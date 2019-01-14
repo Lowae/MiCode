@@ -42,6 +42,7 @@ public class GTaskSyncService extends Service {
 
     private static String mSyncProgress = "";
 
+    //*开始同步指令
     private void startSync() {
         if (mSyncTask == null) {
             mSyncTask = new GTaskASyncTask(this, new GTaskASyncTask.OnCompleteListener() {
@@ -52,22 +53,25 @@ public class GTaskSyncService extends Service {
                 }
             });
             sendBroadcast("");
+            //*执行同步
             mSyncTask.execute();
         }
     }
 
+    //*取消同步指令
     private void cancelSync() {
+        //存在同步任务则取消
         if (mSyncTask != null) {
             mSyncTask.cancelSync();
         }
     }
 
-    @Override
+    //*初始化同步任务
     public void onCreate() {
         mSyncTask = null;
     }
 
-    @Override
+    //*读取命令（开始同步、取消同步）
     public int onStartCommand(Intent intent, int flags, int startId) {
         Bundle bundle = intent.getExtras();
         if (bundle != null && bundle.containsKey(ACTION_STRING_NAME)) {
@@ -86,17 +90,19 @@ public class GTaskSyncService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    @Override
+    //*内存不足，取消同步
     public void onLowMemory() {
         if (mSyncTask != null) {
             mSyncTask.cancelSync();
         }
     }
 
+    //*intent方法解耦
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    //*发送普通广播（在GTaskASyncTask中OnprogessUpdate方法中有收到）
     public void sendBroadcast(String msg) {
         mSyncProgress = msg;
         Intent intent = new Intent(GTASK_SERVICE_BROADCAST_NAME);
@@ -105,6 +111,7 @@ public class GTaskSyncService extends Service {
         sendBroadcast(intent);
     }
 
+    //*开始同步操作
     public static void startSync(Activity activity) {
         GTaskManager.getInstance().setActivityContext(activity);
         Intent intent = new Intent(activity, GTaskSyncService.class);
@@ -112,16 +119,19 @@ public class GTaskSyncService extends Service {
         activity.startService(intent);
     }
 
+    //*取消同步操作
     public static void cancelSync(Context context) {
         Intent intent = new Intent(context, GTaskSyncService.class);
         intent.putExtra(GTaskSyncService.ACTION_STRING_NAME, GTaskSyncService.ACTION_CANCEL_SYNC);
         context.startService(intent);
     }
 
+    //*是否正在同步
     public static boolean isSyncing() {
         return mSyncTask != null;
     }
 
+    //*获取同步进程
     public static String getProgressString() {
         return mSyncProgress;
     }
