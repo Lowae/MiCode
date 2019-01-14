@@ -69,7 +69,7 @@
             android:background="#D5D5D5" />
 
         <ImageView
-            android:id="@+id/ll_font_large"
+            android:id="@+id/font_large"
             android:layout_width="55sp"
             android:layout_height="55sp"
             android:src="@drawable/font_large"
