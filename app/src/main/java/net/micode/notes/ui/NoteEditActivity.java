@@ -52,6 +52,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -174,6 +175,8 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     private String mUserQuery;
     private Pattern mPattern;
 
+    private Button BtnSpeechInput;
+
     /**
      * 在界面创建时调用的方法，完成界面的创建
      *
@@ -183,6 +186,8 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.note_edit);
+
+
 
         if (savedInstanceState == null && !initActivityState(getIntent())) {
             finish();
@@ -449,6 +454,9 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
 
         //绑定被插入图片的ImageView视图
         mInsertImage = (ImageView) findViewById(R.id.insert_image);
+        //绑定语音输入按钮视图
+        BtnSpeechInput=(Button)findViewById(R.id.btn_speech_input);
+        BtnSpeechInput.setOnClickListener(this);
         mInsertImage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -570,6 +578,8 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                         TextAppearanceResources.getTexAppearanceResource(mFontSizeId));
             }
             mFontSizeSelector.setVisibility(View.GONE);
+        }else if (id==R.id.btn_speech_input){
+            start();
         }
     }
 
