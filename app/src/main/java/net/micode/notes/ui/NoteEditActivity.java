@@ -146,6 +146,8 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     //需要插入图片的View
     private ImageView mInsertImage;
 
+    private Button mBtnFontBold,mBtnFontTilt,mBtnFontUnderline,mBtnFontSize;
+
     private HeadViewHolder mNoteHeaderHolder;
 
     private View mHeadViewPanel;
@@ -454,9 +456,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
 
         //绑定被插入图片的ImageView视图
         mInsertImage = (ImageView) findViewById(R.id.insert_image);
-        //绑定语音输入按钮视图
-        BtnSpeechInput=(Button)findViewById(R.id.btn_speech_input);
-        BtnSpeechInput.setOnClickListener(this);
         mInsertImage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -487,8 +486,10 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         mNoteHeaderHolder.ibSetBgColor = (ImageView) findViewById(R.id.btn_set_bg_color);
         //设置响应背景色选取的监听器
         mNoteHeaderHolder.ibSetBgColor.setOnClickListener(this);
+
         //绑定文本编辑的EditText视图
         mNoteEditor = (EditText) findViewById(R.id.note_edit_view);
+
         mNoteEditorPanel = findViewById(R.id.sv_note_edit);
         mNoteBgColorSelector = findViewById(R.id.note_bg_color_selector);
         for (int id : sBgSelectorBtnsMap.keySet()) {
@@ -512,6 +513,20 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
             mFontSizeId = ResourceParser.BG_DEFAULT_FONT_SIZE;
         }
         mEditTextList = (LinearLayout) findViewById(R.id.note_edit_list);
+
+        //绑定语音输入按钮视图
+        BtnSpeechInput=(Button)findViewById(R.id.btn_speech_input);
+        BtnSpeechInput.setOnClickListener(this);
+
+//        mBtnFontBold = findViewById(R.id.);
+//        mBtnFontBold.setOnClickListener(this);
+//        mBtnFontTilt = findViewById();
+//        mBtnFontTilt.setOnClickListener(this);
+//        mBtnFontSize = findViewById();
+//        mBtnFontSize.setOnClickListener(this);
+//        mBtnFontUnderline = findViewById();
+//        mBtnFontUnderline.setOnClickListener(this);
+
         load();
     }
 
@@ -713,16 +728,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                 break;
             //字体设置
             case R.id.menu_font:
-                break;
-            //语音输入
-            case R.id.menu_speech_input:
-                start();
-//                Intent intent = new Intent(NoteEditActivity.this, ActivityUiDialog.class);
-//                startActivity(intent);
-//                if(!(getMessage() == "")){
-//                    Log.e("appen",getMessage()+"——————");
-//                    mNoteEditor.a;
-//                }
                 break;
             default:
                 break;
