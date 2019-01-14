@@ -30,27 +30,25 @@ import net.micode.notes.tool.GTaskStringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-/**
- * 补充关于便签的增添查改操作
- */
-
-
+//*JSON(JavaScript Object Notation, JS 对象简谱) 是一种轻量级的数据交换格式。它基于 ECMAScript
+// (欧洲计算机协会制定的js规范)的一个子集，采用完全独立于编程语言的文本格式来存储和表示数据。
+// 简洁和清晰的层次结构使得 JSON 成为理想的数据交换语言。 易于人阅读和编写，
+// 同时也易于机器解析和生成，并有效地提升网络传输效率。
 public class Task extends Node {
     private static final String TAG = Task.class.getSimpleName();
 
-    private boolean mCompleted;
+    private boolean mCompleted;//完成度
 
-    private String mNotes;
+    private String mNotes;//便签
 
-    private JSONObject mMetaInfo;
+    private JSONObject mMetaInfo;//元信息
 
-    private Task mPriorSibling;
+    private Task mPriorSibling;//优先排序
 
-    private TaskList mParent;
+    private TaskList mParent;//父节点
 
-    /**
-     *定义一个空的任务对象
-     */
+
+    //定义一个空的任务类
     public Task() {
         super();
         mCompleted = false;
@@ -60,24 +58,22 @@ public class Task extends Node {
         mMetaInfo = null;
     }
 
-    /**
-     *创建一个新的操作
-     */
+    //创建一个JSON
     public JSONObject getCreateAction(int actionId) {
         JSONObject js = new JSONObject();
 
         try {
-            // action_type
+            // 操作类型
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE,
                     GTaskStringUtils.GTASK_JSON_ACTION_TYPE_CREATE);
 
-            // action_id
+            // 操作ID
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_ID, actionId);
 
-            // index
+            // 索引
             js.put(GTaskStringUtils.GTASK_JSON_INDEX, mParent.getChildTaskIndex(this));
 
-            // entity_delta
+            //实体变量
             JSONObject entity = new JSONObject();
             entity.put(GTaskStringUtils.GTASK_JSON_NAME, getName());
             entity.put(GTaskStringUtils.GTASK_JSON_CREATOR_ID, "null");
@@ -88,26 +84,23 @@ public class Task extends Node {
             }
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
 
-            // parent_id
+            // 父节点ID
             js.put(GTaskStringUtils.GTASK_JSON_PARENT_ID, mParent.getGid());
 
-            // dest_parent_type
+            // 根节点类型
             js.put(GTaskStringUtils.GTASK_JSON_DEST_PARENT_TYPE,
                     GTaskStringUtils.GTASK_JSON_TYPE_GROUP);
 
-            // list_id
+            // 列表ID
             js.put(GTaskStringUtils.GTASK_JSON_LIST_ID, mParent.getGid());
 
-            // prior_sibling_id
+            // 优先级
             if (mPriorSibling != null) {
                 js.put(GTaskStringUtils.GTASK_JSON_PRIOR_SIBLING_ID, mPriorSibling.getGid());
             }
 
         }
-        /**
-         *抛出异常则创建失败
-         */
-
+        //报错提示生成创建JSON失败
         catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
@@ -117,25 +110,22 @@ public class Task extends Node {
         return js;
     }
 
-    /**
-     * 更新编辑便签类
-     */
-
+    //更新JSON
     public JSONObject getUpdateAction(int actionId) {
         JSONObject js = new JSONObject();
 
         try {
-            // action_type
+            //操作类型
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE,
                     GTaskStringUtils.GTASK_JSON_ACTION_TYPE_UPDATE);
 
-            // action_id
+            // 操作ID
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_ID, actionId);
 
-            // id
+            //ID
             js.put(GTaskStringUtils.GTASK_JSON_ID, getGid());
 
-            // entity_delta
+            //实体变量增量
             JSONObject entity = new JSONObject();
             entity.put(GTaskStringUtils.GTASK_JSON_NAME, getName());
             if (getNotes() != null) {
@@ -144,17 +134,19 @@ public class Task extends Node {
             entity.put(GTaskStringUtils.GTASK_JSON_DELETED, getDeleted());
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
 
-        } catch (JSONException e) {
+        }
+        //报错提示生成更新失败
+        catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
             throw new ActionFailureException("fail to generate task-update jsonobject");
         }
 
+
         return js;
     }
-    /**
-     * 远程获取操作内容
-     */
+
+    //通过JSON修改本地数据
     public void setContentByRemoteJSON(JSONObject js) {
         if (js != null) {
             try {
@@ -163,31 +155,33 @@ public class Task extends Node {
                     setGid(js.getString(GTaskStringUtils.GTASK_JSON_ID));
                 }
 
-                // last_modified
+                // 最后修改
                 if (js.has(GTaskStringUtils.GTASK_JSON_LAST_MODIFIED)) {
                     setLastModified(js.getLong(GTaskStringUtils.GTASK_JSON_LAST_MODIFIED));
                 }
 
-                // name
+                // 名字
                 if (js.has(GTaskStringUtils.GTASK_JSON_NAME)) {
                     setName(js.getString(GTaskStringUtils.GTASK_JSON_NAME));
                 }
 
-                // notes
+                // 便签
                 if (js.has(GTaskStringUtils.GTASK_JSON_NOTES)) {
                     setNotes(js.getString(GTaskStringUtils.GTASK_JSON_NOTES));
                 }
 
-                // deleted
+                // 删除情况
                 if (js.has(GTaskStringUtils.GTASK_JSON_DELETED)) {
                     setDeleted(js.getBoolean(GTaskStringUtils.GTASK_JSON_DELETED));
                 }
 
-                // completed
+                // 完成度
                 if (js.has(GTaskStringUtils.GTASK_JSON_COMPLETED)) {
                     setCompleted(js.getBoolean(GTaskStringUtils.GTASK_JSON_COMPLETED));
                 }
-            } catch (JSONException e) {
+            }
+            //报错，从JSON中获取任务内容失败
+            catch (JSONException e) {
                 Log.e(TAG, e.toString());
                 e.printStackTrace();
                 throw new ActionFailureException("fail to get task content from jsonobject");
@@ -195,10 +189,7 @@ public class Task extends Node {
         }
     }
 
-    /**
-     *编辑本地便签
-     */
-
+    //通过本地数据修改远程数据
     public void setContentByLocalJSON(JSONObject js) {
         if (js == null || !js.has(GTaskStringUtils.META_HEAD_NOTE)
                 || !js.has(GTaskStringUtils.META_HEAD_DATA)) {
@@ -228,14 +219,12 @@ public class Task extends Node {
         }
     }
 
-    /**
-     *获取本地便签信息
-     */
+    //获取本地便签信息
     public JSONObject getLocalJSONFromContent() {
         String name = getName();
         try {
             if (mMetaInfo == null) {
-                // new task created from web
+                // 从web创建新的任务
                 if (name == null) {
                     Log.w(TAG, "the note seems to be an empty one");
                     return null;
@@ -252,7 +241,7 @@ public class Task extends Node {
                 js.put(GTaskStringUtils.META_HEAD_NOTE, note);
                 return js;
             } else {
-                // synced task
+                // 已同步任务
                 JSONObject note = mMetaInfo.getJSONObject(GTaskStringUtils.META_HEAD_NOTE);
                 JSONArray dataArray = mMetaInfo.getJSONArray(GTaskStringUtils.META_HEAD_DATA);
 
@@ -274,9 +263,7 @@ public class Task extends Node {
         }
     }
 
-    /**
-     *元信息赋值
-     */
+    //设值元信息
     public void setMetaInfo(MetaData metaData) {
         if (metaData != null && metaData.getNotes() != null) {
             try {
@@ -288,9 +275,7 @@ public class Task extends Node {
         }
     }
 
-    /**
-     *同步操作
-     */
+    //根据光标实行同步操作
     public int getSyncAction(Cursor c) {
         try {
             JSONObject noteInfo = null;
@@ -308,29 +293,29 @@ public class Task extends Node {
                 return SYNC_ACTION_UPDATE_LOCAL;
             }
 
-            // validate the note id now
+            // 验证便签ID
             if (c.getLong(SqlNote.ID_COLUMN) != noteInfo.getLong(NoteColumns.ID)) {
                 Log.w(TAG, "note id doesn't match");
                 return SYNC_ACTION_UPDATE_LOCAL;
             }
 
             if (c.getInt(SqlNote.LOCAL_MODIFIED_COLUMN) == 0) {
-                // there is no local update
+                //没有本地更新
                 if (c.getLong(SqlNote.SYNC_ID_COLUMN) == getLastModified()) {
-                    // no update both side
+                    // 没有本地和远程更新
                     return SYNC_ACTION_NONE;
                 } else {
-                    // apply remote to local
+                    // 将远程应用于本地的更新
                     return SYNC_ACTION_UPDATE_LOCAL;
                 }
             } else {
-                // validate gtask id
+                // 验证任务列表ID
                 if (!c.getString(SqlNote.GTASK_ID_COLUMN).equals(getGid())) {
                     Log.e(TAG, "gtask id doesn't match");
                     return SYNC_ACTION_ERROR;
                 }
                 if (c.getLong(SqlNote.SYNC_ID_COLUMN) == getLastModified()) {
-                    // local modification only
+                    //仅本地修改
                     return SYNC_ACTION_UPDATE_REMOTE;
                 } else {
                     return SYNC_ACTION_UPDATE_CONFLICT;
@@ -344,42 +329,48 @@ public class Task extends Node {
         return SYNC_ACTION_ERROR;
     }
 
-    /**
-     *判断是否需要保存
-     */
+    //是否需要保存
     public boolean isWorthSaving() {
         return mMetaInfo != null || (getName() != null && getName().trim().length() > 0)
                 || (getNotes() != null && getNotes().trim().length() > 0);
     }
 
+    //完成度设值
     public void setCompleted(boolean completed) {
         this.mCompleted = completed;
     }
 
+    //便签设值
     public void setNotes(String notes) {
         this.mNotes = notes;
     }
 
+    //设值优先级
     public void setPriorSibling(Task priorSibling) {
         this.mPriorSibling = priorSibling;
     }
 
+    //设值父节点
     public void setParent(TaskList parent) {
         this.mParent = parent;
     }
 
+    //获取完成情况
     public boolean getCompleted() {
         return this.mCompleted;
     }
 
+    //获取便签
     public String getNotes() {
         return this.mNotes;
     }
 
+    //获取优先级
     public Task getPriorSibling() {
         return this.mPriorSibling;
     }
 
+    //获取任务列表
     public TaskList getParent() {
         return this.mParent;
     }

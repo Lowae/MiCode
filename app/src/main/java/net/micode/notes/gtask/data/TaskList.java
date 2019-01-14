@@ -34,37 +34,32 @@ public class TaskList extends Node {
     private static final String TAG = TaskList.class.getSimpleName();
 
     private int mIndex;
-    /**
-     * 构建任务清单数组
-     */
+
     private ArrayList<Task> mChildren;
 
-    /**
-     *新建任务
-     */
+    //定义任务清单类
     public TaskList() {
         super();
         mChildren = new ArrayList<Task>();
         mIndex = 1;
     }
-    /**
-     *创建任务清单方法
-     */
+
+    //创建任务清单
     public JSONObject getCreateAction(int actionId) {
         JSONObject js = new JSONObject();
 
         try {
-            // action_type
+            // 操作类型
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE,
                     GTaskStringUtils.GTASK_JSON_ACTION_TYPE_CREATE);
 
-            // action_id
+            // 操作ID
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_ID, actionId);
 
-            // index
+            // 索引
             js.put(GTaskStringUtils.GTASK_JSON_INDEX, mIndex);
 
-            // entity_delta
+            // 实体变量
             JSONObject entity = new JSONObject();
             entity.put(GTaskStringUtils.GTASK_JSON_NAME, getName());
             entity.put(GTaskStringUtils.GTASK_JSON_CREATOR_ID, "null");
@@ -72,7 +67,9 @@ public class TaskList extends Node {
                     GTaskStringUtils.GTASK_JSON_TYPE_GROUP);
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
 
-        } catch (JSONException e) {
+        }
+        //报错：生成创建任务清单JSON失败
+        catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
             throw new ActionFailureException("fail to generate tasklist-create jsonobject");
@@ -81,30 +78,30 @@ public class TaskList extends Node {
         return js;
     }
 
-    /**
-     *更新任务清单方法
-     */
+    //*更新任务清单
     public JSONObject getUpdateAction(int actionId) {
         JSONObject js = new JSONObject();
 
         try {
-            // action_type
+            // 操作类型
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE,
                     GTaskStringUtils.GTASK_JSON_ACTION_TYPE_UPDATE);
 
-            // action_id
+            // 操作ID
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_ID, actionId);
 
             // id
             js.put(GTaskStringUtils.GTASK_JSON_ID, getGid());
 
-            // entity_delta
+            // 实体变量增量
             JSONObject entity = new JSONObject();
             entity.put(GTaskStringUtils.GTASK_JSON_NAME, getName());
             entity.put(GTaskStringUtils.GTASK_JSON_DELETED, getDeleted());
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
 
-        } catch (JSONException e) {
+        }
+        //报错：生成更新任务清单JSON失败
+        catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
             throw new ActionFailureException("fail to generate tasklist-update jsonobject");
@@ -112,9 +109,8 @@ public class TaskList extends Node {
 
         return js;
     }
-    /**
-     *获取任务清单信息
-     * */
+
+    //*从远程同步任务清单内容至本地
     public void setContentByRemoteJSON(JSONObject js) {
         if (js != null) {
             try {
@@ -123,26 +119,27 @@ public class TaskList extends Node {
                     setGid(js.getString(GTaskStringUtils.GTASK_JSON_ID));
                 }
 
-                // last_modified
+                // 最后修改
                 if (js.has(GTaskStringUtils.GTASK_JSON_LAST_MODIFIED)) {
                     setLastModified(js.getLong(GTaskStringUtils.GTASK_JSON_LAST_MODIFIED));
                 }
 
-                // name
+                // 名字
                 if (js.has(GTaskStringUtils.GTASK_JSON_NAME)) {
                     setName(js.getString(GTaskStringUtils.GTASK_JSON_NAME));
                 }
 
-            } catch (JSONException e) {
+            }
+            //报错：获取JSON任务清单内容失败
+            catch (JSONException e) {
                 Log.e(TAG, e.toString());
                 e.printStackTrace();
                 throw new ActionFailureException("fail to get tasklist content from jsonobject");
             }
         }
     }
-    /**
-     *根据任务清单获取内容
-     */
+
+    //根据本地JSON上传内容
     public void setContentByLocalJSON(JSONObject js) {
         if (js == null || !js.has(GTaskStringUtils.META_HEAD_NOTE)) {
             Log.w(TAG, "setContentByLocalJSON: nothing is avaiable");
@@ -170,9 +167,8 @@ public class TaskList extends Node {
             e.printStackTrace();
         }
     }
-    /**
-     *根据便签内容列出清单
-     */
+
+    //根据内容获取本地JSON
     public JSONObject getLocalJSONFromContent() {
         try {
             JSONObject js = new JSONObject();
@@ -199,31 +195,29 @@ public class TaskList extends Node {
         }
     }
 
-    /**
-     *获取同步信息
-     */
+    //获取同步操作
     public int getSyncAction(Cursor c) {
         try {
             if (c.getInt(SqlNote.LOCAL_MODIFIED_COLUMN) == 0) {
-                // there is no local update
+                // 没有本地更新
                 if (c.getLong(SqlNote.SYNC_ID_COLUMN) == getLastModified()) {
-                    // no update both side
+                    // 没有本地和远程更新
                     return SYNC_ACTION_NONE;
                 } else {
-                    // apply remote to local
+                    // 将远程应用于本地
                     return SYNC_ACTION_UPDATE_LOCAL;
                 }
             } else {
-                // validate gtask id
+                // 验证GTASK ID
                 if (!c.getString(SqlNote.GTASK_ID_COLUMN).equals(getGid())) {
                     Log.e(TAG, "gtask id doesn't match");
                     return SYNC_ACTION_ERROR;
                 }
                 if (c.getLong(SqlNote.SYNC_ID_COLUMN) == getLastModified()) {
-                    // local modification only
+                    // 仅本地修改
                     return SYNC_ACTION_UPDATE_REMOTE;
                 } else {
-                    // for folder conflicts, just apply local modification
+                    //对于文件内容冲突，仅应用本地修改
                     return SYNC_ACTION_UPDATE_REMOTE;
                 }
             }
@@ -234,22 +228,19 @@ public class TaskList extends Node {
 
         return SYNC_ACTION_ERROR;
     }
-    /**
-     *获取子任务数量
-     */
+
+    //获取子任务数量
     public int getChildTaskCount() {
         return mChildren.size();
     }
 
-    /**
-     *增添子任务
-     */
+    //增添子任务
     public boolean addChildTask(Task task) {
         boolean ret = false;
         if (task != null && !mChildren.contains(task)) {
             ret = mChildren.add(task);
             if (ret) {
-                // need to set prior sibling and parent
+                // 需要设置优先级和父节点
                 task.setPriorSibling(mChildren.isEmpty() ? null : mChildren
                         .get(mChildren.size() - 1));
                 task.setParent(this);
@@ -258,9 +249,7 @@ public class TaskList extends Node {
         return ret;
     }
 
-    /**
-     *根据索引增添子任务
-     * */
+    //（根据索引增添子任务）
     public boolean addChildTask(Task task, int index) {
         if (index < 0 || index > mChildren.size()) {
             Log.e(TAG, "add child task: invalid index");
@@ -271,7 +260,7 @@ public class TaskList extends Node {
         if (task != null && pos == -1) {
             mChildren.add(index, task);
 
-            // update the task list
+            // 更新任务清单
             Task preTask = null;
             Task afterTask = null;
             if (index != 0)
@@ -287,9 +276,7 @@ public class TaskList extends Node {
         return true;
     }
 
-    /**
-     *删除子任务
-     */
+    //删除子任务
     public boolean removeChildTask(Task task) {
         boolean ret = false;
         int index = mChildren.indexOf(task);
@@ -297,11 +284,11 @@ public class TaskList extends Node {
             ret = mChildren.remove(task);
 
             if (ret) {
-                // reset prior sibling and parent
+                // 重置优先级和父节点
                 task.setPriorSibling(null);
                 task.setParent(null);
 
-                // update the task list
+                // 更新任务清单
                 if (index != mChildren.size()) {
                     mChildren.get(index).setPriorSibling(
                             index == 0 ? null : mChildren.get(index - 1));
@@ -311,9 +298,7 @@ public class TaskList extends Node {
         return ret;
     }
 
-    /**
-     *移动子任务
-     */
+    //移动子任务
     public boolean moveChildTask(Task task, int index) {
 
         if (index < 0 || index >= mChildren.size()) {
@@ -331,9 +316,8 @@ public class TaskList extends Node {
             return true;
         return (removeChildTask(task) && addChildTask(task, index));
     }
-    /**
-     *查找子任务
-     */
+
+    //通过GID查询子任务
     public Task findChildTaskByGid(String gid) {
         for (int i = 0; i < mChildren.size(); i++) {
             Task t = mChildren.get(i);
@@ -344,16 +328,12 @@ public class TaskList extends Node {
         return null;
     }
 
-    /**
-     *获取子任务索引
-     */
+    //获取子任务索引
     public int getChildTaskIndex(Task task) {
         return mChildren.indexOf(task);
     }
-    /**
-     *根据索引查找子任务
-     */
 
+    //根据索引查询子任务
     public Task getChildTaskByIndex(int index) {
         if (index < 0 || index >= mChildren.size()) {
             Log.e(TAG, "getTaskByIndex: invalid index");
@@ -362,9 +342,7 @@ public class TaskList extends Node {
         return mChildren.get(index);
     }
 
-    /**
-     *通过组号查找子任务
-     */
+    //通过GID查询子任务
     public Task getChilTaskByGid(String gid) {
         for (Task task : mChildren) {
             if (task.getGid().equals(gid))
@@ -373,22 +351,17 @@ public class TaskList extends Node {
         return null;
     }
 
-    /**
-     *获取任务清单
-     */
+    //获取任务清单
     public ArrayList<Task> getChildTaskList() {
         return this.mChildren;
     }
 
-    /**
-     *设置索引值
-     */
+    //设置索引值
     public void setIndex(int index) {
         this.mIndex = index;
     }
-    /**
-     *获取索引值
-     */
+
+    //获取索引值
     public int getIndex() {
         return this.mIndex;
     }

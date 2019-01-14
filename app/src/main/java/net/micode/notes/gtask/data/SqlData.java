@@ -38,45 +38,42 @@ import org.json.JSONObject;
 public class SqlData {
     private static final String TAG = SqlData.class.getSimpleName();
 
+    //使无效ID
     private static final int INVALID_ID = -99999;
 
-    /**
-     *构造数据列
-     */
+    //构造数据数组
     public static final String[] PROJECTION_DATA = new String[] {
             DataColumns.ID, DataColumns.MIME_TYPE, DataColumns.CONTENT, DataColumns.DATA1,
             DataColumns.DATA3
     };
 
-    public static final int DATA_ID_COLUMN = 0;
+    public static final int DATA_ID_COLUMN = 0;//ID
 
-    public static final int DATA_MIME_TYPE_COLUMN = 1;
+    public static final int DATA_MIME_TYPE_COLUMN = 1;//协议类型
 
-    public static final int DATA_CONTENT_COLUMN = 2;
+    public static final int DATA_CONTENT_COLUMN = 2;//内容
 
-    public static final int DATA_CONTENT_DATA_1_COLUMN = 3;
+    public static final int DATA_CONTENT_DATA_1_COLUMN = 3;//内容数据1
 
-    public static final int DATA_CONTENT_DATA_3_COLUMN = 4;
+    public static final int DATA_CONTENT_DATA_3_COLUMN = 4;//内容数据3
 
-    private ContentResolver mContentResolver;
+    private ContentResolver mContentResolver;//内容解析器
 
-    private boolean mIsCreate;
+    private boolean mIsCreate;//是否创建
 
-    private long mDataId;
+    private long mDataId;//数据ID
 
-    private String mDataMimeType;
+    private String mDataMimeType;//协议类型
 
-    private String mDataContent;
+    private String mDataContent;//数据内容
 
-    private long mDataContentData1;
+    private long mDataContentData1;//数据1数据内容
 
-    private String mDataContentData3;
+    private String mDataContentData3;//数据3数据内容
 
-    private ContentValues mDiffDataValues;
+    private ContentValues mDiffDataValues;//区分数据价值
 
-    /**
-     * 构造方法，定义一个数据库数据
-     */
+    //通过环境定义数据库数据
     public SqlData(Context context) {
         mContentResolver = context.getContentResolver();
         mIsCreate = true;
@@ -88,11 +85,7 @@ public class SqlData {
         mDiffDataValues = new ContentValues();
     }
 
-    /**
-     * 重写构造方法，传入的参数有Cursor时，将根据Cursor来构造便签数据
-     * @param context
-     * @param c
-     */
+    //根据光标和环境解析数据库数据
     public SqlData(Context context, Cursor c) {
         mContentResolver = context.getContentResolver();
         mIsCreate = false;
@@ -100,9 +93,7 @@ public class SqlData {
         mDiffDataValues = new ContentValues();
     }
 
-    /**
-     *从结果集Cursor中获取信息
-     */
+    //根据光标加载数据信息
     private void loadFromCursor(Cursor c) {
         mDataId = c.getLong(DATA_ID_COLUMN);
         mDataMimeType = c.getString(DATA_MIME_TYPE_COLUMN);
@@ -111,9 +102,7 @@ public class SqlData {
         mDataContentData3 = c.getString(DATA_CONTENT_DATA_3_COLUMN);
     }
 
-    /**
-     *上传内容至数据库
-     */
+    //传值至JSON
     public void setContent(JSONObject js) throws JSONException {
         long dataId = js.has(DataColumns.ID) ? js.getLong(DataColumns.ID) : INVALID_ID;
         if (mIsCreate || mDataId != dataId) {
@@ -147,9 +136,7 @@ public class SqlData {
         mDataContentData3 = dataContentData3;
     }
 
-    /**
-     *从数据库同步内容
-     */
+    // 查询JSON中的值
     public JSONObject getContent() throws JSONException {
         if (mIsCreate) {
             Log.e(TAG, "it seems that we haven't created this in database yet");
@@ -164,9 +151,7 @@ public class SqlData {
         return js;
     }
 
-    /**
-     *提交版本信息
-     */
+    //根据便签ID、版本日期、版本提交更新及版本信息
     public void commit(long noteId, boolean validateVersion, long version) {
 
         if (mIsCreate) {
@@ -206,9 +191,7 @@ public class SqlData {
         mIsCreate = false;
     }
 
-    /**
-     *获取数据ID
-     */
+    //获取数据ID
     public long getId() {
         return mDataId;
     }

@@ -19,29 +19,24 @@ package net.micode.notes.gtask.data;
 import android.database.Cursor;
 
 import org.json.JSONObject;
-/**
- * 定义一个关于便签的类
- * 包括便签的各种属性和方法
- */
-
 public abstract class Node {
-    public static final int SYNC_ACTION_NONE = 0;
+    public static final int SYNC_ACTION_NONE = 0;//没有同步操作
 
-    public static final int SYNC_ACTION_ADD_REMOTE = 1;
+    public static final int SYNC_ACTION_ADD_REMOTE = 1;//从本地上传
 
-    public static final int SYNC_ACTION_ADD_LOCAL = 2;
+    public static final int SYNC_ACTION_ADD_LOCAL = 2;//从网上同步
 
-    public static final int SYNC_ACTION_DEL_REMOTE = 3;
+    public static final int SYNC_ACTION_DEL_REMOTE = 3;//删除远程数据
 
-    public static final int SYNC_ACTION_DEL_LOCAL = 4;
+    public static final int SYNC_ACTION_DEL_LOCAL = 4;//删除本地数据
 
-    public static final int SYNC_ACTION_UPDATE_REMOTE = 5;
+    public static final int SYNC_ACTION_UPDATE_REMOTE = 5;//更新远程数据
 
-    public static final int SYNC_ACTION_UPDATE_LOCAL = 6;
+    public static final int SYNC_ACTION_UPDATE_LOCAL = 6;//更新本地数据
 
-    public static final int SYNC_ACTION_UPDATE_CONFLICT = 7;
+    public static final int SYNC_ACTION_UPDATE_CONFLICT = 7;//更新有数据冲突
 
-    public static final int SYNC_ACTION_ERROR = 8;
+    public static final int SYNC_ACTION_ERROR = 8;//同步操作错误
 
     private String mGid;
 
@@ -51,6 +46,7 @@ public abstract class Node {
 
     private boolean mDeleted;
 
+    //定义一个数据节点类
     public Node() {
         mGid = null;
         mName = "";
@@ -58,15 +54,10 @@ public abstract class Node {
         mDeleted = false;
     }
 
-    /**
-     * 创建便签和编辑便签方法
-     */
+    //在Task中对方法有详细定义
     public abstract JSONObject getCreateAction(int actionId);
 
     public abstract JSONObject getUpdateAction(int actionId);
-    /**
-     * 创建便签和编辑便签方法
-     */
 
     public abstract void setContentByRemoteJSON(JSONObject js);
 
@@ -76,6 +67,7 @@ public abstract class Node {
 
     public abstract int getSyncAction(Cursor c);
 
+    //set设定数据操作
     public void setGid(String gid) {
         this.mGid = gid;
     }
@@ -92,6 +84,7 @@ public abstract class Node {
         this.mDeleted = deleted;
     }
 
+    //get获取数据操作
     public String getGid() {
         return this.mGid;
     }
