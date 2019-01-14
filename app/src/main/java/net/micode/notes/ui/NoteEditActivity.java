@@ -719,7 +719,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                 start();
 //                Intent intent = new Intent(NoteEditActivity.this, ActivityUiDialog.class);
 //                startActivity(intent);
-                Log.e("消息:", getMessage()+"11");
 //                if(!(getMessage() == "")){
 //                    Log.e("appen",getMessage()+"——————");
 //                    mNoteEditor.a;

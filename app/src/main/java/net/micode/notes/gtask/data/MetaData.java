@@ -52,7 +52,7 @@ public class MetaData extends Task {
     }
 
     //由远程JSON设值元信息及关联GID
-    public void setContentByRemoteJSON(JSONObject js) {（）
+    public void setContentByRemoteJSON(JSONObject js) {
         super.setContentByRemoteJSON(js);
         if (getNotes() != null) {
             try {

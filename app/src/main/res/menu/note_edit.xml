@@ -66,7 +66,7 @@
         android:id="@+id/menu_font"
         android:title="@string/menu_font"
         android:icon="@drawable/menu_font"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/menu_speech_input"
