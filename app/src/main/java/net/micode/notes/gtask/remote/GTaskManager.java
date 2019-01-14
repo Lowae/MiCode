@@ -507,7 +507,7 @@ public class GTaskManager {
                     GTaskClient.getInstance().deleteNode(meta);
                 }
                 mLocalDeleteIdMap.add(c.getLong(SqlNote.ID_COLUMN));
-                break
+                break;
             //本地删除            ;
             case Node.SYNC_ACTION_DEL_REMOTE:
                 meta = mMetaHashMap.get(node.getGid());

@@ -108,7 +108,7 @@ public class NotesProvider extends ContentProvider {
      * @return
      */
     @Override
-    public Cursor quetiry(Uri uri, String[] projection, String selection, String[] selectionArgs,
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         Cursor c = null;
         SQLiteDatabase db = mHelper.getReadableDatabase();
