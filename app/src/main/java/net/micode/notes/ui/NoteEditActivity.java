@@ -19,6 +19,7 @@ package net.micode.notes.ui;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.appwidget.AppWidgetManager;
@@ -33,6 +34,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -45,12 +47,14 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.BackgroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -59,10 +63,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.aip.asrwakeup3.core.recog.listener.ChainRecogListener;
+import com.baidu.aip.asrwakeup3.core.recog.listener.MessageStatusRecogListener;
 import com.baidu.aip.asrwakeup3.core.util.MyLogger;
+import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
+import com.baidu.voicerecognition.android.ui.DigitalDialogInput;
 
 import net.micode.notes.R;
 import net.micode.notes.data.Notes;
@@ -141,12 +150,26 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         sFontSelectorSelectionMap.put(ResourceParser.TEXT_SUPER, R.id.iv_super_select);
     }
 
+    private static final Map<Integer, Integer> sFontSettingMap = new HashMap<>();
+    static {
+        sFontSettingMap.put(R.id.btn_font_bold, Typeface.BOLD);
+        sFontSettingMap.put(R.id.btn_font_italic, Typeface.ITALIC);
+        sFontSettingMap.put(R.id.btn_font_underline, Paint.UNDERLINE_TEXT_FLAG);
+    }
+
     private static final String TAG = "NoteEditActivity";
+
+
+    private DigitalDialogInput input;
+    private ChainRecogListener chainRecogListener;
 
     //需要插入图片的View
     private ImageView mInsertImage;
 
-    private Button mBtnFontBold,mBtnFontTilt,mBtnFontUnderline,mBtnFontSize;
+    private Button mBtnFontBold;
+    private Button mBtnFontTilt;
+    private Button mBtnFontUnderline;
+    private Button mBtnFontSize;
 
     private HeadViewHolder mNoteHeaderHolder;
 
@@ -189,12 +212,14 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.note_edit);
 
-
-
         if (savedInstanceState == null && !initActivityState(getIntent())) {
             finish();
             return;
         }
+        chainRecogListener = new ChainRecogListener();
+        // DigitalDialogInput 输入 ，MessageStatusRecogListener可替换为用户自己业务逻辑的listener
+        chainRecogListener.addListener(new MessageStatusRecogListener(handler));
+        myRecognizer.setEventListener(chainRecogListener); // 替换掉原来的listener
         initResources();
     }
 
@@ -463,7 +488,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                 builder.setTitle("是否删除图片").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        displayImage(null);
+                        save(null);
                         Toast.makeText(NoteEditActivity.this,"删除图片成功！",Toast.LENGTH_LONG).show();
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -517,16 +542,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         //绑定语音输入按钮视图
         BtnSpeechInput=(Button)findViewById(R.id.btn_speech_input);
         BtnSpeechInput.setOnClickListener(this);
-
-//        mBtnFontBold = findViewById(R.id.);
-//        mBtnFontBold.setOnClickListener(this);
-//        mBtnFontTilt = findViewById();
-//        mBtnFontTilt.setOnClickListener(this);
-//        mBtnFontSize = findViewById();
-//        mBtnFontSize.setOnClickListener(this);
-//        mBtnFontUnderline = findViewById();
-//        mBtnFontUnderline.setOnClickListener(this);
-
         load();
     }
 
@@ -540,6 +555,9 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
             Log.e(TAG, "Note data was saved with length:" + mWorkingNote.getContent().length());
         }
         clearSettingState();
+        if (!running) {
+            myRecognizer.release();
+        }
     }
 
     /**
@@ -595,6 +613,14 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
             mFontSizeSelector.setVisibility(View.GONE);
         }else if (id==R.id.btn_speech_input){
             start();
+        }else if(sFontSettingMap.containsKey(id)){
+            if(sFontSettingMap.get(id) == Paint.UNDERLINE_TEXT_FLAG){
+                mNoteEditor.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+                mNoteEditor.getPaint().setAntiAlias(true);//去除锯齿
+            }else{
+                mNoteEditor.setTypeface(Typeface.defaultFromStyle(sFontSettingMap.get(id)));
+            }
+
         }
     }
 
@@ -728,6 +754,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                 break;
             //字体设置
             case R.id.menu_font:
+                popFontWindows();
                 break;
             default:
                 break;
@@ -1167,30 +1194,30 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
      * 从相机中获取图片
      */
     public void pickImageFromAlbum() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_PICK);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 222);
-
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_PICK);
+//        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(intent, 22);
+        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+        startActivityForResult(intent, 22);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CANCELED) {
-            return;
-        }
-
-        try {
-            Uri imageUri = data.getData();
-            Log.e("TAG", imageUri.toString());
-            String imagePath = getImagePath(imageUri, null);
-            displayImage(imagePath);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (requestCode == 2) {
+        Log.e("requestCode", String.valueOf(requestCode));
+        Log.e("resultCode", String.valueOf(resultCode));
+        if(requestCode == 22){
+            Log.e("22","2222222");
+            try {
+                Uri imageUri = data.getData();
+                Log.e("TAG", imageUri.toString());
+                String imagePath = getImagePath(imageUri, null);
+                displayImage(imagePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode == 2) {
             running = false;
             String message = "";
             if (resultCode == RESULT_OK) {
@@ -1205,6 +1232,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
             mNoteEditor.append(message);
             mWorkingNote.setWorkingText(mNoteEditor.getText().toString());
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -1233,6 +1261,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
 
     //展示图片
     private void displayImage(String imagePath){
+        Log.e("imagePath",imagePath+"null");
         save(imagePath);
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         mInsertImage.setImageBitmap(bitmap);
@@ -1249,5 +1278,46 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         }
         cursor.close();
         return path;
+    }
+
+    private void popFontWindows(){
+        View view = LayoutInflater.from(NoteEditActivity.this).inflate(R.layout.dialog_font, null);
+        PopupWindow popupWindow = new PopupWindow(view);
+        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        //设置动画效果
+        popupWindow.setAnimationStyle(R.style.AnimBottom);
+        popupWindow.showAtLocation(findViewById(R.id.activity_edit),Gravity.BOTTOM, 0, 0);
+
+        mBtnFontBold = (Button) view.findViewById(R.id.btn_font_bold);
+        mBtnFontBold.setOnClickListener(this);
+        mBtnFontTilt = (Button) view.findViewById(R.id.btn_font_italic);
+        mBtnFontTilt.setOnClickListener(this);
+        mBtnFontSize = (Button) view.findViewById(R.id.btn_font_size);
+        mBtnFontSize.setOnClickListener(this);
+        mBtnFontUnderline = (Button) view.findViewById(R.id.btn_font_underline);
+        mBtnFontUnderline.setOnClickListener(this);
+    }
+
+    /**
+     * 开始录音，点击“开始”按钮后调用。
+     */
+    @Override
+    protected void start() {
+        // 此处params可以打印出来，直接写到你的代码里去，最终的json一致即可。
+        final Map<String, Object> params = fetchParams();
+
+        // BaiduASRDigitalDialog的输入参数
+        input = new DigitalDialogInput(myRecognizer, chainRecogListener, params);
+        BaiduASRDigitalDialog.setInput(input); // 传递input信息，在BaiduASRDialog中读取,
+        Intent intent = new Intent(this, BaiduASRDigitalDialog.class);
+
+        // 修改对话框样式
+        // intent.putExtra(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_ORANGE_DEEPBG);
+
+        running = true;
+        startActivityForResult(intent, 2);
     }
 }

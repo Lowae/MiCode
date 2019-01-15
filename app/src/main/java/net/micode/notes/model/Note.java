@@ -130,13 +130,14 @@ public class Note {
          */
         //Update用于修改表中的数据
         if (context.getContentResolver().update(
-                //通过withappendedId方法将noteId添加到uri中，返回带有id的uri
+                //通过withAppendedId方法将noteId添加到uri中，返回带有id的uri
                 ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId)
                 , mNoteDiffValues, null, null) == 0) {
 
             Log.e(TAG, "Update note error, should not happen");//更新说明错误，不应发生
             // Do not return, fall through//不要返回
         }
+        //调用clear方法清除数据，避免数据叠加
         mNoteDiffValues.clear();
 
         if (mNoteData.isLocalModified()
@@ -144,7 +145,7 @@ public class Note {
             return false;
         }
         return true;
-    }//调用clear方法清除数据，避免数据叠加
+    }
 
     private class NoteData {
         private long mTextDataId;//声明文本数据ID

@@ -42,7 +42,7 @@
         android:id="@+id/menu_image_share"
         android:title="@string/menu_image_share"
         android:icon="@drawable/image_share"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/menu_send_to_desktop"
@@ -52,7 +52,7 @@
         android:id="@+id/menu_image_insert"
         android:title="@string/menu_image_insert"
         android:icon="@drawable/image_insert"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/menu_alert"

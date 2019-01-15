@@ -130,12 +130,17 @@ public class WorkingNote {
     }
     //Context.getContentResolver().query获取后面的一些信息：文件名ID，颜色ID，小控件ID，小控件类型，闹钟提醒日期，修改日期
     private void loadNote() {
+        /**
+         * public final Cursor query (Uri uri, String[] projection,String selection,String[] selectionArgs, String sortOrder)
+         * uri:指的是唯一的标识来标识这个Provider（）内容提供者
+         * projection:告诉查询要返回的列（Column）
+         * selection:查询where字句
+         * selectionArgs: 查询条件属性值
+         * sortOrder:结果排序规则(升序、降序等)
+         */
         Cursor cursor = mContext.getContentResolver().query(
                 ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, mNoteId), NOTE_PROJECTION, null,
                 null, null);
-      //第一个参数uri用来唯一的标识ID；第二个参数projection这个参数告诉ID要返回的内容（列Column）；第三个参数selection设置条件null表示不进行筛选
-        //第四个参数selectionArgs这个参数是要配合第三个参数使用的，如果你在第三个参数里面有，那么你在selectionArgs写的数据就会替换掉
-        //第五个参数，sortOrder，按照什么进行排序，null表示不排序
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 mFolderId = cursor.getLong(NOTE_PARENT_ID_COLUMN);
@@ -152,7 +157,7 @@ public class WorkingNote {
         }
         loadNoteData();
     }
-      //类似于上面的Context.getContentResolver().query方法
+      //类似于上面的Context.getContentResolver().query方法，用于获取该id便签的数据内容信息
     private void loadNoteData() {
         Cursor cursor = mContext.getContentResolver().query(Notes.CONTENT_DATA_URI, DATA_PROJECTION,
                 DataColumns.NOTE_ID + "=?", new String[] {
@@ -166,6 +171,7 @@ public class WorkingNote {
                     if (DataConstants.NOTE.equals(type)) {
                         mContent = cursor.getString(DATA_CONTENT_COLUMN);
                         mMode = cursor.getInt(DATA_MODE_COLUMN);
+                        Log.e("Data4:", String.valueOf(cursor.getInt(6)));
                         mNote.setTextDataId(cursor.getLong(DATA_ID_COLUMN));
                     } else if (DataConstants.CALL_NOTE.equals(type)) {
                         mNote.setCallDataId(cursor.getLong(DATA_ID_COLUMN));
@@ -219,12 +225,13 @@ public class WorkingNote {
             return false;
         }
     }
-
+    //存在于数据库中
     public boolean existInDatabase() {
         return mNoteId > 0;
-    }    //存在于数据库中
+    }
 
-    private boolean isWorthSaving() {                              //满足下面条件即可存储
+    //满足下面条件即可存储
+    private boolean isWorthSaving() {
         if (mIsDeleted || (!existInDatabase() && TextUtils.isEmpty(mContent))
                 || (existInDatabase() && !mNote.isLocalModified())) {
             return false;

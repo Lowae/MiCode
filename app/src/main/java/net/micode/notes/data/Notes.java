@@ -255,7 +255,7 @@ public class Notes {
 
     public static final class TextNote implements DataColumns {
         /**
-         * 是否显示检查列表模式中的文本的模式
+         * 是否显示检查清单模式中的文本的模式
          * <P> 数据类型: Integer 1:check list mode 0: normal mode </P>
          */
         public static final String MODE = DATA1;
