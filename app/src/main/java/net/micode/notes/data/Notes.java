@@ -115,7 +115,7 @@ public class Notes {
         public static final String SNIPPET = "snippet";
 
         /**
-         * 便签的控件ID
+         * 便签的桌面小部件ID
          * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String WIDGET_ID = "widget_id";
@@ -140,7 +140,7 @@ public class Notes {
         public static final String HAS_ATTACHMENT = "has_attachment";
 
         /**
-         * 文件夹的数量
+         * 文件夹的便签的数量
          * <P> 数据类型: INTEGER (long) </P>
          */
         public static final String NOTES_COUNT = "notes_count";
@@ -251,6 +251,11 @@ public class Notes {
          * <P> 数据类型: TEXT </P>
          */
         public static final String DATA5 = "data5";
+
+        /**
+         * 存放图片路径
+         */
+        public static final String IMAGE_PATH = "image_path";
     }
 
     public static final class TextNote implements DataColumns {

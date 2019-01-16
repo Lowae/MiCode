@@ -86,7 +86,8 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
                     DataColumns.DATA2 + " INTEGER," +
                     DataColumns.DATA3 + " TEXT NOT NULL DEFAULT ''," +
                     DataColumns.DATA4 + " TEXT NOT NULL DEFAULT ''," +
-                    DataColumns.DATA5 + " TEXT NOT NULL DEFAULT ''" +
+                    DataColumns.DATA5 + " TEXT NOT NULL DEFAULT ''," +
+                    DataColumns.IMAGE_PATH +  " TEXT DEFAULT ''" +
                     ")";
 
     //声明静态字符串"CREATE_DATA_NOTE_ID_INDEX_SQL",含义为创建便签和便签内容ID的索引
@@ -232,8 +233,6 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
     /**
      * 此类的构造方法
      * @param context
-     * @param DB_NAME 数据库名称
-     * @param DB_VERSION 数据库版本
      */
 
     public NotesDatabaseHelper(Context context) {
@@ -352,6 +351,7 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
      */
     public void createDataTable(SQLiteDatabase db) {
         db.execSQL(CREATE_DATA_TABLE_SQL);
+        Log.e("createDataTable","---");
         reCreateDataTableTriggers(db);
         db.execSQL(CREATE_DATA_NOTE_ID_INDEX_SQL);
         Log.d(TAG, "data table has been created");

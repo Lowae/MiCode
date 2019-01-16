@@ -488,7 +488,8 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                 builder.setTitle("是否删除图片").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        save(null);
+                        save("");
+                        load();
                         Toast.makeText(NoteEditActivity.this,"删除图片成功！",Toast.LENGTH_LONG).show();
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -1205,10 +1206,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("requestCode", String.valueOf(requestCode));
-        Log.e("resultCode", String.valueOf(resultCode));
         if(requestCode == 22){
-            Log.e("22","2222222");
             try {
                 Uri imageUri = data.getData();
                 Log.e("TAG", imageUri.toString());
@@ -1226,7 +1224,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                     message += results.get(0);
                 }
             } else {
-                message += "没有结果";
+                message += "";
             }
             MyLogger.info(message);
             mNoteEditor.append(message);
@@ -1240,31 +1238,37 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
      * @param imagePath
      */
     private void save(String imagePath){
-        SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();//获得SHaredPreferences.Editor对象
-        editor.putBoolean("imageChange",true);//添加一个名为imageChange的boolean值，数值为true
-//        editor.putLong("noteId",noteId);
-        editor.putString("imagePath",imagePath);//保存imagePath图片路径
-        editor.apply();//提交
+//        SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();//获得SHaredPreferences.Editor对象
+//        editor.putBoolean("imageChange",true);//添加一个名为imageChange的boolean值，数值为true
+////        editor.putLong("noteId",noteId);
+//        editor.putString("imagePath",imagePath);//保存imagePath图片路径
+//        editor.apply();//提交
+        mWorkingNote.setWorkingImage(imagePath);
     }
 
     /**
      * 加载图片
      */
     private void load(){
-        SharedPreferences preferences = getSharedPreferences("data",MODE_PRIVATE);//获得SharedPreferences的对象
-        //括号里的判断是去找imageChange这个对应的数值，若是找不到，则是返回false，找到了的话就是我们上面定义的true，就会执行其中的语句
-        if(preferences.getBoolean("imageChange",false)){
-            String imagePath = preferences.getString("imagePath","");//取出保存的imagePath，若是找不到，则是返回一个空
-            displayImage(imagePath);//调用显示图片方法，为ImageView设置图片
+//        SharedPreferences preferences = getSharedPreferences("data",MODE_PRIVATE);//获得SharedPreferences的对象
+//        //括号里的判断是去找imageChange这个对应的数值，若是找不到，则是返回false，找到了的话就是我们上面定义的true，就会执行其中的语句
+//        if(preferences.getBoolean("imageChange",false)){
+//            String imagePath = preferences.getString("imagePath","");//取出保存的imagePath，若是找不到，则是返回一个空
+//            displayImage(imagePath);//调用显示图片方法，为ImageView设置图片
+//        }
+        String ImagePath = mWorkingNote.getImagePath();
+        if(ImagePath != null){
+            displayImage(ImagePath);
         }
     }
 
     //展示图片
     private void displayImage(String imagePath){
-        Log.e("imagePath",imagePath+"null");
         save(imagePath);
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        mInsertImage.setImageBitmap(bitmap);
+        if (imagePath != null){
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            mInsertImage.setImageBitmap(bitmap);
+        }
     }
 
     //获得图片路径
@@ -1280,6 +1284,9 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         return path;
     }
 
+    /**
+     * 设置字体设置的弹出式菜单
+     */
     private void popFontWindows(){
         View view = LayoutInflater.from(NoteEditActivity.this).inflate(R.layout.dialog_font, null);
         PopupWindow popupWindow = new PopupWindow(view);
@@ -1302,21 +1309,17 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     }
 
     /**
-     * 开始录音，点击“开始”按钮后调用。
+     * 开始录音，点击按钮后调用。
      */
     @Override
     protected void start() {
-        // 此处params可以打印出来，直接写到你的代码里去，最终的json一致即可。
         final Map<String, Object> params = fetchParams();
-
         // BaiduASRDigitalDialog的输入参数
         input = new DigitalDialogInput(myRecognizer, chainRecogListener, params);
         BaiduASRDigitalDialog.setInput(input); // 传递input信息，在BaiduASRDialog中读取,
         Intent intent = new Intent(this, BaiduASRDigitalDialog.class);
-
         // 修改对话框样式
         // intent.putExtra(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_ORANGE_DEEPBG);
-
         running = true;
         startActivityForResult(intent, 2);
     }

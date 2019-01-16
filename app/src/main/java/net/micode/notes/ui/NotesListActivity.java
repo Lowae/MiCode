@@ -32,6 +32,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -56,6 +57,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -254,6 +256,10 @@ public class NotesListActivity extends AppCompatActivity implements OnClickListe
        mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
        mWebView = (WebView) findViewById(R.id.webview_weather);
        mWebView.loadUrl("https://tianqiapi.com/api.php?style=tg&skin=pitaya");
+       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+           mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+       }
+       mWebView.getSettings().setBlockNetworkImage(false);
        mWebView.setVisibility(View.GONE);
        mWebView.setBackgroundColor(0);
         mCurrentFolderId = Notes.ID_ROOT_FOLDER;

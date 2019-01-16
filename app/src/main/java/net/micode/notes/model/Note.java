@@ -191,6 +191,7 @@ public class Note {
 
         void setTextData(String key, String value) {
             mTextDataValues.put(key, value);
+            Log.e("imagePathNote", String.valueOf(mTextDataValues.get(DataColumns.IMAGE_PATH)));
             mNoteDiffValues.put(NoteColumns.LOCAL_MODIFIED, 1);
             mNoteDiffValues.put(NoteColumns.MODIFIED_DATE, System.currentTimeMillis());
         }//记录文本数据的键盘输入，局部修改以及修改日期

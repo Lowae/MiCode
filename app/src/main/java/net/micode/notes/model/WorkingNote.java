@@ -63,6 +63,10 @@ public class WorkingNote {
     //便签被删除
     private boolean mIsDeleted;
     //设置更改监听器以及状态监听器
+
+    //图片路径Uri
+    private String mImagePath;
+
     private NoteSettingChangedListener mNoteSettingStatusListener;
     //定义一系列数据投影
     public static final String[] DATA_PROJECTION = new String[] {
@@ -73,6 +77,7 @@ public class WorkingNote {
             DataColumns.DATA2,
             DataColumns.DATA3,
             DataColumns.DATA4,
+            DataColumns.IMAGE_PATH
     };
     // 定义一系列标签投影
     public static final String[] NOTE_PROJECTION = new String[] {
@@ -91,6 +96,8 @@ public class WorkingNote {
     private static final int DATA_MIME_TYPE_COLUMN = 2;
 
     private static final int DATA_MODE_COLUMN = 3;
+
+    private static final int DATA_IMAGE_PATH_COLUMN = 7;
 
     private static final int NOTE_PARENT_ID_COLUMN = 0;
 
@@ -171,7 +178,8 @@ public class WorkingNote {
                     if (DataConstants.NOTE.equals(type)) {
                         mContent = cursor.getString(DATA_CONTENT_COLUMN);
                         mMode = cursor.getInt(DATA_MODE_COLUMN);
-                        Log.e("Data4:", String.valueOf(cursor.getInt(6)));
+                        mImagePath = cursor.getString(DATA_IMAGE_PATH_COLUMN);
+                        Log.e("data_image", mImagePath);
                         mNote.setTextDataId(cursor.getLong(DATA_ID_COLUMN));
                     } else if (DataConstants.CALL_NOTE.equals(type)) {
                         mNote.setCallDataId(cursor.getLong(DATA_ID_COLUMN));
@@ -302,6 +310,11 @@ public class WorkingNote {
             mNote.setTextData(DataColumns.CONTENT, mContent);
         }
     }
+
+    public void setWorkingImage(String imagepath){
+        mImagePath = imagepath;
+        mNote.setTextData(DataColumns.IMAGE_PATH,mImagePath);
+    }
     //转换调用便签
     public void convertToCallNote(String phoneNumber, long callDate) {
         mNote.setCallData(CallNote.CALL_DATE, String.valueOf(callDate));
@@ -355,6 +368,9 @@ public class WorkingNote {
 
     public int getWidgetType() {
         return mWidgetType;
+    }
+    public String getImagePath(){
+        return mImagePath;
     }
 
     public interface NoteSettingChangedListener {
