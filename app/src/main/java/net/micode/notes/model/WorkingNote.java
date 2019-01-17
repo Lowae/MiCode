@@ -32,6 +32,9 @@ import net.micode.notes.data.Notes.TextNote;
 import net.micode.notes.tool.ResourceParser.NoteBgResources;
 
 
+/**
+ * 此类是用于与数据库进行数据交互的类
+ */
 public class WorkingNote {
     // Note for the working note
     private Note mNote;
@@ -66,9 +69,11 @@ public class WorkingNote {
 
     //图片路径Uri
     private String mImagePath;
+    //文本样式选择
+    private int mFontSelect;
 
     private NoteSettingChangedListener mNoteSettingStatusListener;
-    //定义一系列数据投影
+    //定义一系列数据投影，用于从数据库中获取该数组中包含的列值
     public static final String[] DATA_PROJECTION = new String[] {
             DataColumns.ID,                         //数据列ID
             DataColumns.CONTENT,                   //内容
@@ -77,7 +82,8 @@ public class WorkingNote {
             DataColumns.DATA2,
             DataColumns.DATA3,
             DataColumns.DATA4,
-            DataColumns.IMAGE_PATH
+            DataColumns.IMAGE_PATH,
+            DataColumns.FONT_SELECT
     };
     // 定义一系列标签投影
     public static final String[] NOTE_PROJECTION = new String[] {
@@ -88,7 +94,7 @@ public class WorkingNote {
             NoteColumns.WIDGET_TYPE,                     //桌面小部件类型
             NoteColumns.MODIFIED_DATE                   //最新的修改日期
     };
-    //定义一些变量的初始值
+    //用于获取上方数据投影中指定列的值
     private static final int DATA_ID_COLUMN = 0;
 
     private static final int DATA_CONTENT_COLUMN = 1;
@@ -98,6 +104,8 @@ public class WorkingNote {
     private static final int DATA_MODE_COLUMN = 3;
 
     private static final int DATA_IMAGE_PATH_COLUMN = 7;
+
+    private static final int DATA_FONT_SELECT_COLUMN = 8;
 
     private static final int NOTE_PARENT_ID_COLUMN = 0;
 
@@ -112,7 +120,7 @@ public class WorkingNote {
     private static final int NOTE_MODIFIED_DATE_COLUMN = 5;
 
     // New note construct
-    // 新建便签结构
+    // 新建便签的构造方法
     private WorkingNote(Context context, long folderId) {
         mContext = context;
         mAlertDate = 0;
@@ -126,7 +134,7 @@ public class WorkingNote {
     }
 
     // Existing note construct
-    // 现有便签构造
+    // 现有便签的构造方法
     private WorkingNote(Context context, long noteId, long folderId) {
         mContext = context;
         mNoteId = noteId;
@@ -179,7 +187,8 @@ public class WorkingNote {
                         mContent = cursor.getString(DATA_CONTENT_COLUMN);
                         mMode = cursor.getInt(DATA_MODE_COLUMN);
                         mImagePath = cursor.getString(DATA_IMAGE_PATH_COLUMN);
-                        Log.e("data_image", mImagePath);
+                        mFontSelect = cursor.getInt(DATA_FONT_SELECT_COLUMN);
+                        Log.e("font_select", String.valueOf(mFontSelect));
                         mNote.setTextDataId(cursor.getLong(DATA_ID_COLUMN));
                     } else if (DataConstants.CALL_NOTE.equals(type)) {
                         mNote.setCallDataId(cursor.getLong(DATA_ID_COLUMN));
@@ -194,7 +203,7 @@ public class WorkingNote {
             throw new IllegalArgumentException("Unable to find note's data with id " + mNoteId);//找不到ID为的便笺数据
         }
     }
-   //创造新标签
+   //新建一个空便签
     public static WorkingNote createEmptyNote(Context context, long folderId, int widgetId,
                                               int widgetType, int defaultBgColorId) {
         WorkingNote note = new WorkingNote(context, folderId);
@@ -315,6 +324,11 @@ public class WorkingNote {
         mImagePath = imagepath;
         mNote.setTextData(DataColumns.IMAGE_PATH,mImagePath);
     }
+
+    public void setFontSelect(int id){
+        mFontSelect = id;
+        mNote.setFontData(DataColumns.FONT_SELECT, mFontSelect);
+    }
     //转换调用便签
     public void convertToCallNote(String phoneNumber, long callDate) {
         mNote.setCallData(CallNote.CALL_DATE, String.valueOf(callDate));
@@ -371,6 +385,10 @@ public class WorkingNote {
     }
     public String getImagePath(){
         return mImagePath;
+    }
+
+    public int getFontSelect(){
+        return mFontSelect;
     }
 
     public interface NoteSettingChangedListener {

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\micode\\micode\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh-rTW\\values-zh-rTW.xml",
+            "outputFile": "F:\\MiCode\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh-rTW\\values-zh-rTW.xml",
             "map": [
                 {
-                    "source": "E:\\micode\\micode\\app\\src\\main\\res\\values-zh-rTW\\strings.xml",
+                    "source": "F:\\MiCode\\app\\src\\main\\res\\values-zh-rTW\\strings.xml",
                     "from": {
                         "startLines": "127,77,76,75,74,19,20,21,117,118,126,125,26,81,82,80,79,78,94,93,92,84,62,29,30,85,37,119,73,67,39,46,51,40,61,60,59,69,55,54,52,53,56,65,64,57,47,72,58,68,44,50,49,48,66,43,63,70,41,42,71,45,28,34,36,33,35,32,31,25,24,101,100,103,115,108,107,109,110,112,111,102,106,104,105,99,113,114,124,122,121,123,27,83,91,96,95,97,90,89,88,87,22,23",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "E:\\micode\\micode\\app\\src\\main\\res\\values-zh-rTW\\arrays.xml",
+                    "source": "F:\\MiCode\\app\\src\\main\\res\\values-zh-rTW\\arrays.xml",
                     "from": {
                         "startLines": "18",
                         "startColumns": "4",
@@ -42,7 +42,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\76905\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\8f592b41c7455e3457c7b458878a6035\\res\\values-zh-rTW\\values-zh-rTW.xml",
+                    "source": "C:\\Users\\Hao\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.1.aar\\cd1d264904006e233b069385b9398436\\res\\values-zh-rTW\\values-zh-rTW.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

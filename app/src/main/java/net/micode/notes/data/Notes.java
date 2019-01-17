@@ -256,6 +256,11 @@ public class Notes {
          * 存放图片路径
          */
         public static final String IMAGE_PATH = "image_path";
+
+        /**
+         * 文本样式选择
+         */
+        public static final String FONT_SELECT = "font_select";
     }
 
     public static final class TextNote implements DataColumns {

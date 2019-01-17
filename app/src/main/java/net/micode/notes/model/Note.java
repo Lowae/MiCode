@@ -80,6 +80,10 @@ public class Note {
         mNoteData.setTextData(key, value);
     }//设置文本数据
 
+    public void setFontData(String key, int value){
+        mNoteData.setFontData(key, value);
+    }
+
     public void setTextDataId(long id) {
         mNoteData.setTextDataId(id);
     }
@@ -191,10 +195,15 @@ public class Note {
 
         void setTextData(String key, String value) {
             mTextDataValues.put(key, value);
-            Log.e("imagePathNote", String.valueOf(mTextDataValues.get(DataColumns.IMAGE_PATH)));
             mNoteDiffValues.put(NoteColumns.LOCAL_MODIFIED, 1);
             mNoteDiffValues.put(NoteColumns.MODIFIED_DATE, System.currentTimeMillis());
         }//记录文本数据的键盘输入，局部修改以及修改日期
+
+        void setFontData(String key, int value){
+            mTextDataValues.put(key, value);
+            mNoteDiffValues.put(NoteColumns.LOCAL_MODIFIED, 1);
+            mNoteDiffValues.put(NoteColumns.MODIFIED_DATE, System.currentTimeMillis());
+        }
 
         Uri pushIntoContentResolver(Context context, long noteId) {
             /**

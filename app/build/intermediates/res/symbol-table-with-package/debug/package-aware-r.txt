@@ -9,6 +9,8 @@ anim abc_slide_in_bottom
 anim abc_slide_in_top
 anim abc_slide_out_bottom
 anim abc_slide_out_top
+anim push_bottom_in
+anim push_bottom_out
 array _model_list
 array decoder_list
 array format_for_exported_note
@@ -584,11 +586,15 @@ drawable edit_title_white
 drawable edit_title_yellow
 drawable edit_white
 drawable edit_yellow
+drawable font_bold
+drawable font_italic
 drawable font_large
 drawable font_normal
+drawable font_size
 drawable font_size_selector_bg
 drawable font_small
 drawable font_super
+drawable font_underline
 drawable ic_launcher
 drawable ic_launcher_background
 drawable icon_app
@@ -658,6 +664,7 @@ drawable widget_4x_green
 drawable widget_4x_red
 drawable widget_4x_white
 drawable widget_4x_yellow
+font font
 id account_dialog_subtitle
 id account_dialog_title
 id action0
@@ -681,6 +688,7 @@ id action_select_all
 id action_text
 id actions
 id activity_chooser_view_content
+id activity_edit
 id add
 id alertTitle
 id always
@@ -688,6 +696,10 @@ id amPm
 id beginning
 id bottom
 id btn
+id btn_font_bold
+id btn_font_italic
+id btn_font_size
+id btn_font_underline
 id btn_new_note
 id btn_set_bg_color
 id btn_speech_input
@@ -740,7 +752,9 @@ id iv_medium_select
 id iv_small_select
 id iv_super_select
 id line1
+id line2
 id line3
+id linear1
 id listMode
 id list_item
 id ll_font_large
@@ -753,7 +767,6 @@ id menu_delete
 id menu_delete_remind
 id menu_export_text
 id menu_font
-id menu_font_size
 id menu_image_insert
 id menu_image_share
 id menu_list_mode
@@ -763,7 +776,6 @@ id menu_search
 id menu_send_to_desktop
 id menu_setting
 id menu_share
-id menu_speech_input
 id menu_sync
 id menu_weather
 id middle
@@ -834,6 +846,7 @@ id titleDividerNoCustom
 id title_template
 id top
 id topPanel
+id tv_1
 id tv_alert_date
 id tv_folder_name
 id tv_modified_date
@@ -890,6 +903,7 @@ layout common_mini
 layout common_without_setting
 layout datetime_picker
 layout dialog_edit_text
+layout dialog_font
 layout folder_list_item
 layout note_edit
 layout note_edit_list_item
@@ -1091,6 +1105,7 @@ string widget_havenot_content
 string widget_under_visit_mode
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
+style AnimBottom
 style Animation_AppCompat_Dialog
 style Animation_AppCompat_DropDownUp
 style Base_AlertDialog_AppCompat

@@ -87,7 +87,8 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
                     DataColumns.DATA3 + " TEXT NOT NULL DEFAULT ''," +
                     DataColumns.DATA4 + " TEXT NOT NULL DEFAULT ''," +
                     DataColumns.DATA5 + " TEXT NOT NULL DEFAULT ''," +
-                    DataColumns.IMAGE_PATH +  " TEXT DEFAULT ''" +
+                    DataColumns.IMAGE_PATH +  " TEXT DEFAULT ''," +
+                    DataColumns.FONT_SELECT + " INTEGER NOT NULL DEFAULT 0"+
                     ")";
 
     //声明静态字符串"CREATE_DATA_NOTE_ID_INDEX_SQL",含义为创建便签和便签内容ID的索引

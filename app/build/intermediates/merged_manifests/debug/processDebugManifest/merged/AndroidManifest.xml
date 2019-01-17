@@ -62,7 +62,7 @@
         <activity
             android:name="net.micode.notes.ui.NoteEditActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTop"
+            android:launchMode="standard"
             android:theme="@style/NoteTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -89,17 +89,6 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
-        <activity
-            android:name="net.micode.notes.recog.ActivityUiDialog"
-            android:configChanges="orientation|keyboardHidden|screenLayout"
-            android:label="在线识别（带对话框界面）"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="com.baidu.speech.recognizerdemo.intent.category.SAMPLE_CODE" />
-            </intent-filter>
         </activity>
 
         <provider

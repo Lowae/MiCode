@@ -152,9 +152,10 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
 
     private static final Map<Integer, Integer> sFontSettingMap = new HashMap<>();
     static {
-        sFontSettingMap.put(R.id.btn_font_bold, Typeface.BOLD);
-        sFontSettingMap.put(R.id.btn_font_italic, Typeface.ITALIC);
-        sFontSettingMap.put(R.id.btn_font_underline, Paint.UNDERLINE_TEXT_FLAG);
+        sFontSettingMap.put(R.id.btn_font_bold, ResourceParser.FONT_BOLD);
+        sFontSettingMap.put(R.id.btn_font_italic, ResourceParser.FONT_ITALIC);
+        sFontSettingMap.put(R.id.btn_font_underline, ResourceParser.FONT_UNDERLINE);
+        sFontSettingMap.put(R.id.btn_font_size, ResourceParser.FONT_SIZE);
     }
 
     private static final String TAG = "NoteEditActivity";
@@ -171,6 +172,9 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     private Button mBtnFontUnderline;
     private Button mBtnFontSize;
 
+
+    private PopupWindow popupWindow;
+
     private HeadViewHolder mNoteHeaderHolder;
 
     private View mHeadViewPanel;
@@ -186,6 +190,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     private WorkingNote mWorkingNote;
 
     private SharedPreferences mSharedPrefs;
+
     private int mFontSizeId;
 
     private static final String PREFERENCE_FONT_SIZE = "pref_font_size";
@@ -275,7 +280,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                 return false;
             } else {
                 mWorkingNote = WorkingNote.load(this, noteId);
-//                Log.e("noteId3:", String.valueOf(noteId));
                 if (mWorkingNote == null) {
                     Log.e(TAG, "load note failed with note id" + noteId);
                     finish();
@@ -350,14 +354,16 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         //设置字体大小
         mNoteEditor.setTextAppearance(this, TextAppearanceResources
                 .getTexAppearanceResource(mFontSizeId));
+        //如果便签已选择清单模式。则转换为清单模式
         if (mWorkingNote.getCheckListMode() == TextNote.MODE_CHECK_LIST) {
             switchToListMode(mWorkingNote.getContent());
         } else {
             mNoteEditor.setText(getHighlightQueryResult(mWorkingNote.getContent(), mUserQuery));
+            Log.e("FontSelectID", String.valueOf(mWorkingNote.getFontSelect()));
+            fontselect(mWorkingNote.getFontSelect());
             mNoteEditor.setSelection(mNoteEditor.getText().length());
         }
-//        Typeface font = Typeface.create(Typeface.SANS_SERIF,Typeface.BOLD_ITALIC);
-//        mNoteEditor.getPaint().setTypeface(font);
+        //绑定背景色选择的视图
         for (Integer id : sBgSelectorSelectionMap.keySet()) {
             findViewById(sBgSelectorSelectionMap.get(id)).setVisibility(View.GONE);
         }
@@ -615,13 +621,10 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         }else if (id==R.id.btn_speech_input){
             start();
         }else if(sFontSettingMap.containsKey(id)){
-            if(sFontSettingMap.get(id) == Paint.UNDERLINE_TEXT_FLAG){
-                mNoteEditor.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-                mNoteEditor.getPaint().setAntiAlias(true);//去除锯齿
-            }else{
-                mNoteEditor.setTypeface(Typeface.defaultFromStyle(sFontSettingMap.get(id)));
+            fontselect(sFontSettingMap.get(id));
+            if(popupWindow != null){
+                popupWindow.dismiss();
             }
-
         }
     }
 
@@ -714,11 +717,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
                         });
                 builder.setNegativeButton(android.R.string.cancel, null);
                 builder.show();
-                break;
-            //文字大小
-            case R.id.menu_font_size:
-                mFontSizeSelector.setVisibility(View.VISIBLE);
-                findViewById(sFontSelectorSelectionMap.get(mFontSizeId)).setVisibility(View.VISIBLE);
                 break;
             //进入清单模式
             case R.id.menu_list_mode:
@@ -1195,10 +1193,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
      * 从相机中获取图片
      */
     public void pickImageFromAlbum() {
-//        Intent intent = new Intent();
-//        intent.setAction(Intent.ACTION_PICK);
-//        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        startActivityForResult(intent, 22);
         Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         startActivityForResult(intent, 22);
@@ -1238,11 +1232,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
      * @param imagePath
      */
     private void save(String imagePath){
-//        SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();//获得SHaredPreferences.Editor对象
-//        editor.putBoolean("imageChange",true);//添加一个名为imageChange的boolean值，数值为true
-////        editor.putLong("noteId",noteId);
-//        editor.putString("imagePath",imagePath);//保存imagePath图片路径
-//        editor.apply();//提交
         mWorkingNote.setWorkingImage(imagePath);
     }
 
@@ -1250,15 +1239,9 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
      * 加载图片
      */
     private void load(){
-//        SharedPreferences preferences = getSharedPreferences("data",MODE_PRIVATE);//获得SharedPreferences的对象
-//        //括号里的判断是去找imageChange这个对应的数值，若是找不到，则是返回false，找到了的话就是我们上面定义的true，就会执行其中的语句
-//        if(preferences.getBoolean("imageChange",false)){
-//            String imagePath = preferences.getString("imagePath","");//取出保存的imagePath，若是找不到，则是返回一个空
-//            displayImage(imagePath);//调用显示图片方法，为ImageView设置图片
-//        }
         String ImagePath = mWorkingNote.getImagePath();
         if(ImagePath != null){
-            displayImage(ImagePath);
+            displayImage(ImagePath);//调用显示图片方法，为ImageView设置图片
         }
     }
 
@@ -1289,7 +1272,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
      */
     private void popFontWindows(){
         View view = LayoutInflater.from(NoteEditActivity.this).inflate(R.layout.dialog_font, null);
-        PopupWindow popupWindow = new PopupWindow(view);
+        popupWindow = new PopupWindow(view);
         popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
@@ -1322,5 +1305,31 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         // intent.putExtra(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_ORANGE_DEEPBG);
         running = true;
         startActivityForResult(intent, 2);
+    }
+
+    private void fontselect(int id){
+        switch (id){
+            case 1:
+                mNoteEditor.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                mWorkingNote.setFontSelect(id);
+                break;
+            case 2:
+                mNoteEditor.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+                mWorkingNote.setFontSelect(id);
+                break;
+            case 3:
+                mNoteEditor.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+                mNoteEditor.getPaint().setAntiAlias(true);//去除锯齿
+                mWorkingNote.setFontSelect(id);
+                break;
+            case 4:
+                mFontSizeSelector.setVisibility(View.VISIBLE);
+                findViewById(sFontSelectorSelectionMap.get(mFontSizeId)).setVisibility(View.VISIBLE);
+                mWorkingNote.setFontSelect(id);
+                break;
+            default:
+//                mNoteEditor.setTypeface(Typeface.DEFAULT);
+                break;
+        }
     }
 }
