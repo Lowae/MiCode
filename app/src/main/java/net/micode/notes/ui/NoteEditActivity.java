@@ -133,6 +133,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         sBgSelectorSelectionMap.put(ResourceParser.GREEN, R.id.iv_bg_green_select);
         sBgSelectorSelectionMap.put(ResourceParser.WHITE, R.id.iv_bg_white_select);
     }
+
     //定义一个存放字体大小的Map数组
     private static final Map<Integer, Integer> sFontSizeBtnsMap = new HashMap<Integer, Integer>();
     static {
@@ -141,6 +142,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         sFontSizeBtnsMap.put(R.id.ll_font_normal, ResourceParser.TEXT_MEDIUM);
         sFontSizeBtnsMap.put(R.id.ll_font_super, ResourceParser.TEXT_SUPER);
     }
+
     //定义一个存放标识已被选择字体大小的图标的Map数组
     private static final Map<Integer, Integer> sFontSelectorSelectionMap = new HashMap<Integer, Integer>();
     static {
@@ -150,6 +152,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         sFontSelectorSelectionMap.put(ResourceParser.TEXT_SUPER, R.id.iv_super_select);
     }
 
+    //定义一个存放字体选择ID的Map数组
     private static final Map<Integer, Integer> sFontSettingMap = new HashMap<>();
     static {
         sFontSettingMap.put(R.id.btn_font_bold, ResourceParser.FONT_BOLD);
@@ -159,7 +162,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     }
 
     private static final String TAG = "NoteEditActivity";
-
 
     private DigitalDialogInput input;
     private ChainRecogListener chainRecogListener;
@@ -171,7 +173,6 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     private Button mBtnFontTilt;
     private Button mBtnFontUnderline;
     private Button mBtnFontSize;
-
 
     private PopupWindow popupWindow;
 
@@ -196,6 +197,7 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
     private static final String PREFERENCE_FONT_SIZE = "pref_font_size";
 
     private static final int SHORTCUT_ICON_TITLE_MAX_LEN = 10;
+
     //定义相应ASCII码
     public static final String TAG_CHECKED = String.valueOf('\u221A');
     public static final String TAG_UNCHECKED = String.valueOf('\u25A1');
@@ -253,6 +255,11 @@ public class NoteEditActivity extends ActivityUiDialog implements OnClickListene
         }
     }
 
+    /**
+     * 初始化Activity活动（界面）的状态
+     * @param intent
+     * @return
+     */
     private boolean initActivityState(Intent intent) {
         /**
          * If the user specified the {@link Intent#ACTION_VIEW} but not provided with id,

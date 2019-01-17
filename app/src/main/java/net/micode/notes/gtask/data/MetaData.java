@@ -30,7 +30,9 @@ public class MetaData extends Task {
 
     private String mRelatedGid = null;
 
-    //设值关联GID
+    /**
+     *关联组号和元信息
+     */
     public void setMeta(String gid, JSONObject metaInfo) {
         try {
             metaInfo.put(GTaskStringUtils.META_HEAD_GTASK_ID, gid);
@@ -41,17 +43,25 @@ public class MetaData extends Task {
         setName(GTaskStringUtils.META_NOTE_NAME);
     }
 
-    //获取关联GID
+    /**
+     *获取关联组号
+     */
     public String getRelatedGid() {
         return mRelatedGid;
     }
 
-    //是否需要保存
+    @Override
+    /**
+     *判断是否需要保存
+     */
     public boolean isWorthSaving() {
         return getNotes() != null;
     }
 
-    //由远程JSON设值元信息及关联GID
+    @Override
+    /**
+     *获取关联组号
+     */
     public void setContentByRemoteJSON(JSONObject js) {
         super.setContentByRemoteJSON(js);
         if (getNotes() != null) {
@@ -65,20 +75,27 @@ public class MetaData extends Task {
         }
     }
 
-
-    //异常提示，不被响应
+    @Override
+    /**
+     *异常提示，不被响应
+     */
     public void setContentByLocalJSON(JSONObject js) {
+        // this function should not be called
         throw new IllegalAccessError("MetaData:setContentByLocalJSON should not be called");
     }
 
-
-
+    @Override
+    /**
+     *异常提示，不被响应
+     */
     public JSONObject getLocalJSONFromContent() {
         throw new IllegalAccessError("MetaData:getLocalJSONFromContent should not be called");
     }
 
-
-
+    @Override
+    /**
+     *异常提示，不被响应
+     */
     public int getSyncAction(Cursor c) {
         throw new IllegalAccessError("MetaData:getSyncAction should not be called");
     }

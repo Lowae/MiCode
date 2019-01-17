@@ -38,6 +38,11 @@ public class ResourceParser {
     public static final int TEXT_LARGE       = 2;//定义静态常量TEXT_LARGE为2
     public static final int TEXT_SUPER       = 3;//定义静态常量TEXT_SUPER为3
 
+    public static final int FONT_BOLD          = 1;
+    public static final int FONT_ITALIC         =2;
+    public static final int FONT_UNDERLINE      =3;
+    public static final int FONT_SIZE           =4;
+
     public static final int BG_DEFAULT_FONT_SIZE = TEXT_MEDIUM;//默认字体大小为中号字体
 
     public static class NoteBgResources {//便签背景资源
