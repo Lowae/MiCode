@@ -43,11 +43,14 @@ import java.io.IOException;
 public class AlarmAlertActivity extends Activity implements OnClickListener, OnDismissListener {
     private long mNoteId;
     private String mSnippet;
-    //设置的最大显示长度
+    //设置的最大显示文本长度
     private static final int SNIPPET_PREW_MAX_LEN = 60;
     MediaPlayer mPlayer;
 
-
+    /**
+     * 每个Activity的创建方法，在界面创建前调用
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

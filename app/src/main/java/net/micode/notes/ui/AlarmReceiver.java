@@ -20,7 +20,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+
 public class AlarmReceiver extends BroadcastReceiver {
+    /**
+     * 是BroadcastReceiver的方法，当系统接收到intent broadcast时，就会被调用到。从而响应该广播事件，启动指定的Activity
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         intent.setClass(context, AlarmAlertActivity.class);

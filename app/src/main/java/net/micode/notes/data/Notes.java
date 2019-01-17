@@ -314,6 +314,16 @@ public class Notes {
          * <P> 数据类型: TEXT </P>
          */
         public static final String DATA5 = "data5";
+
+        /**
+         *
+         */
+        public static final String IMAGE_PATH = "image_path";
+
+        /**
+         *
+         */
+        public static final String FONT_SELECT = "font_select";
     }
 
     public static final class TextNote implements DataColumns {
